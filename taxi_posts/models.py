@@ -6,7 +6,7 @@ class Ride(models.Model):
     departure_location = models.CharField(max_length=50)
     destination = models.CharField(max_length=100)
     departure_time = models.DateTimeField()
-    available_seats = models.IntegerField(validators=[MaxValueValidator(4)])
+    available_seats = models.IntegerField()
     description = models.TextField()
 
     def __str__(self):

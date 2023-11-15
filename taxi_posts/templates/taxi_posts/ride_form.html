@@ -1,0 +1,15 @@
+{% extends 'taxi_posts/base.html' %}
+
+{% block main_area %}
+    <div class="container mt-4">
+      <h2>카풀 모집하기</h2><br>
+      <form action="{% url 'ride_create' %}" method="post" class="form">
+        {% csrf_token %}
+        <table>
+          {{ form.as_table }}
+        </table>
+        <button type="submit" class="btn btn-primary">글쓰기</button>
+      </form>
+      <a href="{% url 'ride_list' %}" class="btn btn-secondary mt-3">Back to Ride List</a>
+    </div>
+{% endblock %}

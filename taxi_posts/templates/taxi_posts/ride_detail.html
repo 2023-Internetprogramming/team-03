@@ -1,0 +1,11 @@
+{% extends 'taxi_posts/base.html' %}
+
+{% block main_area %}
+    <div class="container mt-4">
+      <h2>{{ ride.departure_location }} -> {{ ride.destination }}</h2>
+      <p>시간: {{ ride.departure_time }}</p>
+      <p>모집 인원: {{ ride.available_seats }}</p>
+      <p>세부 사항: {{ ride.description }}</p>
+      <a href="{% url 'ride_list' %}" class="btn btn-secondary">Back to Ride List</a>
+    </div>
+{% endblock %}

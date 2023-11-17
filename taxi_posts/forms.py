@@ -21,10 +21,4 @@ class RideForm(forms.ModelForm):
     def __init__(self, *args, **kwargs):
         super(RideForm, self).__init__(*args, **kwargs)
         self.initial['departure_time'] = datetime.now().strftime('%Y-%m-%dT%H:%M')
-
-        # error_message = {
-        #     'name' : {
-        #         'max_length': _("제목이 너무 길어요")
-        #     }
-        # }
     

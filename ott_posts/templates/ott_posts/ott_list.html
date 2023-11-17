@@ -1,0 +1,19 @@
+{% extends 'taxi_posts/base.html' %}
+
+{% block main_area %}
+<div class="container mt-4">
+  <h2 class="mb-4">OTT List</h2>
+  {% if otts %}
+    <ul class="list-group">
+      {% for ott in otts %}
+        <li class="list-group-item d-flex justify-content-between align-items-center">
+          <a href="{% url 'ott_detail' ott.id %}">[{{ ott.type }}] {{ ott.people }}명 모집</a>
+        </li>
+      {% endfor %}
+    </ul>
+  {% else %}
+    <h3>아직 게시물이 없습니다.</h3>
+  {% endif %}
+  <a href="{% url 'ott_create' %}" class="btn btn-primary mt-4">작성</a>
+</div>
+{% endblock %}

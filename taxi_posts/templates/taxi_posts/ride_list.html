@@ -3,14 +3,18 @@
 {% block main_area %}
 <div class="container mt-4">
   <h2 class="mb-4">Carpool List</h2>
-  <ul class="list-group">
-    {% for ride in rides %}
-      <li class="list-group-item d-flex justify-content-between align-items-center">
-        <a href="{% url 'ride_detail' ride.id %}">{{ ride.departure_location }} -> {{ ride.destination }}</a>
-        <span class="badge badge-info">{{ ride.departure_time }}</span>
-      </li>
-    {% endfor %}
-  </ul>
+  {% if rides %}
+    <ul class="list-group">
+      {% for ride in rides %}
+        <li class="list-group-item d-flex justify-content-between align-items-center">
+          <a href="{% url 'ride_detail' ride.id %}">{{ ride.departure_location }} -> {{ ride.destination }}</a>
+          <span class="badge badge-info">{{ ride.departure_time }}</span>
+        </li>
+      {% endfor %}
+    </ul>
+    {% else %}
+      <h3>아직 게시물이 없습니다.</h3>
+    {% endif %}
   <a href="{% url 'ride_create' %}" class="btn btn-primary mt-4">작성</a>
 </div>
 {% endblock %}

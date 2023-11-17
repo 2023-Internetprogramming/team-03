@@ -1,0 +1,15 @@
+{% extends 'taxi_posts/base.html' %}
+
+{% block main_area %}
+    <div class="container mt-4">
+      <h2>OTT 모집하기</h2><br>
+      <form action="{% url 'ott_create' %}" method="post" class="form">
+        {% csrf_token %}
+        <table>
+          {{ form.as_table }}
+        </table>
+        <button type="submit" class="btn btn-primary">글쓰기</button>
+      </form>
+      <a href="{% url 'ott_list' %}" class="btn btn-secondary mt-3">Back to Ride List</a>
+    </div>
+{% endblock %}

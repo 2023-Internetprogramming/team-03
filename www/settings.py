@@ -43,6 +43,7 @@ INSTALLED_APPS = [
     'taxi_posts',
     'ott_posts',
     'users',
+    'contest',
 ]
 
 MIDDLEWARE = [

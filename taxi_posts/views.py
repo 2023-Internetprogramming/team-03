@@ -1,26 +1,58 @@
 from django.shortcuts import render, redirect
-from django.views import View
-from django.views.generic import ListView, DetailView, CreateView
 from .models import Ride
 from .forms import RideForm
-from django.urls import reverse_lazy
+from django.http import HttpResponseRedirect
+from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
+from django.shortcuts import get_object_or_404
 
-class RideListView(ListView):
-    model = Ride
-    template_name = 'taxi_posts/ride_list.html'
-    context_object_name = 'rides'
-    paginate_by = 10
+def ride_list(request):
+    rides = Ride.objects.all()
     
-    def get_queryset(self):
-        return Ride.objects.all().order_by('-departure_time')
+    page = request.GET.get('page', 1)
+    paginator = Paginator(rides, 8) 
+    try:
+        rides = paginator.page(page)
+    except PageNotAnInteger:
+        rides = paginator.page(1)
+    except EmptyPage:
+        rides = paginator.page(paginator.num_pages)
 
-class RideDetailView(DetailView):
-    model = Ride
-    template_name = 'taxi_posts/ride_detail.html'
-    context_object_name = 'ride'
+    return render(request, 'taxi_posts/ride_list.html', {'rides': rides})
 
-class RideCreateView(CreateView):
-    model = Ride
-    form_class = RideForm
-    template_name = 'taxi_posts/ride_form.html'
-    success_url = reverse_lazy('ride_list')
+def ride_detail(request, ride_id):
+    ride = Ride.objects.get(id=ride_id)
+    return render(request, 'taxi_posts/ride_detail.html', {'ride': ride})
+
+def ride_create(request):
+    if request.method == 'POST':
+        form = RideForm(request.POST)
+        if form.is_valid():
+            new_item = form.save()
+            return HttpResponseRedirect('/rides/')
+    form = RideForm()
+    return render(request, 'taxi_posts/ride_form.html', {'form': form})
+
+# from django.contrib.auth.decorators import login_required
+# @login_required
+# def ride_create(request):
+#     if request.method == 'POST':
+#         form = RideForm(request.POST)
+#         if form.is_valid():
+#             new_item = form.save(commit=False)
+#             new_item.user = request.user  # 현재 로그인한 사용자 설정
+#             new_item.save()
+#             return redirect('ride_list')  # 게시물이 성공적으로 저장되면 어떤 URL로 이동할지 설정
+#     else:
+#         form = RideForm()
+
+#     return render(request, 'your_template.html', {'form': form})
+
+
+def ride_delete(request):
+    ride_id = request.GET.get('id')
+    
+    if ride_id:
+        item = get_object_or_404(Ride, pk=ride_id)
+        item.delete()
+        
+    return redirect('ride_list')

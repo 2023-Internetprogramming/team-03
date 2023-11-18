@@ -1,8 +1,8 @@
 from django.db import models
-from django.contrib.auth.models import User
-from django.core.validators import MaxValueValidator
+# from django.contrib.auth.models import User
 
 class Ride(models.Model):
+    # user = models.ForeignKey(User, on_delete=models.CASCADE)
     departure_location = models.CharField(max_length=50)
     destination = models.CharField(max_length=100)
     departure_time = models.DateTimeField()

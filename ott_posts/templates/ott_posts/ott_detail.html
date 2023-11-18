@@ -7,6 +7,38 @@
       <p>요금제: {{ ott.bill }}</p>
       <p>모집 인원: {{ ott.people }}</p>
       <p>세부 사항: {{ ott.description_OTT }}</p>
-      <a href="{% url 'ott_list' %}" class="btn btn-secondary">Back to Ride List</a>
+
+      <!-- 삭제 버튼에 onclick 이벤트 추가 -->
+      <button type="button" class="btn btn-danger" onclick="confirmDelete()">삭제</button>
+
+      <!-- 삭제 확인 모달 -->
+      <div class="modal fade" id="confirmDeleteModal" tabindex="-1" role="dialog" aria-labelledby="confirmDeleteModalLabel" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h5 class="modal-title" id="confirmDeleteModalLabel">삭제 확인</h5>
+              <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+              </button>
+            </div>
+            <div class="modal-body">
+              <p>게시물을 삭제하시겠습니까?</p>
+            </div>
+            <div class="modal-footer">
+              <button type="button" class="btn btn-secondary" data-dismiss="modal">취소</button>
+              <a href="{% url 'ott_delete' %}?id={{ ott.id }}" class="btn btn-danger">삭제</a>
+            </div>
+          </div>
+        </div>
+      </div>
+      <a href="{% url 'ott_list' %}" class="btn btn-secondary">목록으로 돌아가기</a>
+    </div>
+    
+    <script>
+      function confirmDelete() {
+        $('#confirmDeleteModal').modal('show');
+      }
+    </script>
+
     </div>
 {% endblock %}

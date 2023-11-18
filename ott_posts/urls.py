@@ -1,8 +1,10 @@
 from django.urls import path
-from .views import OttListView, OttDetailView, OttCreateView
+from .views import ott_list, ott_detail, ott_create
+from . import views
 
 urlpatterns = [
-    path('ott/', OttListView.as_view(), name='ott_list'),
-    path('ott/<int:pk>/', OttDetailView.as_view(), name='ott_detail'),
-    path('ott/new/', OttCreateView.as_view(), name='ott_create'),
+    path('ott/', ott_list, name='ott_list'),
+    path('ott/<int:ott_id>/', ott_detail, name='ott_detail'),
+    path('ott/new/', ott_create, name='ott_create'),
+    path('ott_delete/', views.ott_delete, name='ott_delete'),
 ]

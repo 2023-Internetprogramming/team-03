@@ -16,7 +16,7 @@
 
     <!--페이지네이션-->
     <br><br>
-    <nav aria-label="Page navigation example" {% if rides|length <= 6 %}style="padding-bottom: 80%;"{% endif %}>
+    <nav aria-label="Page navigation example" {% if rides|length <= 7 %}style="padding-bottom: 100%;"{% endif %}>
       <ul class="pagination d-flex justify-content-center">
         {% if page_obj.has_previous %}
           <li class="page-item">

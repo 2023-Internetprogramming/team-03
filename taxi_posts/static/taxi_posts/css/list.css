@@ -1,6 +1,6 @@
 #plus{
     position: fixed;
-    bottom: 20px;
+    bottom: 50px;
     right: 1%;
     color: #8b2845;
 }
@@ -76,7 +76,7 @@
 body {
     margin: 0;
     padding: 0;
-    height: 100vh;
+    height: 125vh;
     display: flex;
     flex-direction: column;
 }
@@ -102,5 +102,4 @@ footer {
 #container {
     padding-bottom: 10vh;
     flex-grow: 1;
-    height: auto;
 }

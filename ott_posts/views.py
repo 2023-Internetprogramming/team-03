@@ -42,3 +42,17 @@ def ott_delete(request):
         item.delete()
         
     return redirect('ott_list')
+
+def ott_update(request, id):
+    item = get_object_or_404(Ott, pk=id)
+
+    if request.method == 'POST':
+        form = OttForm(request.POST, instance=item)
+        if form.is_valid():
+            form.save()
+            return redirect('ott_detail', ott_id=item.id)
+
+    else:
+        form = OttForm(instance=item)
+
+    return render(request, 'ott_posts/ott_update.html', {'form': form})

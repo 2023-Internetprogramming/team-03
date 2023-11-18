@@ -5,6 +5,7 @@ class Contest(models.Model):
     contest_description = models.TextField()
     deadline = models.DateField()
     link = models.URLField()
+    contest_image = models.ImageField(upload_to='contest/images/%Y/%m/%d/', blank=True)
 
     def __str__(self):
-        return self.title
+        return self.contest_title

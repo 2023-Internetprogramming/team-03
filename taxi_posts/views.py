@@ -9,7 +9,7 @@ def ride_list(request):
     rides = Ride.objects.all()
     
     page = request.GET.get('page', 1)
-    paginator = Paginator(rides, 8) 
+    paginator = Paginator(rides, 10) 
     try:
         rides = paginator.page(page)
     except PageNotAnInteger:
@@ -17,7 +17,7 @@ def ride_list(request):
     except EmptyPage:
         rides = paginator.page(paginator.num_pages)
 
-    return render(request, 'taxi_posts/ride_list.html', {'rides': rides})
+    return render(request, 'taxi_posts/ride_list.html', {'rides': rides, 'page_obj': rides})
 
 def ride_detail(request, ride_id):
     ride = Ride.objects.get(id=ride_id)

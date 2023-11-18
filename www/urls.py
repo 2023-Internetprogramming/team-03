@@ -21,4 +21,5 @@ urlpatterns = [
     path('admin/', admin.site.urls),
     path('', include('taxi_posts.urls')),
     path('', include('ott_posts.urls')),
+    path('', include('contest.urls')),
 ]

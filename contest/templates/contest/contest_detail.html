@@ -1,0 +1,12 @@
+{% extends 'taxi_posts/base.html' %}
+
+{% block main_area %}
+    <br><br>
+    <div class="container mt-4" id="container">
+      <h2>{{ contest.contest_title }}</h2>
+      <p>신청 기간: {{ contest.deadline }} 까지</p>
+      <p>세부 사항: {{ contest.contest_description }}</p>
+      
+      <a href="{% url 'contest_list' %}" class="btn btn-secondary">목록으로 돌아가기</a>
+    </div>
+{% endblock %}

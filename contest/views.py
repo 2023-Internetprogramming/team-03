@@ -8,10 +8,14 @@ def contest_list(request):
     page = request.GET.get('page', 1)
     paginator = Paginator(contests, 8) 
     try:
-        otts = paginator.page(page)
+        contests = paginator.page(page)
     except PageNotAnInteger:
-        otts = paginator.page(1)
+        contests = paginator.page(1)
     except EmptyPage:
-        otts = paginator.page(paginator.num_pages)
+        contests = paginator.page(paginator.num_pages)
 
     return render(request, 'contest/contest_list.html', {'contests': contests, 'page_obj': contests})
+
+def contest_detail(request, contest_id):
+    contest = Contest.objects.get(id=contest_id)
+    return render(request, 'contest/contest_detail.html', {'contest': contest})

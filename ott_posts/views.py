@@ -9,10 +9,11 @@ from django.shortcuts import get_object_or_404
 def ott_list(request):
     otts = Ott.objects.all()
 
-    page = request.GET.get('page', 1)
-    paginator = Paginator(otts, 8) 
+    page_number = request.GET.get('page', 1)
+    paginator = Paginator(otts, 10)
+
     try:
-        otts = paginator.page(page)
+        otts = paginator.page(page_number)
     except PageNotAnInteger:
         otts = paginator.page(1)
     except EmptyPage:

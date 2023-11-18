@@ -1,4 +1,5 @@
 {% extends 'taxi_posts/base.html' %}
+{% load static %}
 
 {% block navbar_area %}
   <nav class="navbar navbar-expand-lg navbar-light bg-light" id="nav">
@@ -12,58 +13,67 @@
 {% endblock %}
 
 {% block main_area %}
-<br><br>
-<div class="container mt-4" id="container">
-  <h2 class="mb-4">Contest List</h2>
-  {% if rides %}
-    <ul class="list-group">
-        {% for competition in competitions %}
-        <li class="list-group-item d-flex justify-content-between align-items-center">
-          <a href="{% url 'contest_detail' contest.id %}" style="width: 100%; display: block;">{{ competition.title }}</a>
-          <span>
-            <a href="{% url 'contest_detail' contest.id %}">
-              <span class="badge badge-info">{{ competition.deadline }}</span>
-            </a>
-          </span>
-        </li>
-      {% endfor %}
-    </ul>
+<br><br><br>
+<div class="container">
+    <h2 class="mb-4">Contests List</h2>
+    <div class="row" id="container" style="padding-bottom: 10px;">
+        {% if contests %}
+            {% for contest in contests %}
+                <div class="col-md-3 col-sm-6 col-12 d-inline-block mb-4" style="margin-bottom: 20px;">
+                    <a href="{% url 'contest_detail' contest.id %}">
+                        <div class="card" style="width: 237px; height: 400px;">
+                            {% if contest.contest_image %}
+                                <img src="{{ contest.contest_image }}" class="card-img-top img-fluid" alt="Contest Image" style="width: 237px; height: 220px;">
+                            {% else %}
+                                <img src="https://picsum.photos/seed/{{ p.id }}/800/200" class="card-img-top" alt="random_image" style="width: 235px; height: 220px;">
+                            {% endif %}
+                            <!-- 이미지 경로 또는 소스를 지정해주세요 -->
+                            <div class="card-body">
+                                <h5 class="card-title">{{ contest.contest_title }}</h5>
+                                <p class="card-text">{{ contest.contest_description }}</p>
+                            </div>
+                            <div class="card-footer">
+                                <small class="text-muted">신청 기간: {{ contest.deadline }} 까지</small>
+                            </div>
+                        </div>
+                    </a>
+                </div>
+            {% endfor %}
+    </div>
 
-    <!--페이지네이션-->
-    <br><br>
-    <nav aria-label="Page navigation example">
-      <ul class="pagination d-flex justify-content-center">
-        {% if page_obj.has_previous %}
-          <li class="page-item">
-            <a class="page-link" href="?page=1" aria-label="Previous">
-              <span aria-hidden="true">&laquo;</span>
-            </a>
-          </li>
+        <!-- 페이지네이션 -->
+            <br><br>
+            <nav aria-label="Page navigation example">
+                <ul class="pagination justify-content-center">
+                    {% if page_obj.has_previous %}
+                        <li class="page-item">
+                            <a class="page-link" href="?page=1" aria-label="Previous">
+                                <span aria-hidden="true">&laquo;</span>
+                            </a>
+                        </li>
+                    {% endif %}
+
+                    {% for i in page_obj.paginator.page_range %}
+                        <li class="page-item {% if page_obj.number == i %}active{% endif %}">
+                            <a class="page-link" href="?page={{ i }}">{{ i }}</a>
+                        </li>
+                    {% endfor %}
+
+                    {% if page_obj.has_next %}
+                        <li class="page-item">
+                            <a class="page-link" href="?page={{ page_obj.paginator.num_pages }}" aria-label="Next">
+                                <span aria-hidden="true">&raquo;</span>
+                            </a>
+                        </li>
+                    {% endif %}
+                </ul>
+            </nav>
+
+        {% else %}
+            <h4>아직 게시물이 없습니다.</h4>
         {% endif %}
+        
+        <link href="{% static 'contest/css/contest.css' %}" rel="stylesheet" media="screen">
 
-        {% for i in page_obj.paginator.page_range %}
-          <li class="page-item {% if page_obj.number == i %}active{% endif %}">
-            <a class="page-link" href="?page={{ i }}">{{ i }}</a>
-          </li>
-        {% endfor %}
-
-        {% if page_obj.has_next %}
-          <li class="page-item">
-            <a class="page-link" href="?page={{ page_obj.paginator.num_pages }}" aria-label="Next">
-              <span aria-hidden="true">&raquo;</span>
-            </a>
-          </li>
-        {% endif %}
-      </ul>
-    </nav>
-
-  {% else %}
-    <h3>아직 게시물이 없습니다.</h3>
-  {% endif %}
-  <a href="{% url 'ott_create' %}">
-    <span class="material-symbols-outlined" id="plus">
-      edit_square
-    </span>
-  </a>
 </div>
 {% endblock %}

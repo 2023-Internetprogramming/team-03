@@ -8,8 +8,12 @@
     <ul class="list-group">
       {% for ride in rides %}
         <li class="list-group-item d-flex justify-content-between align-items-center">
-          <a href="{% url 'ride_detail' ride.id %}">{{ ride.departure_location }} -> {{ ride.destination }}</a>
-          <span class="badge badge-info">{{ ride.departure_time }}</span>
+          <a href="{% url 'ride_detail' ride.id %}" style="width: 100%; display: block;">{{ ride.departure_location }} -> {{ ride.destination }}</a>
+          <span>
+            <a href="{% url 'ride_detail' ride.id %}">
+              <span class="badge badge-info">{{ ride.departure_time }}</span>
+            </a>
+          </span>
         </li>
       {% endfor %}
     </ul>

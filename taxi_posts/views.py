@@ -56,3 +56,17 @@ def ride_delete(request):
         item.delete()
         
     return redirect('ride_list')
+
+def ride_update(request, id):
+    item = get_object_or_404(Ride, pk=id)
+
+    if request.method == 'POST':
+        form = RideForm(request.POST, instance=item)
+        if form.is_valid():
+            form.save()
+            return redirect('ride_detail', ride_id=item.id)
+
+    else:
+        form = RideForm(instance=item)
+
+    return render(request, 'taxi_posts/ride_update.html', {'form': form})

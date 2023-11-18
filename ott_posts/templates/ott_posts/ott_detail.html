@@ -8,6 +8,8 @@
       <p>모집 인원: {{ ott.people }}</p>
       <p>세부 사항: {{ ott.description_OTT }}</p>
 
+      <a href="{% url 'ott_update' id=ott.id %}" class="btn btn-secondary">수정</a>
+
       <!-- 삭제 버튼에 onclick 이벤트 추가 -->
       <button type="button" class="btn btn-danger" onclick="confirmDelete()">삭제</button>
 

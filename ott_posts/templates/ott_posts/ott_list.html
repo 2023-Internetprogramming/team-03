@@ -1,12 +1,12 @@
 {% extends 'taxi_posts/base.html' %}
 
 {% block navbar_area %}
-  <nav class="navbar navbar-expand-lg navbar-light bg-light" id = "nav">
+  <nav class="navbar navbar-expand-lg navbar-light bg-light" id="nav">
     <div class="container-fluid">
-            <form class="form-inline ml-auto" role="search">
-                <input class="form-control mr-sm-2" type="search" placeholder="검색" aria-label="검색">
-                <button class="btn btn-outline-success my-2 my-sm-0" type="submit">검색</button>
-            </form>
+      <form class="form-inline ml-auto" role="search">
+        <input class="form-control mr-sm-2" type="search" placeholder="검색" aria-label="검색">
+        <button class="btn btn-outline-success my-2 my-sm-0" type="submit">검색</button>
+      </form>
     </div>
   </nav>
 {% endblock %}
@@ -19,7 +19,9 @@
     <ul class="list-group">
       {% for ott in otts %}
         <li class="list-group-item d-flex justify-content-between align-items-center">
-          <a href="{% url 'ott_detail' ott.id %}">[{{ ott.type }}] {{ ott.people }}명 모집</a>
+          <a href="{% url 'ott_detail' ott.id %}" style="width: 100%; display: block;">
+            [{{ ott.type }}] {{ ott.people }}명 모집
+          </a>
         </li>
       {% endfor %}
     </ul>
@@ -35,13 +37,13 @@
             </a>
           </li>
         {% endif %}
-    
+
         {% for i in page_obj.paginator.page_range %}
           <li class="page-item {% if page_obj.number == i %}active{% endif %}">
             <a class="page-link" href="?page={{ i }}">{{ i }}</a>
           </li>
         {% endfor %}
-    
+
         {% if page_obj.has_next %}
           <li class="page-item">
             <a class="page-link" href="?page={{ page_obj.paginator.num_pages }}" aria-label="Next">

@@ -1,7 +1,8 @@
 {% extends 'taxi_posts/base.html' %}
 
 {% block main_area %}
-    <div class="container mt-4">
+    <br><br>
+    <div class="container mt-4" id="container">
       <h2>OTT 모집하기</h2><br>
       <form action="{% url 'ott_create' %}" method="post" class="form">
         {% csrf_token %}

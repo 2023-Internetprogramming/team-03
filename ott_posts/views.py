@@ -1,22 +1,28 @@
-from django.shortcuts import render, redirect
+from django.shortcuts import render
+from django.views import View
+from django.views.generic import ListView, DetailView, CreateView
 from .models import Ott
 from .forms import OttForm
-from django.http import HttpResponseRedirect
-from django.urls import reverse
 
-def ott_list(request):
-    otts = Ott.objects.all()
-    return render(request, 'ott_posts/ott_list.html', {'otts': otts})
+class OttListView(ListView):
+    model = Ott
+    template_name = 'ott_posts/ott_list.html'
+    context_object_name = 'otts'
+    paginate_by = 10
+    
+    def get_queryset(self):
+        return Ott.objects.all().order_by()
 
-def ott_detail(request, ott_id):
-    ott = Ott.objects.get(id=ott_id)
-    return render(request, 'ott_posts/ott_detail.html', {'ott': ott})
+class OttDetailView(DetailView):
+    model = Ott
+    template_name = 'ott_posts/ott_detail.html'
+    context_object_name = 'ott'
 
-def ott_create(request):
-    if request.method == 'POST':
-        form = OttForm(request.POST)
-        if form.is_valid():
-            new_item = form.save()
-            return HttpResponseRedirect('/ott/')
-    form = OttForm()
-    return render(request, 'ott_posts/ott_form.html', {'form': form})
+class OttCreateView(CreateView):
+    model = Ott
+    form_class = OttForm
+    template_name = 'ott_posts/ott_form.html'
+    success_url = '/ott/'
+
+    def form_valid(self, form):
+        return super().form_valid(form)

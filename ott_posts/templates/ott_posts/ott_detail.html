@@ -1,11 +1,12 @@
 {% extends 'taxi_posts/base.html' %}
 
 {% block main_area %}
-    <div class="container mt-4">
+    <br><br>
+    <div class="container mt-4" id="container">
       <h2>{{ ott.type }} {{ ott.people }}</h2>
       <p>요금제: {{ ott.bill }}</p>
       <p>모집 인원: {{ ott.people }}</p>
       <p>세부 사항: {{ ott.description_OTT }}</p>
-      <a href="{% url 'ride_list' %}" class="btn btn-secondary">Back to Ride List</a>
+      <a href="{% url 'ott_list' %}" class="btn btn-secondary">Back to Ride List</a>
     </div>
 {% endblock %}

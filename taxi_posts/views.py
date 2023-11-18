@@ -1,22 +1,26 @@
 from django.shortcuts import render, redirect
+from django.views import View
+from django.views.generic import ListView, DetailView, CreateView
 from .models import Ride
 from .forms import RideForm
-from django.http import HttpResponseRedirect
-from django.urls import reverse
+from django.urls import reverse_lazy
 
-def ride_list(request):
-    rides = Ride.objects.all()
-    return render(request, 'taxi_posts/ride_list.html', {'rides': rides})
+class RideListView(ListView):
+    model = Ride
+    template_name = 'taxi_posts/ride_list.html'
+    context_object_name = 'rides'
+    paginate_by = 10
+    
+    def get_queryset(self):
+        return Ride.objects.all().order_by('-departure_time')
 
-def ride_detail(request, ride_id):
-    ride = Ride.objects.get(id=ride_id)
-    return render(request, 'taxi_posts/ride_detail.html', {'ride': ride})
+class RideDetailView(DetailView):
+    model = Ride
+    template_name = 'taxi_posts/ride_detail.html'
+    context_object_name = 'ride'
 
-def ride_create(request):
-    if request.method == 'POST':
-        form = RideForm(request.POST)
-        if form.is_valid():
-            new_item = form.save()
-            return HttpResponseRedirect('/rides/')
-    form = RideForm()
-    return render(request, 'taxi_posts/ride_form.html', {'form': form})
+class RideCreateView(CreateView):
+    model = Ride
+    form_class = RideForm
+    template_name = 'taxi_posts/ride_form.html'
+    success_url = reverse_lazy('ride_list')

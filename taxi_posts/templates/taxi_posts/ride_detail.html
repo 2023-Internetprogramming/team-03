@@ -1,7 +1,8 @@
 {% extends 'taxi_posts/base.html' %}
 
 {% block main_area %}
-    <div class="container mt-4">
+    <br><br>
+    <div class="container mt-4" id="container">
       <h2>{{ ride.departure_location }} -> {{ ride.destination }}</h2>
       <p>시간: {{ ride.departure_time }}</p>
       <p>모집 인원: {{ ride.available_seats }}</p>

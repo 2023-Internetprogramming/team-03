@@ -1,7 +1,8 @@
 {% extends 'taxi_posts/base.html' %}
 
 {% block main_area %}
-<div class="container mt-4">
+<br><br>
+<div class="container mt-4" id="container">
   <h2 class="mb-4">Carpool List</h2>
   {% if rides %}
     <ul class="list-group">
@@ -12,9 +13,43 @@
         </li>
       {% endfor %}
     </ul>
+
+    <!--페이지네이션-->
+    <br><br>
+    <nav aria-label="Page navigation example" {% if rides|length <= 6 %}style="padding-bottom: 80%;"{% endif %}>
+      <ul class="pagination d-flex justify-content-center">
+        {% if page_obj.has_previous %}
+          <li class="page-item">
+            <a class="page-link" href="?page=1" aria-label="Previous">
+              <span aria-hidden="true">&laquo;</span>
+            </a>
+          </li>
+        {% endif %}
+    
+        {% for i in page_obj.paginator.page_range %}
+          <li class="page-item {% if page_obj.number == i %}active{% endif %}">
+            <a class="page-link" href="?page={{ i }}">{{ i }}</a>
+          </li>
+        {% endfor %}
+    
+        {% if page_obj.has_next %}
+          <li class="page-item">
+            <a class="page-link" href="?page={{ page_obj.paginator.num_pages }}" aria-label="Next">
+              <span aria-hidden="true">&raquo;</span>
+            </a>
+          </li>
+        {% endif %}
+      </ul>
+    </nav>
+
     {% else %}
       <h3>아직 게시물이 없습니다.</h3>
     {% endif %}
-  <a href="{% url 'ride_create' %}" class="btn btn-primary mt-4">작성</a>
+
+  <a href="{% url 'ride_create' %}">
+    <span class="material-symbols-outlined" id="plus">
+      edit_square
+    </span>
+  </a>
 </div>
 {% endblock %}

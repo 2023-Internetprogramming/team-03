@@ -6,7 +6,7 @@ from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 from django.shortcuts import get_object_or_404
 
 def ride_list(request):
-    rides = Ride.objects.all()
+    rides = Ride.objects.order_by('-pk')
     
     page = request.GET.get('page', 1)
     paginator = Paginator(rides, 10) 

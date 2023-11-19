@@ -1,3 +1,4 @@
+
 {% extends 'taxi_posts/base.html' %}
 {% load static %}
 
@@ -13,67 +14,107 @@
 {% endblock %}
 
 {% block main_area %}
-<br><br><br>
-<div class="container">
-    <h2 class="mb-4">Contests List</h2>
-    <div class="row" id="container" style="padding-bottom: 10px;">
-        {% if contests %}
-            {% for contest in contests %}
-                <div class="col-md-3 col-sm-6 col-12 d-inline-block mb-4" style="margin-bottom: 20px;">
-                    <a href="{% url 'contest_detail' contest.id %}">
-                        <div class="card" style="width: 237px; height: 400px;">
-                            {% if contest.contest_image %}
-                                <img src="{{ contest.contest_image }}" class="card-img-top img-fluid" alt="Contest Image" style="width: 237px; height: 220px;">
-                            {% else %}
-                                <img src="https://picsum.photos/seed/{{ p.id }}/800/200" class="card-img-top" alt="random_image" style="width: 235px; height: 220px;">
-                            {% endif %}
-                            <!-- 이미지 경로 또는 소스를 지정해주세요 -->
-                            <div class="card-body">
-                                <h5 class="card-title">{{ contest.contest_title }}</h5>
-                                <p class="card-text">{{ contest.contest_description }}</p>
-                            </div>
-                            <div class="card-footer">
-                                <small class="text-muted">신청 기간: {{ contest.deadline }} 까지</small>
-                            </div>
-                        </div>
-                    </a>
-                </div>
-            {% endfor %}
+  <!-- <section class="search fixed" style="top: -56px; transform: translateY(0px);">
+    <div class="wrap">
+      <form>
+        <input type="search" name="keyword" class="keyword" placeholder="찾으시는 공모전이 있나요?" autocomplete="off">
+        <input type="submit" class="submit">
+      </form>
     </div>
+  </section>
+  <section class="tab fixed" style="top: 0px; transform: translateY(0px);">
+    <div class="wrap">
+      <a href="/contest/" class="active"><span class="text">전체</span></a>
+      <a href="" data-category="101"><span class="text">기획/아이디어</span></a>
+      <a href="" data-category="102"><span class="text">브랜드/네이밍</span></a>
+      <a href="" data-category="103"><span class="text">광고/마케팅</span></a>
+      <a href="" data-category="104"><span class="text">사진/영상/UCC</span></a>
+      <a href="" data-category="105"><span class="text">디자인</span></a>
+      <a href="" data-category="106"><span class="text">예체능</span></a>
+      <a href="" data-category="107"><span class="text">문학/수기/시나리오</span></a>
+      <a href="" data-category="108"><span class="text">IT/소프트웨어/게임</span></a>
+      <a href="" data-category="109"><span class="text">기타</span></a></div>
+  </section> -->
 
-        <!-- 페이지네이션 -->
-            <br><br>
-            <nav aria-label="Page navigation example">
-                <ul class="pagination justify-content-center">
-                    {% if page_obj.has_previous %}
-                        <li class="page-item">
-                            <a class="page-link" href="?page=1" aria-label="Previous">
-                                <span aria-hidden="true">&laquo;</span>
-                            </a>
-                        </li>
-                    {% endif %}
 
-                    {% for i in page_obj.paginator.page_range %}
-                        <li class="page-item {% if page_obj.number == i %}active{% endif %}">
-                            <a class="page-link" href="?page={{ i }}">{{ i }}</a>
-                        </li>
-                    {% endfor %}
-
-                    {% if page_obj.has_next %}
-                        <li class="page-item">
-                            <a class="page-link" href="?page={{ page_obj.paginator.num_pages }}" aria-label="Next">
-                                <span aria-hidden="true">&raquo;</span>
-                            </a>
-                        </li>
-                    {% endif %}
-                </ul>
-            </nav>
-
-        {% else %}
-            <h4>아직 게시물이 없습니다.</h4>
-        {% endif %}
-        
-        <link href="{% static 'contest/css/contest.css' %}" rel="stylesheet" media="screen">
-
+<div id="container1" style="padding-top: 112px;">    
+    {% if contests %}
+    {% for contest in contests %}
+    <div class="list">
+        <div class="item">
+            <a class="top" href="{% url 'contest_detail' contest.id %}">
+                {% if contest.contest_image %}
+                    <img src="{{ contest.contest_image.url }}" alt="Contest Image">
+                {% else %}
+                    <img src="https://picsum.photos/seed/{{ contest.id }}/800/200" class="card-img-top" alt="random_image">
+                {% endif %}
+                <p class="badges">
+                    <span>사진/영상/UCC</span>
+                    <span>디자인</span>
+                </p>
+                <h2>{{ contest.contest_title }}</h2>
+                <p class="info">
+                    <span class="dday highlight">D-{{ contest.deadline }}</span>
+                    <span class="viewcount">
+                        <span class="material-symbols-outlined" style="font-size: 11px;">
+                        visibility
+                        </span>
+                        405
+                    </span>
+                </p>
+                <hr>
+            </a>
+            <div class="bottom">
+                <a href="{% url 'contest_detail' contest.id %}">
+                    <span class="text">소개</span>
+                </a>
+                <a href="/prj/">
+                    <span class="text">팀원 모집</span>
+                    <span class="count">0</span>
+                </a>
+                <a href="{% url 'contest_detail' contest.id %}">
+                    <span class="text">댓글</span>
+                    <span class="count">0</span>
+                </a>
+            </div>
+        </div>
+    </div>
+    {% endfor %}
 </div>
+
+<!-- 페이지네이션 -->
+<br><br>
+<nav aria-label="Page navigation example">
+    <ul class="pagination justify-content-center">
+        {% if page_obj.has_previous %}
+            <li class="page-item">
+                <a class="page-link" href="?page=1" aria-label="Previous">
+                    <span aria-hidden="true">&laquo;</span>
+                </a>
+            </li>
+        {% endif %}
+
+        {% for i in page_obj.paginator.page_range %}
+            <li class="page-item {% if page_obj.number == i %}active{% endif %}">
+                <a class="page-link" href="?page={{ i }}">{{ i }}</a>
+            </li>
+        {% endfor %}
+
+        {% if page_obj.has_next %}
+            <li class="page-item">
+                <a class="page-link" href="?page={{ page_obj.paginator.num_pages }}" aria-label="Next">
+                    <span aria-hidden="true">&raquo;</span>
+                </a>
+            </li>
+        {% endif %}
+    </ul>
+</nav>
+
+{% else %}
+<h4>아직 게시물이 없습니다.</h4>
+{% endif %}
+
+<link rel="stylesheet" type="text/css" href="{% static 'contest/css/list.css' %}">
+
+
 {% endblock %}

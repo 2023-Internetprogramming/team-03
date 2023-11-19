@@ -7,7 +7,7 @@ from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 from django.shortcuts import get_object_or_404
 
 def ott_list(request):
-    otts = Ott.objects.all()
+    otts = Ott.objects.order_by('-pk')
 
     page_number = request.GET.get('page', 1)
     paginator = Paginator(otts, 10)

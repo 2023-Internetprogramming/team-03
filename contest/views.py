@@ -3,7 +3,7 @@ from .models import Contest
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 
 def contest_list(request):
-    contests = Contest.objects.all()
+    contests = Contest.objects.order_by('-pk')
     
     page = request.GET.get('page', 1)
     paginator = Paginator(contests, 8) 

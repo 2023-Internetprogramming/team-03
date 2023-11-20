@@ -22,5 +22,6 @@ urlpatterns = [
     path('', include('taxi_posts.urls')),
     path('', include('ott_posts.urls')),
     path('', include('contest.urls')),
-    path('', include('users.urls')),
+    path('prj/', include('prj_posts.urls')),
+    path('study/', include('study_posts.urls')),
 ]

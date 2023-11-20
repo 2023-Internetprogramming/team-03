@@ -1,21 +1,50 @@
-{% extends 'prj_posts/base.html' %}
+{% extends 'taxi_posts/base.html' %}
 
 {% block main_area %}
-<form method="POST">
-    <a href="{% url 'update_prj' prj.pk %}">수정</a>
-    <a href="{% url 'delete_prj' prj.pk %}">삭제</a>
-</form>
-<div>
-<h2>제목 : {{prj.post_title}}</h2>
-<h4>{{prj.created}}</h4> 
-<h4>모집 인원수 : {{prj.prj_membernum}}</h4>
-<h4>{{prj.prj_content}}</h4>
+<br><br>
+<div class="container mt-4" id="container">
+    <h2>제목 : {{prj.post_title}}</h2>
+    <p>{{prj.created}}</p>
+    <p>모집 인원수 : {{prj.prj_membernum}}</p>
+    <p>세부 사항 : {{prj.prj_content}}</p>
 
-<h4>{{prj.user_name}}</h4>
-<h4>학년 : {{prj.user_grade}}</h4>
-<h4>학과 : {{prj.post_content}}</h4>
+    <p>{{prj.user_name}}</p>
+    <p>학년 : {{prj.user_grade}}</p>
+    <p>학과 : {{prj.post_content}}</p>
+
+    <a href="{% url 'prj_update' id=prj.id %}" class="btn btn-secondary">수정</a>
+
+    <!-- 삭제 버튼에 onclick 이벤트 추가 -->
+    <button type="button" class="btn btn-danger" onclick="confirmDelete()">삭제</button>
+
+    <!-- 삭제 확인 모달 -->
+    <div class="modal fade" id="confirmDeleteModal" tabindex="-1" role="dialog"
+        aria-labelledby="confirmDeleteModalLabel" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="confirmDeleteModalLabel">삭제 확인</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <p>게시물을 삭제하시겠습니까?</p>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">취소</button>
+                    <a href="{% url 'prj_delete' %}?id={{ prj.id }}" class="btn btn-danger">삭제</a>
+                </div>
+            </div>
+        </div>
+    </div>
+    <a href="{% url 'prj_list' %}" class="btn btn-secondary">목록으로 돌아가기</a>
 </div>
 
-<button type="submit"> 참여신청 </button>   
+<script>
+    function confirmDelete() {
+        $('#confirmDeleteModal').modal('show');
+    }
+</script>
 
 {% endblock %}

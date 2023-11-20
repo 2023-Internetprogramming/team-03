@@ -1,16 +1,16 @@
-{% extends 'study_posts/base.html' %}
-
-{% block head_title %}
-Create Post
-{% endblock %}
+{% extends 'taxi_posts/base.html' %}
 
 {% block main_area %}
-<form method='post'>
-    {% csrf_token %}
-    <table>
-        {{ form.as_p }}
-    </table>
-    <button type="submit"> 글쓰기 </button>
-
-</form>
+    <br><br>
+    <div class="container mt-4" id="container">
+      <h2>프로젝트 / 대외활동 모집하기</h2><br>
+      <form action="{% url 'study_create' %}" method="post" class="form">
+        {% csrf_token %}
+        <table>
+          {{ form.as_table }}
+        </table>
+        <button type="submit" class="btn btn-primary">글쓰기</button>
+      </form>
+      <a href="{% url 'study_list' %}" class="btn btn-secondary mt-3">Back to Ride List</a>
+    </div>
 {% endblock %}

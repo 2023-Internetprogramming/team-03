@@ -1,22 +1,32 @@
 from django.shortcuts import render, get_object_or_404, redirect
 from .models import Study
 from .forms import StudyForm
-from datetime import datetime
+from django.http import HttpResponseRedirect
+from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 
-
-def studyList(request):
+def study_list(request):
     studys = Study.objects.all().order_by('-pk')
+
+    page = request.GET.get('page', 1)
+    paginator = Paginator(studys, 10)
+    try:
+        studys = paginator.page(page)
+    except PageNotAnInteger:
+        studys = paginator.page(1)
+    except EmptyPage:
+        studys = paginator.page(paginator.num_pages)
 
     return render(
         request,
         'study_posts/study_list.html',
         {
             'studys' : studys,
+            'page_obj': studys,
         }
     )
 
-def studyDetail(request, pk):
-    study = Study.objects.get(pk=pk)
+def study_detail(request, study_id):
+    study = Study.objects.get(pk=study_id)
 
     return render(
         request,
@@ -26,35 +36,34 @@ def studyDetail(request, pk):
         }
     )
 
-def studyCreate(request):
+def study_create(request):
     if request.method == 'POST': 
         form = StudyForm(request.POST)   
         if form.is_valid():
-            form.save()
+            new_item = form.save()
             return redirect('/study/')
 
-    else:
-        form = StudyForm()
-        return render(request, 'study_posts/study_form.html', {'form': form})
+    form = StudyForm()
+    return render(request, 'study_posts/study_form.html', {'form': form})
+
+def study_delete(request):
+    study_id = request.GET.get('id')
     
-
-def studyUpdate(request, pk):
-    study = Study.objects.get(pk=pk)
-    if request.method == "POST":
-        form = StudyForm(request.POST, instance=study)
-        if form.is_valid():
-            prj = form.save(commit = False)
-            prj.save()
-            return redirect('/study/'+str(pk))
-    else:
-        form = StudyForm(instance=study)
-        return render(request, "study_posts/study_edit.html", {'form': form})
-
-
-def studyDelete(request, pk):
-    study = Study.objects.get(pk=pk)
-    # if study.writer == request.user or request.user.level == '0': # 작성자 확인
-    study.delete()
+    if study_id:
+        item = get_object_or_404(Study, pk=study_id)
+        item.delete()
+    
     return redirect('/study/')
-    # else:
-    #     return redirect('/notice/'+str(pk)) 
+
+def study_update(request, id):
+    item = get_object_or_404(Study, pk=id)
+
+    if request.method == "POST":
+        form = StudyForm(request.POST, instance=item)
+        if form.is_valid():
+            form.save()
+            return redirect('study_detail', study_id=item.id)
+    else:
+        form = StudyForm(instance=item)
+    
+    return render(request, "study_posts/study_edit.html", {'form': form})

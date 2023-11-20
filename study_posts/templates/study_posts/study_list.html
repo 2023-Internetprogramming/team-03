@@ -1,40 +1,59 @@
-{% extends 'study_posts/base.html' %}
+{% extends 'taxi_posts/base.html' %}
 
 {% block main_area %}
+<br><br>
+<div class="container mt-4" id="container">
+    <h2 class="mb-4">Study List</h2>
+    {% if studys %}
+        <ul class="list-group">
+            {% for study in studys %}
+            <li class="list-group-item d-flex justify-content-between align-items-center">
+                <a href="{% url 'study_detail' study.id %}" style="width: 100%; display: block;">{{ study.post_title }}</a>
+                <span>
+                    <a href="{% url 'study_detail' study.id %}">
+                        <span class="badge badge-info">{{ study.study_membernum }}</span>
+                    </a>
+                </span>
+            </li>
+            {% endfor %}
+        </ul>
 
-{% if studys %}
-{% for p in studys %}
-<div class="card m-4 ">
-    <div>
-        <h3><a href="{{ p.get_absolute_url}}">제목 : {{p.post_title}}</a></h3>
-        <h5>모집자 : {{p.user_name}}</h5>
-        <h5>스터디 과목 : {{p.study_type}}</h5>
-        <h5>모집 인원 : {{p.study_membernum}}</h5>
-        <h6>{{p.created_at}}</h6>
-    </div>
+    <!--페이지네이션-->
+    <br><br>
+    <nav aria-label="Page navigation example">
+        <ul class="pagination d-flex justify-content-center">
+            {% if page_obj.has_previous %}
+            <li class="page-item">
+                <a class="page-link" href="?page=1" aria-label="Previous">
+                    <span aria-hidden="true">&laquo;</span>
+                </a>
+            </li>
+            {% endif %}
+
+            {% for i in page_obj.paginator.page_range %}
+            <li class="page-item {% if page_obj.number == i %}active{% endif %}">
+                <a class="page-link" href="?page={{ i }}">{{ i }}</a>
+            </li>
+            {% endfor %}
+
+            {% if page_obj.has_next %}
+            <li class="page-item">
+                <a class="page-link" href="?page={{ page_obj.paginator.num_pages }}" aria-label="Next">
+                    <span aria-hidden="true">&raquo;</span>
+                </a>
+            </li>
+            {% endif %}
+        </ul>
+    </nav>
+
+    {% else %}
+    <h3>아직 게시물이 없습니다.</h3>
+    {% endif %}
+
+    <a href="{% url 'study_create' %}">
+        <span class="material-symbols-outlined" id="plus">
+            edit_square
+        </span>
+    </a>
 </div>
-{% endfor %}
-{% else %}
-<h3>게시글이 없습니다</h3>
-{% endif %}
-<a href="create_study"><span>글 작성하기</span></a>
-
-<!-- Pagination -->
-<ul class="pagination justify-content-center mb-4">
-    <li class="page-item">
-        <a class="page-link" href="#" aria-label="Previous">
-            <span aria-hidden="true">&laquo;</span>
-            <span class="sr-only">Previous</span>
-        </a>
-    </li>
-    <li class="page-item"><a class="page-link" href="#">1</a></li>
-    <li class="page-item"><a class="page-link" href="#">2</a></li>
-    <li class="page-item"><a class="page-link" href="#">3</a></li>
-    <li class="page-item">
-        <a class="page-link" href="#" aria-label="Next">
-            <span aria-hidden="true">&raquo;</span>
-            <span class="sr-only">Next</span>
-        </a>
-    </li>
-</ul>
 {% endblock %}

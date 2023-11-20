@@ -2,7 +2,109 @@
 {% load static %}
 
 {% block main_area %}
-    <br><br>
+<br><br>
+<section class="title" style="top: -170px; transform: none;">
+    <div class="wrap">
+        <p class="badges">
+            <span>{{ contest.contest_category }}</span>
+        </p>
+        {% if contest.contest_image %}
+            <img src="{{ contest.contest_image.url }}" alt="Contest Image">
+        {% else %}
+            <img src="https://picsum.photos/seed/{{ contest.id }}/800/200" class="card-img-top" alt="random_image">
+        {% endif %}
+      <div class="content">
+        <h1>{{ contest.contest_title }}</h1>
+        <p class="info">
+            <span class="viewcount">
+                <span class="material-symbols-outlined" style="font-size: 11px;">
+                visibility
+                </span>
+                {{ contest.contest_view_count }}
+            </span>
+        </p>
+      </div>
+    </div>
+</section>
+
+  <section class="tab">
+    <div class="wrap">
+      <a href="{% url 'contest_detail' contest.id %}" class="active">
+        <span class="text">소개</span>
+      </a>
+      <a href="/prj/" data-menu="team" class="">
+        <span class="text">팀원 모집</span>
+        <span class="teamcount count">0</span>
+      </a>
+      <a href="{% url 'contest_detail' contest.id %}" data-menu="comment">
+        <span class="text">댓글</span>
+        <span class="commentcount count highlight">3</span>
+      </a>
+    </div>
+  </section>
+
+
+  <div id="container2" style="padding-top: 0px;">
+    <div class="section">
+      <h2>접수 기간</h2>
+      <p class="dday highlight">D-13</p>
+      <p class="indent">{{ contest.deadline }} 까지</p>
+    </div>
+    <div class="section">
+        <h2>기관</h2>
+        <h3>주최</h3>
+        <p class="indent">위피</p>
+    </div>
+    <div class="poster">
+        {% if contest.contest_image %}
+            <img id="i" src="{{ contest.contest_image.url }}" alt="Contest Image">
+        {% else %}
+            <img id="i" src="https://picsum.photos/seed/{{ contest.id }}/800/200" class="card-img-top" alt="random_image">
+        {% endif %}
+    </div><div class="section">
+      <article class="description">[응모 주제]
+        <br>ooooooooooooooooooooooooooooooooooooo
+        <br>
+        <br>[응모 자격]
+        <br>- 대학교 재학생 및 휴학생 누구나 (졸업예정자 포함) *개인 단위로 참여 가능<br>
+        <br>[진행 일정]<br>- 접수 기간 : 11월 10일(금)~12월 3일(일)
+        <br>- 심사 기간 : 12월 4일(월)~12월 5일(화)
+        <br>- 결과 발표 : 12월 7일(목) 18:00<br>- 시상식 : 12월 9일(토)
+        <br><br>[시상 내역]
+        <br>- 대상(1명): 150만원 상당 | 제주도 왕복 항공권 2매(약 50만원) + 여행지원금 100만원
+        <br>- 최우수상(3명): 50만원 상당 | 신라호텔 숙박권(약 50만원)
+        <br>- 우수상(30명): 3만원 상당 | 영화 쿠폰(2인+팝콘세트)
+        <br>- 참가상(참가 전원): 위피 젤리(2.5만원 상당)
+        <br><br>[응모 방법]
+        <br>지원 링크(<a href="https://www.campuspick.com/linkclick?referrer_type=activity&amp;referrer_id=24067&amp;url=https%3A%2F%2Ftally.so%2Fr%2Fw7Nl9z" target="_blank" rel="nofollow">https://tally.so/r/w7Nl9z</a>)로 응모<br>
+        <br>[유의사항]
+        <br>- 주관사 내부 사정에 따라 진행 일정, 경품이 변경될 수 있습니다.
+        <br>- 작성된 문구가 순수 창작물이 아닐 경우(표절 등) 수상이 취소될 수 있으며, 이와 관련된 법적 책임은 응모자에게 있습니다.
+        <br>- 상금 및 상품에 대한 제세공과금이 발생할 경우 수상자 부담입니다.
+        <br>- 수상작은 반환하지 않으며, 주최 기업 홍보 목적으로 온/오프라인상에 공개될 수 있습니다.
+        <br><br>[문의]
+        <br>이메일 : info@tendom.co.kr
+        <br><br>[위피 SNS]
+        <br>- 공식 홈페이지 : <a href="https://www.campuspick.com/linkclick?referrer_type=activity&amp;referrer_id=24067&amp;url=https%3A%2F%2Fwww.wippy.io%2F" target="_blank" rel="nofollow">https://www.wippy.io/</a>
+        <br>- 인스타그램 : <a href="https://www.campuspick.com/linkclick?referrer_type=activity&amp;referrer_id=24067&amp;url=https%3A%2F%2Fwww.instagram.com%2Fwippy_official%2F" target="_blank" rel="nofollow">https://www.instagram.com/wippy_official/</a>
+        <br>- 유튜브 : <a href="https://www.campuspick.com/linkclick?referrer_type=activity&amp;referrer_id=24067&amp;url=https%3A%2F%2Fwww.youtube.com%2F%40wippy_official%2Fvideos" target="_blank" rel="nofollow">https://www.youtube.com/@wippy_official/videos</a>
+        <br>- 틱톡 : <a href="https://www.campuspick.com/linkclick?referrer_type=activity&amp;referrer_id=24067&amp;url=https%3A%2F%2Fwww.tiktok.com%2F%40wippy_official" target="_blank" rel="nofollow">https://www.tiktok.com/@wippy_official</a>
+      </article>
+    </div>
+    <div class="bottombar threecols">
+      <a class="website" href="https://www.campuspick.com/linkclick?referrer_type=activity&amp;referrer_id=24067&amp;url=https%3A%2F%2Ftally.so%2Fr%2Fw7Nl9z" target="_blank" rel="nofollow">
+          <span>웹사이트 바로가기</span>
+        </a>
+        <a class="scrap">
+          <span>스크랩</span>
+        </a>
+        <a class="share">
+          <span>공유</span>
+        </a>
+      </div>
+    </div>
+
+    <!-- <br><br>
     <div class="container mt-4" id="container">
       <h2>{{ contest.contest_title }}</h2>
       <p>신청 기간: {{ contest.deadline }} 까지</p>
@@ -20,7 +122,7 @@
           <p class="badges"><span>기획/아이디어</span></p>
           <figure style="background-image: url(&#39;https://cf-cpi.campuspick.com/activity/1699790947804419_thumb.jpg&#39;);"></figure>
           <div class="content">
-            <h1>{{ contest.contest_title }}</h1>
+            <h1>{{ contest.contest_title }}</h1>tab
             <p class="info">
                 <span class="viewcount">
                     <span class="material-symbols-outlined" style="font-size: 11px;">
@@ -38,16 +140,9 @@
           <a href="/prj/" data-menu="team"><span class="text">팀원 모집</span><span class="teamcount count">0</span></a>
           <a href="https://www.campuspick.com/contest/view?id=24067&amp;menu=comment" data-menu="comment" class="active"><span class="text">댓글</span><span class="commentcount count highlight">3</span></a>
         </div>
-      </section>
-
-
-      <!-- Add new comment form -->
-      <form method="post" action="{% url 'contest_detail' contest.id %}">
-          {% csrf_token %}
-          {{ form.as_p }}
-          <button type="submit" class="btn btn-primary">댓글 달기</button>
-      </form>
+      </section> -->
         
     </div>
-    <link rel="stylesheet" type="text/css" href="{% static 'contest/css/list.css' %}">
+
+    <link rel="stylesheet" type="text/css" href="{% static 'contest/css/detail.css' %}">
 {% endblock %}

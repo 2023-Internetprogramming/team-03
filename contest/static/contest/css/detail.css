@@ -1,0 +1,178 @@
+section.title {
+    padding: 25px 20px 0 20px;
+}
+section.title, section.tab {
+    position: static;
+    width: 100%;
+    box-sizing: border-box;
+    font-size: 0;
+    background-color: #fff;
+}
+
+section.title > div.wrap > p.badges {
+    margin-bottom: 16px;
+}
+
+section.title > div.wrap > div.content > h1 {
+    line-height: 27px;
+    color: #292929;
+    font-size: 18px;
+    font-weight: bold;
+    word-wrap: break-word;
+}
+
+section.tab > div.wrap > a.active {
+    border-bottom-color: #8B2845;
+}
+section.tab > div.wrap > a {
+    display: inline-block;
+    width: 33.3%;
+    height: 56px;
+    line-height: 56px;
+    box-sizing: border-box;
+    border-bottom: 3px solid transparent;
+    text-align: center;
+}
+a {
+    color: inherit;
+    text-decoration: none;
+}
+* {
+    margin: 0;
+    padding: 0;
+    border: 0;
+    -webkit-touch-callout: none;
+}
+
+section.title, section.tab {
+    position: static;
+    width: 100%;
+    box-sizing: border-box;
+    font-size: 0;
+    background-color: #fff;
+}
+
+section.title > div.wrap {
+    margin: 0 auto;
+    max-width: 720px;
+}
+
+body {
+    font-family: "맑은 고딕", sans-serif;
+    letter-spacing: -0.5px;
+    background-color: #f2f2f2;
+    user-select: none;
+    -webkit-user-select: none;
+    -webkit-tap-highlight-color: rgba(0, 0, 0, 0.05);
+    margin: 0;
+    padding: 0;
+    height: 125vh;
+    display: block;
+}
+
+section.title > div.wrap > div.content {
+    padding-left: 96px;
+    min-height: 114px;
+}
+
+section.title > div.wrap > img {
+    position: absolute;
+    display: block;
+    width: 80px;
+    height: 114px;
+}
+
+#container2 > div.section {
+    padding: 16px;
+    background-color: #fff;
+}
+
+@media only screen and (min-width: 720px){
+    #container2 {
+        position: relative;
+        margin: 16px auto;
+    }
+}
+
+#container2 {
+    margin: 8px auto 64px auto;
+    max-width: 720px;
+    font-size: 0;
+}
+
+#container2 > div.section > h2 {
+    margin-bottom: 8px;
+    line-height: 24px;
+    color: #292929;
+    font-size: 16px;
+    font-weight: bold;
+}
+
+#container2 > div.section > p.indent {
+    padding-left: 80px;
+    line-height: 20px;
+    color: #4c4c4c;
+    font-size: 14px;
+    word-wrap: break-word;
+}
+
+#container2 > div.section > p.indent {
+    padding-left: 80px;
+    line-height: 20px;
+    color: #4c4c4c;
+    font-size: 14px;
+    word-wrap: break-word;
+}
+
+#container2 > div.section > h3 {
+    position: absolute;
+    line-height: 20px;
+    color: #a6a6a6;
+    font-size: 14px;
+    font-weight: normal;
+}
+
+#i {
+    margin: 0 auto;
+    max-width: 720px;
+    height: auto;
+    padding-left: 20%;
+}
+
+@media only screen and (min-width: 720px){
+    #container2 > div.poster {
+        margin: 16px 0;
+    }
+}
+
+section.tab > div.wrap > a.active > span.text {
+    color: #8B2845;
+    font-weight: bold;
+}
+section.tab > div.wrap > a > span.text {
+    color: #292929;
+    font-size: 14px;
+}
+
+#container2 > div.section {
+    padding: 16px;
+    background-color: #fff;
+}
+
+#container2 > div.section > article.description {
+    line-height: 20px;
+    color: #4c4c4c;
+    font-size: 14px;
+    word-wrap: break-word;
+}
+
+section.title > div.wrap > p.badges > span {
+    display: inline-block;
+    margin: 0 4px 4px 0;
+    padding: 0 8px;
+    line-height: 20px;
+    border-radius: 10px;
+    color: #737373;
+    font-size: 12px;
+    background-color: #f2f2f2;
+}

@@ -8,5 +8,18 @@
       <p>세부 사항: {{ contest.contest_description }}</p>
       
       <a href="{% url 'contest_list' %}" class="btn btn-secondary">목록으로 돌아가기</a>
+
+      <h3>댓글</h3>
+        {% for comment in contest.comments.all %}
+            <p>{{ comment.name }} - {{ comment.content }}</p>
+        {% endfor %}
+
+        <!-- Add new comment form -->
+        <form method="post" action="{% url 'contest_detail' contest.id %}">
+            {% csrf_token %}
+            {{ form.as_p }}
+            <button type="submit" class="btn btn-primary">댓글 달기</button>
+        </form>
+        
     </div>
 {% endblock %}

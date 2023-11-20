@@ -21,11 +21,18 @@
         <input type="submit" class="submit">
       </form>
     </div>
-  </section>
+  </section>-->
   <section class="tab fixed" style="top: 0px; transform: translateY(0px);">
     <div class="wrap">
-      <a href="/contest/" class="active"><span class="text">전체</span></a>
-      <a href="" data-category="101"><span class="text">기획/아이디어</span></a>
+        <a href="/contest/" class="active"><span class="text">전체</span></a>
+        <a href="?category=101">기획/아이디어</a>
+        <a href="?category=102">IT/소프트웨어/게임</a>
+        <a href="?category=103">광고/마케팅</a>
+        <a href="?category=104">디자인</a>
+        <a href="?category=105">사진/영상/UCC</a>
+        <a href="?category=106">예체능</a>
+
+      {% comment %} <a href="" data-category="101"><span class="text">기획/아이디어</span></a>
       <a href="" data-category="102"><span class="text">브랜드/네이밍</span></a>
       <a href="" data-category="103"><span class="text">광고/마케팅</span></a>
       <a href="" data-category="104"><span class="text">사진/영상/UCC</span></a>
@@ -33,10 +40,8 @@
       <a href="" data-category="106"><span class="text">예체능</span></a>
       <a href="" data-category="107"><span class="text">문학/수기/시나리오</span></a>
       <a href="" data-category="108"><span class="text">IT/소프트웨어/게임</span></a>
-      <a href="" data-category="109"><span class="text">기타</span></a></div>
-  </section> -->
-
-
+      <a href="" data-category="109"><span class="text">기타</span></a></div> {% endcomment %}
+  </section>
 <div id="container1" style="padding-top: 112px; flex-grow: 1;" >    
     {% if contests %}
     {% for contest in contests %}
@@ -49,8 +54,7 @@
                     <img src="https://picsum.photos/seed/{{ contest.id }}/800/200" class="card-img-top" alt="random_image">
                 {% endif %}
                 <p class="badges">
-                    <span>사진/영상/UCC</span>
-                    <span>디자인</span>
+                    <span>{{ contest.contest_category }}</span>
                 </p>
                 <h2>{{ contest.contest_title }}</h2>
                 <p class="info">

@@ -37,7 +37,7 @@
   </section> -->
 
 
-<div id="container1" style="padding-top: 112px;">    
+<div id="container1" style="padding-top: 112px; flex-grow: 1;" >    
     {% if contests %}
     {% for contest in contests %}
     <div class="list">
@@ -59,7 +59,7 @@
                         <span class="material-symbols-outlined" style="font-size: 11px;">
                         visibility
                         </span>
-                        405
+                        {{ contest.contest_view_count }}
                     </span>
                 </p>
                 <hr>

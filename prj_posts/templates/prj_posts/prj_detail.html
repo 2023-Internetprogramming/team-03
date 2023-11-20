@@ -1,0 +1,21 @@
+{% extends 'prj_posts/base.html' %}
+
+{% block main_area %}
+<form method="POST">
+    <a href="{% url 'update_prj' prj.pk %}">수정</a>
+    <a href="{% url 'delete_prj' prj.pk %}">삭제</a>
+</form>
+<div>
+<h2>제목 : {{prj.post_title}}</h2>
+<h4>{{prj.created}}</h4> 
+<h4>모집 인원수 : {{prj.prj_membernum}}</h4>
+<h4>{{prj.prj_content}}</h4>
+
+<h4>{{prj.user_name}}</h4>
+<h4>학년 : {{prj.user_grade}}</h4>
+<h4>학과 : {{prj.post_content}}</h4>
+</div>
+
+<button type="submit"> 참여신청 </button>   
+
+{% endblock %}

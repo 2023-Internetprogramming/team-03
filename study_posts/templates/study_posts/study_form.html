@@ -1,0 +1,16 @@
+{% extends 'study_posts/base.html' %}
+
+{% block head_title %}
+Create Post
+{% endblock %}
+
+{% block main_area %}
+<form method='post'>
+    {% csrf_token %}
+    <table>
+        {{ form.as_p }}
+    </table>
+    <button type="submit"> 글쓰기 </button>
+
+</form>
+{% endblock %}

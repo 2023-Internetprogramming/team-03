@@ -1,0 +1,22 @@
+{% extends 'study_posts/base.html' %}
+
+{% block main_area %}
+<form method="POST">
+    <a href="{% url 'update_study' study.pk %}">수정</a>
+    <a href="{% url 'delete_study' study.pk %}">삭제</a>
+</form>
+<div>
+<h2>제목 : {{study.post_title}}</h2>
+<h4>{{study.created}}</h4> 
+<h4>모집 인원수 : {{study.study_membernum}}</h4>
+<h4>스터디 과목 : {{study.study_type}}</h4>
+<h4>{{study.post_content}}</h4>
+
+<h4>{{study.user_name}}</h4>
+<h4>학년 : {{study.user_grade}}</h4>
+<h4>학과 : {{study.user_major}}</h4>
+</div>
+
+<button type="submit"> 참여신청 </button>   
+
+{% endblock %}

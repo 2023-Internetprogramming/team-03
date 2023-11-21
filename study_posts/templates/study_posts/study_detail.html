@@ -3,15 +3,14 @@
 {% block main_area %}
 
 <div class="container mt-4" id="container">
-    <h2>제목 : {{study.post_title}}</h2>
-    <p>{{study.created}}</p>
-    <p>모집 인원수 : {{study.study_membernum}}</p>
-    <p>스터디 과목 : {{study.study_type}}</p>
-    <p>세부 사항 : {{study.post_content}}</p>
-
+    <h2>{{ study.study_type }} 스터디 팀원 {{study.study_membernum}}명 모집합니다</h2>
+    <p>{{study.created_at}}</p>
+    <br>
+    
     <p>{{study.user_name}}</p>
-    <p>학년 : {{study.user_grade}}</p>
-    <p>학과 : {{study.user_major}}</p>
+    <p>{{study.user_grade}}학년 / 학과 : {{study.user_major}}</p>
+
+    <p>세부 사항 : {{study.post_content}}</p>
 
     <a href="{% url 'study_update' id=study.id %}" class="btn btn-secondary">수정</a>
     

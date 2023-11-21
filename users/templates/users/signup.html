@@ -1,59 +1,136 @@
 {% extends 'taxi_posts/base.html' %}
+{% load static %}
+
+{% block main_area %}
   <head>
     <meta charset="UTF-8">
-    <title>SignUp</title>
-    <link rel="stylesheet" href="signup.css">
+    <title>Sign Up</title>
+    <link rel="stylesheet" href="{% static 'users/css/signup.css' %}">
     <script src="http://code.jquery.com/jquery-3.3.1.min.js"></script>
   </head>
-  {% block main_area %}
-    <div class="login-box">
-      <section class="login-form">
-        <h1>Sign Up</h1>
-        <form action="">
-          <div class="int-area">
-            <input type="text" name="id" id="id"
-            autocomplete="off" required>
-            <label for="id">Duksung Mail</label>
-          </div>
-          <div class="int-area">
-            <input type="text" name="verification_code" id="code"
-            autocomplete="off" required>
-            <label for="verification_code">Verification Code</label>
-         </div>
-          <div class="int-area">
-            <input type="password" name="pw" id="pw"
-            autocomplete="off" required>
-            <label for="pw">Password</label>
-          </div>
-          <div class="btn-area">
-            <button id="btn"
-            type="submit">Create</button>
-          </div>
-        </form>
-        <div class="caption">
-          <a href="login.html">Log In?</a>
+  <div class="signup-box" style="margin-top: 250px; margin-bottom: 90px;">
+    <section class="signup-form">
+      <h1>Sign Up</h1>
+      <form method="post" action="{% url 'signup' %}">
+        {% csrf_token %}
+        <div class="int-area">
+          <input type="text" name="username" id="id" autocomplete="off" required>
+          <label for="id">Username</label>
         </div>
-      </section>
-    </div>
+        <div class="int-area">
+          <input type="text" name="phone_number" id="phone" autocomplete="off" required>
+          <label for="phone">Phone Number</label>
+        </div>
+        <div class="int-area">
+          <input type="password" name="password1" id="pw1" autocomplete="off" required>
+          <label for="pw1">Password</label>
+        </div>
+        <div class="int-area">
+          <input type="password" name="password2" id="pw2" autocomplete="off" required>
+          <label for="pw2">Confirm Password</label>
+        </div>
+        <div class="btn-area">
+          <button type="submit">SIGN UP</button>
+        </div>
+      </form>
+      <div class="caption">
+        <a href="{% url 'signup' %}">Don't have an account? Sign Up</a>
+      </div>
+    </section>
+  </div>
+  <div id="error-message" class="error-message">
+    {% for message in messages %}
+        <div class="alert alert-danger" role="alert">{{ message }}</div>
+    {% endfor %}
+  </div>
 
-    <script>
-      let id = $('#id');
-      let pw = $('#pw');
+  <div class="modal" id="success-modal" {% if success_modal %}style="display: block;"{% endif %} tabindex="-1" role="dialog">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">회원가입 성공</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <p>회원가입에 성공했습니다.</p>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-primary" data-dismiss="modal" onclick="window.location.href='{% url 'login' %}'">로그인하러 가기</button>
+            </div>
+        </div>
+    </div>
+  </div>
+
+<!-- Add the necessary JavaScript to handle the modal and error message visibility -->
+<script>
+    $(document).ready(function () {
+        // Close the success modal when the user clicks the close button
+        $('.close').on('click', function () {
+            $('#success-modal').css('display', 'none');
+        });
+    });
+</script>
+
+  <script>
+    $(document).ready(function (){
+      let username = $('#id');
+      let password1 = $('#pw1');
+      let password2 = $('#pw2');
       let btn = $('#btn');
+      let phonenum = $('#phone');
 
       $(btn).on('click', function() {
-        if($(id).val() == "") {
-          $(id).next('label').addClass('warning');
+        if ($(username).val() == "") {
+          $(username).next('label').addClass('warning');
           setTimeout(function() {
             $('label').removeClass('warning');
-          },1500);
-        }
-        else if($(pw).val() == "") {
-          $(pw).next('label').addClass('warning');
+          }, 1500);
+        } else if ($(password1).val() == "") {
+          $(password1).next('label').addClass('warning');
           setTimeout(function() {
             $('label').removeClass('warning');
-          },1500);
+          }, 1500);
+        } else if ($(password2).val() == "") {
+          $(password2).next('label').addClass('warning');
+          setTimeout(function() {
+            $('label').removeClass('warning');
+          }, 1500);
+        }else if ($(phonenum).val() == "") {
+          $(phonenum).next('label').addClass('warning');
+          setTimeout(function() {
+            $('label').removeClass('warning');
+          }, 1500);
         }
-      });
-    </script>
+
+    });
+  </script>
+  <script>
+    $(document).ready(function () {
+        // Check if the page is being loaded for the first time
+        if (sessionStorage.getItem('first_time_load')) {
+            // Hide the error message after a certain time
+            setTimeout(function () {
+                $('#error-message').fadeOut('slow');
+            }, 5000); // Adjust the time (in milliseconds) as needed
+
+            // Remove the flag from the session storage
+            sessionStorage.removeItem('first_time_load');
+
+            // Check if there are success messages
+            {% if messages.success %}
+                // Show the success modal
+                $('#success-modal').css('display', 'block');
+                // Hide the error message
+                $('#error-message').css('display', 'none');
+            {% endif %}
+        }
+
+        // Close the success modal when the user clicks the close button
+        $('.close').on('click', function () {
+            $('#success-modal').css('display', 'none');
+        });
+    });
+</script>
 {% endblock %}

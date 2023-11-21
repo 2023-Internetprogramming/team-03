@@ -28,12 +28,34 @@
                 </li>
             </ul>
             <ul class="navbar-nav">
-                <li class="nav-item">
-                    <a class="nav-link" href="/login/">로그인</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="/signup/">회원가입</a>
-                </li>
+                {% if user.is_authenticated %}
+                    <li class="nav-item">
+                        <div class="d-flex align-items-center">
+
+                            <li class="nav-item dropdown">
+                                <a class="nav-link dropdown-toggle" href="/contest/" id="navbarDropdownMenuLink" role="button"
+                                    data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                    <span class="material-symbols-outlined" style="width:22px; height:32px;" class="rounded-circle">
+                                        account_circle
+                                    </span>
+                                </a>
+                                <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink" id="text-small" style="position: absolute; inset: 0px 0px auto auto; margin: 0px; transform: translate3d(0.5px, 34px, 0px);" data-popper-placement="bottom-end">
+                                    <a class="dropdown-item" href="/set/">Settings</a>
+                                    <a class="dropdown-item" href="/profile/">Profile</a>
+                                    <hr class="dropdown-divider">
+                                    <a class="dropdown-item" href="{% url 'logout' %}">로그아웃</a>
+                                </div>
+                            </li>
+                        </div>
+                    </li>
+                {% else %}
+                    <li class="nav-item">
+                        <a class="nav-link" href="/login/">로그인</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="/signup/">회원가입</a>
+                    </li>
+                {% endif %}
             </ul>
         </div>
     </div>

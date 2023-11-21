@@ -32,18 +32,15 @@ def login_view(request):
         if form.is_valid():
             username = form.cleaned_data.get('username')
             password = form.cleaned_data.get('password')
-            user = authenticate(request, username=username, password=password)
-
-            if user is not None:
-                login(request, user)
-                return redirect('main')
-            else:
-                messages.error(request, "로그인 실패. 아이디 또는 비밀번호를 확인하세요.")
-                return render(request, 'users/login.html', {'form': form})
+            
+            user = form.get_user()
+            login(request, user)
+            
+            return redirect('main')
     else:
         form = AuthenticationForm()
 
-    return render(request, 'users/signup.html', {'form': form, 'real_name': form.cleaned_data['real_name']})
+    return render(request, 'users/login.html', {'form': form})
 
 def logout_view(request):
     logout(request)

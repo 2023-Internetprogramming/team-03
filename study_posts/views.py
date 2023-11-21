@@ -66,4 +66,4 @@ def study_update(request, id):
     else:
         form = StudyForm(instance=item)
     
-    return render(request, "study_posts/study_edit.html", {'form': form})
+    return render(request, "study_posts/study_update.html", {'form': form})

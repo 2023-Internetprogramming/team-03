@@ -11,7 +11,7 @@
             <a href="{% url 'prj_detail' prj.id %}" style="width: 100%; display: block;">{{ prj.post_title }}</a>
             <span>
                 <a href="{% url 'prj_detail' prj.id %}">
-                    <span class="badge badge-info">{{ prj.prj_membernum }}</span>
+                    <span class="badge badge-info">{{ prj.user_name }}</span>
                 </a>
             </span>
         </li>

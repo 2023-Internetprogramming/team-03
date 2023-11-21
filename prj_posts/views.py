@@ -23,14 +23,14 @@ def prj_list(request):
         request,
         'prj_posts/prj_list.html',
         {
-            'rides': prjs, 
+            'prjs': prjs, 
             'page_obj': prjs        
         },
     )
 
 def prj_detail(request, prj_id):
     prj = Prj.objects.get(id=prj_id)
-    return render(request, 'prj_posts/prj_form.html', {'prj': prj})
+    return render(request, 'prj_posts/prj_detail.html', {'prj': prj})
 
 def prj_create(request):
     if request.method == 'POST':

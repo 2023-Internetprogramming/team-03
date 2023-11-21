@@ -11,7 +11,7 @@
                 <a href="{% url 'study_detail' study.id %}" style="width: 100%; display: block;">{{ study.post_title }}</a>
                 <span>
                     <a href="{% url 'study_detail' study.id %}">
-                        <span class="badge badge-info">{{ study.study_membernum }}</span>
+                        <span class="badge badge-info">{{ study.user_name }}</span>
                     </a>
                 </span>
             </li>

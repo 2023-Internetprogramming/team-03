@@ -1,0 +1,54 @@
+{% extends 'taxi_posts/base.html' %}
+  <head>
+    <meta charset="UTF-8">
+    <title>LogIn</title>
+    <link rel="stylesheet" href="LogIn_style.css">
+    <script src="http://code.jquery.com/jquery-3.3.1.min.js"></script>
+  </head>
+  {% block main_area %}
+    <div class="login-box">
+      <section class="login-form">
+        <h1>Log In</h1>
+        <form action="">
+          <div class="int-area">
+            <input type="text" name="id" id="id"
+            autocomplete="off" required>
+            <label for="id">Duksung Mail</label>
+          </div>
+          <div class="int-area">
+            <input type="password" name="pw" id="pw"
+            autocomplete="off" required>
+            <label for="pw">Password</label>
+          </div>
+          <div class="btn-area">
+            <button id="btn"
+            type="submit">LOGIN</button>
+          </div>
+        </form>
+        <div class="caption">
+          <a href="">Sign Up?</a>
+        </div>
+      </section>
+    </div>
+
+    <script>
+      let id = $('#id');
+      let pw = $('#pw');
+      let btn = $('#btn');
+
+      $(btn).on('click', function() {
+        if($(id).val() == "") {
+          $(id).next('label').addClass('warning');
+          setTimeout(function() {
+            $('label').removeClass('warning');
+          },1500);
+        }
+        else if($(pw).val() == "") {
+          $(pw).next('label').addClass('warning');
+          setTimeout(function() {
+            $('label').removeClass('warning');
+          },1500);
+        }
+      });
+    </script>
+{% endblock %}

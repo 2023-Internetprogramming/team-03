@@ -14,12 +14,16 @@
       <form method="post" action="{% url 'signup' %}">
         {% csrf_token %}
         <div class="int-area">
+          <input type="text" name="real_name" id="real_name" autocomplete="off" required>
+          <label for="real_name">이름</label>
+        </div>
+        <div class="int-area">
           <input type="text" name="username" id="id" autocomplete="off" required>
-          <label for="id">Username</label>
+          <label for="id">ID</label>
         </div>
         <div class="int-area">
           <input type="text" name="phone_number" id="phone" autocomplete="off" required>
-          <label for="phone">Phone Number</label>
+          <label for="phone">전화번호</label>
         </div>
         <div class="int-area">
           <input type="password" name="password1" id="pw1" autocomplete="off" required>
@@ -54,7 +58,7 @@
                 </button>
             </div>
             <div class="modal-body">
-                <p>회원가입에 성공했습니다.</p>
+              <p>{{ real_name }}님! 환영합니다.</p>
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-primary" data-dismiss="modal" onclick="window.location.href='{% url 'login' %}'">로그인하러 가기</button>
@@ -63,10 +67,8 @@
     </div>
   </div>
 
-<!-- Add the necessary JavaScript to handle the modal and error message visibility -->
 <script>
     $(document).ready(function () {
-        // Close the success modal when the user clicks the close button
         $('.close').on('click', function () {
             $('#success-modal').css('display', 'none');
         });
@@ -75,6 +77,7 @@
 
   <script>
     $(document).ready(function (){
+      let name = $('#real_name');
       let username = $('#id');
       let password1 = $('#pw1');
       let password2 = $('#pw2');
@@ -99,6 +102,11 @@
           }, 1500);
         }else if ($(phonenum).val() == "") {
           $(phonenum).next('label').addClass('warning');
+          setTimeout(function() {
+            $('label').removeClass('warning');
+          }, 1500);
+        }else if ($(name).val() == "") {
+          $(name).next('label').addClass('warning');
           setTimeout(function() {
             $('label').removeClass('warning');
           }, 1500);

@@ -108,26 +108,19 @@
   </script>
   <script>
     $(document).ready(function () {
-        // Check if the page is being loaded for the first time
         if (sessionStorage.getItem('first_time_load')) {
-            // Hide the error message after a certain time
             setTimeout(function () {
                 $('#error-message').fadeOut('slow');
-            }, 5000); // Adjust the time (in milliseconds) as needed
+            }, 5000); 
 
-            // Remove the flag from the session storage
             sessionStorage.removeItem('first_time_load');
 
-            // Check if there are success messages
             {% if messages.success %}
-                // Show the success modal
                 $('#success-modal').css('display', 'block');
-                // Hide the error message
                 $('#error-message').css('display', 'none');
             {% endif %}
         }
 
-        // Close the success modal when the user clicks the close button
         $('.close').on('click', function () {
             $('#success-modal').css('display', 'none');
         });

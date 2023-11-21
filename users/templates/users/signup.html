@@ -1,14 +1,14 @@
 {% extends 'taxi_posts/base.html' %}
   <head>
     <meta charset="UTF-8">
-    <title>LogIn</title>
-    <link rel="stylesheet" href="LogIn_style.css">
+    <title>SignUp</title>
+    <link rel="stylesheet" href="signup.css">
     <script src="http://code.jquery.com/jquery-3.3.1.min.js"></script>
   </head>
   {% block main_area %}
     <div class="login-box">
       <section class="login-form">
-        <h1>Log In</h1>
+        <h1>Sign Up</h1>
         <form action="">
           <div class="int-area">
             <input type="text" name="id" id="id"
@@ -16,17 +16,22 @@
             <label for="id">Duksung Mail</label>
           </div>
           <div class="int-area">
+            <input type="text" name="verification_code" id="code"
+            autocomplete="off" required>
+            <label for="verification_code">Verification Code</label>
+         </div>
+          <div class="int-area">
             <input type="password" name="pw" id="pw"
             autocomplete="off" required>
             <label for="pw">Password</label>
           </div>
           <div class="btn-area">
             <button id="btn"
-            type="submit">LOGIN</button>
+            type="submit">Create</button>
           </div>
         </form>
         <div class="caption">
-          <a href="signup.html">Sign Up?</a>
+          <a href="login.html">Log In?</a>
         </div>
       </section>
     </div>

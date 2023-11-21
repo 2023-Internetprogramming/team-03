@@ -32,7 +32,7 @@ class Contest(models.Model):
 
 #댓글
 class Comment(models.Model):
-    name = models.CharField(max_length=100)
+    name = models.CharField(max_length=100, default='Anonymous')
     content = models.TextField()
     created_at = models.DateTimeField(auto_now_add=True)
 

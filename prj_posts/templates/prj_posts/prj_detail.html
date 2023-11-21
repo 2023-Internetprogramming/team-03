@@ -3,14 +3,13 @@
 {% block main_area %}
 <br><br><br><br>
 <div class="container mt-4" id="container">
-    <h2>제목 : {{prj.post_title}}</h2>
-    <p>{{prj.created}}</p>
-    <p>모집 인원수 : {{prj.prj_membernum}}</p>
-    <p>세부 사항 : {{prj.prj_content}}</p>
+    <h2>{{ prj.prj_name }} 팀원 {{ prj.prj_membernum }}명 모집합니다</h2>
+    <p>{{prj.created_at}}</p>
+    <p>모집 인원 : {{prj.prj_membernum}}</p>
 
     <p>{{prj.user_name}}</p>
-    <p>학년 : {{prj.user_grade}}</p>
-    <p>학과 : {{prj.post_content}}</p>
+    <p>{{prj.user_grade}}학년 / 학과 : {{prj.user_major}}</p>
+    <p>세부 사항 : {{prj.post_content}}</p>
 
     <a href="{% url 'prj_update' id=prj.id %}" class="btn btn-secondary">수정</a>
 

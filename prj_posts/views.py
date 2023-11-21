@@ -61,4 +61,4 @@ def prj_update(request, id):
     else:
         form = PrjForm(instance=item)
 
-    return render(request, "prj_posts/prj_edit.html", {'form': form})
+    return render(request, "prj_posts/prj_update.html", {'form': form})

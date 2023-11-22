@@ -3,6 +3,11 @@ from .models import Contest, Comment
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 from .forms import CommentForm
 from django.shortcuts import render, get_object_or_404, redirect
+from django.http import JsonResponse
+from django.views.decorators.http import require_POST
+from django.contrib.auth.decorators import login_required
+from django.http import HttpResponse
+
 
 
 def contest_list(request):
@@ -53,3 +58,18 @@ def contest_detail(request, contest_id):
     contest.save()
     
     return render(request, 'contest/contest_detail.html', {'contest': contest})
+
+
+@require_POST
+@login_required
+def scrap_contest(request, contest_id):
+    contest = get_object_or_404(Contest, id=contest_id)
+
+    # 사용자가 이미 해당 콘테스트를 스크랩한 경우 중복을 피하기 위해 체크
+    if request.user in contest.scraped_by_users.all():
+        return JsonResponse({'status': 'error', 'message': '이미 스크랩한 콘테스트입니다'})
+
+    # 현재 사용자를 스크랩한 사용자 목록에 추가
+    contest.scraped_by_users.add(request.user)
+
+    return JsonResponse({'status': 'success', 'message': '콘테스트가 성공적으로 스크랩되었습니다'})

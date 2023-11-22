@@ -1,4 +1,5 @@
 from django.db import models
+from django.contrib.auth.models import User
 
 class Contest(models.Model):
     
@@ -18,6 +19,7 @@ class Contest(models.Model):
     contest_image = models.ImageField(upload_to='contest/images/%Y/%m/%d/', blank=True)
     contest_view_count = models.IntegerField(default=0)
     contest_category = models.CharField(max_length=30, choices=CATEGORY_CHOICES, default='기획/아이디어')
+    scraped_by_users = models.ManyToManyField(User, related_name='scraped_contests', blank=True)
     # comments = models.ManyToManyField(User, through='Comment', related_name='comments')
 
 # #댓글

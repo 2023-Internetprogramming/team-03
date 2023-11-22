@@ -1,0 +1,51 @@
+{% extends 'taxi_posts/base.html' %}
+{% load static %}
+
+{% block main_area %}
+<link rel="stylesheet" type="text/css" href="{% static 'contest/css/list.css' %}">
+<br><br><br><br><br><br><br><br>
+  <h2>Your Scraped Contests</h2>
+  {% for contest in saved_posts %}
+
+  <div class="row mb-2">
+    <div class="col-md-6">
+      <a class="top" href="{% url 'contest_detail' contest.id %}">
+        <div class="row g-0 border rounded overflow-hidden flex-md-row mb-4 shadow-sm h-md-250 position-relative">
+          <div class="col p-4 d-flex flex-column position-static">
+            <strong class="d-inline-block mb-2 text-primary-emphasis">
+              <p class="badges">
+                <span>{{ contest.contest_category }}</span>
+              </p>
+            </strong>
+            <h3 class="mb-0">{{ contest.contest_title }}</h3>
+            <div class="mb-1 text-body-secondary">D-{{ contest.deadline }}</div>
+            <p class="card-text mb-auto">This is a wider card with supporting text below as a natural lead-in to additional content.</p>
+            <a href="https://getbootstrap.com/docs/5.3/examples/blog/#" class="icon-link gap-1 icon-link-hover stretched-link">
+              Continue reading
+              <svg class="bi"><use xlink:href="#chevron-right"></use></svg>
+            </a>
+          </div>
+        </div>
+      </a>
+    </div>
+  {% endfor %}
+  {% if not saved_posts %}
+    <p>You haven't scraped any contests yet.</p>
+  {% endif %}
+  <style>
+    .stretched-link::after {
+      position: absolute;
+      top: 0;
+      right: 0;
+      bottom: 0;
+      left: 0;
+      z-index: 1;
+      content: "";
+    }
+    
+    *, ::after, ::before {
+        box-sizing: border-box;
+    }
+</style>
+
+{% endblock %}

@@ -176,3 +176,31 @@ section.title > div.wrap > p.badges > span {
     font-size: 12px;
     background-color: #f2f2f2;
 }
+
+@media only screen and (min-width: 720px){
+    #container2 > div.bottombar {
+        position: relative;
+        margin-top: 16px;
+        border-top: 0;
+        text-align: left;
+        background-color: transparent;
+    }
+}
+
+@media only screen and (min-width: 720px){
+    #container2 > div.bottombar > a > span {
+        line-height: 36px;
+    }
+}
+
+
+#container2 > div.bottombar > a > span {
+    display: inline-block;
+    padding-left: 26px;
+    line-height: 56px;
+    color: #292929;
+    font-size: 14px;
+    background-repeat: no-repeat;
+    background-size: 18px 18px;
+    background-position: left center;
+}

@@ -4,7 +4,6 @@ from django.shortcuts import render, redirect
 from django.contrib.auth.forms import AuthenticationForm
 from .forms import SignUpForm
 from django.contrib.auth import logout
-from .models import UserProfile
 
 def main_view(request):
     return render(request, 'users/main_page.html')

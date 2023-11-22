@@ -94,10 +94,34 @@
     <div class="bottombar threecols">
       <a class="website" href="https://www.campuspick.com/linkclick?referrer_type=activity&amp;referrer_id=24067&amp;url=https%3A%2F%2Ftally.so%2Fr%2Fw7Nl9z" target="_blank" rel="nofollow">
           <span>웹사이트 바로가기</span>
-        </a>
-        <a class="scrap">
-          <span>스크랩</span>
-        </a>
+      </a>
+      <a class="scrap">
+        <form method="post" action="{% url 'contest_detail' contest.id %}" id="scrapForm">
+            {% csrf_token %}
+            <button type="submit" name="scrap" onclick="handleScrap(event)">찜하기</button>
+        </form>
+      </a>
+    
+      <script>
+        function handleScrap(event) {
+
+            jQuery.ajax({
+                url: "{% url 'scrap_contest' contest.id %}",
+                method: "POST",
+                data: { csrfmiddlewaretoken: '{{ csrf_token }}', contest_id: {{ contest.id }} },
+                success: function (data) {
+                    console.log(data);
+                    alert(data.message);
+                    if (data.status === 'success') {
+                        // 추가 작업
+                    }
+                },
+                error: function (error) {
+                    console.log(error);
+                },
+            });
+        }
+        </script>
         <a class="share">
           <span>공유</span>
         </a>

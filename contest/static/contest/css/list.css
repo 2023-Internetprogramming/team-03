@@ -153,9 +153,10 @@ a {
 
 #container1 p.info > span.dday {
     font-weight: bold;
+    color: #0aafdf;
 }
 #container1 p.info > span.highlight {
-    color: #0aafdf;
+    color: #8B2845;
 }
 #container1 p.info > span {
     display: inline-block;
@@ -367,6 +368,15 @@ body {
     section.menu > div.wrap > a {
       height: 37px; line-height: 40px;
     }
+  }
+  
+  section.tab > div.wrap {
+    text-align: center;
+  }
+
+  section.tab > div.wrap > a {
+    color: #292929;
+    font-size: 14px;
   }
 
 

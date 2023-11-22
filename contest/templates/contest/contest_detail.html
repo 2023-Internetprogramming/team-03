@@ -16,12 +16,12 @@
       <div class="content">
         <h1>{{ contest.contest_title }}</h1>
         <p class="info">
-            <span class="viewcount">
-                <span class="material-symbols-outlined" style="font-size: 11px;">
-                visibility
-                </span>
-                {{ contest.contest_view_count }}
+          <span class="viewcount">
+            <span class="material-symbols-outlined" style="font-size: 11px;">
+            visibility
             </span>
+            {{ contest.contest_view_count }}
+        </span>
         </p>
       </div>
     </div>
@@ -167,6 +167,16 @@
       </section> -->
         
     </div>
+    <style>
+      section.title > div.wrap > div.content > p.info > span {
+        display: inline-block;
+        margin-right: 8px;
+        line-height: 18px;
+        color: #a6a6a6;
+        font-size: 12px;
+        letter-spacing: 0;
+    }
+  </style>
 
     <link rel="stylesheet" type="text/css" href="{% static 'contest/css/detail.css' %}">
 {% endblock %}

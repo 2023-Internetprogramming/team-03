@@ -12,14 +12,20 @@ from datetime import datetime, timedelta
 
 
 def contest_list(request):
-    contests = Contest.objects.order_by('-pk')
+    category_filter = request.GET.get('category', None)
+    if category_filter:
+        contests = Contest.objects.filter(contest_category=category_filter).order_by('-pk')
+    else:
+        contests = Contest.objects.order_by('-pk')
+
     today = datetime.now().date()
-    
+
     for contest in contests:
         contest.deadline = (contest.deadline - today).days
-    
+
     page = request.GET.get('page', 1)
-    paginator = Paginator(contests, 8) 
+    paginator = Paginator(contests, 8)
+
     try:
         contests = paginator.page(page)
     except PageNotAnInteger:

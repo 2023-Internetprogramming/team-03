@@ -22,16 +22,42 @@
       </form>
     </div>
   </section>-->
-  <section class="tab fixed" style="top: 0px; transform: translateY(0px);">
-    <div class="wrap">
-        <a href="/contest/" class="active"><span class="text">전체</span></a>
-        <a href="?category=101">기획/아이디어</a>
-        <a href="?category=102">IT/소프트웨어/게임</a>
-        <a href="?category=103">광고/마케팅</a>
-        <a href="?category=104">디자인</a>
-        <a href="?category=105">사진/영상/UCC</a>
-        <a href="?category=106">예체능</a>
-
+  <br><br><br>
+  <div class="py-3 mb-4 border-bottom">
+    <div class="container d-flex flex-wrap justify-content-center">
+      <p class="d-flex align-items-center mb-3 mb-lg-0 me-lg-auto link-body-emphasis text-decoration-none" style="margin-right:600px;">
+        <span class="fs-4">공모전</span>
+      </p>
+      <form class="col-12 col-lg-auto mb-3 mb-lg-0" role="search">
+        <input type="search" class="form-control" placeholder="Search..." aria-label="Search">
+      </form>
+      <hr>
+    </div>
+    <section style="height: 50px;">
+        <div class="wrap">
+            <a href="/contest/" class="{% if not request.GET.category %}active{% endif %}">
+                <span class="text">전체</span>
+            </a>
+            <a href="?category=기획/아이디어" class="{% if request.GET.category == '기획/아이디어' %}active{% endif %}">
+                <span class="text">기획/아이디어</span>
+            </a>
+            <a href="?category=IT/소프트웨어/게임" class="{% if request.GET.category == 'IT/소프트웨어/게임' %}active{% endif %}">
+                <span class="text">IT/소프트웨어/게임</span>
+            </a>
+            <a href="?category=광고/마케팅" class="{% if request.GET.category == '광고/마케팅' %}active{% endif %}">
+                <span class="text">광고/마케팅</span>
+            </a>
+            <a href="?category=디자인" class="{% if request.GET.category == '디자인' %}active{% endif %}">
+                <span class="text">디자인</span>
+            </a>
+            <a href="?category=사진/영상/UCC" class="{% if request.GET.category == '사진/영상/UCC' %}active{% endif %}">
+                <span class="text">사진/영상/UCC</span>
+            </a>
+            <a href="?category=예체능" class="{% if request.GET.category == '예체능' %}active{% endif %}">
+                <span class="text">예체능</span>
+            </a>
+        </section>
+  </div>
       {% comment %} <a href="" data-category="101"><span class="text">기획/아이디어</span></a>
       <a href="" data-category="102"><span class="text">브랜드/네이밍</span></a>
       <a href="" data-category="103"><span class="text">광고/마케팅</span></a>
@@ -41,7 +67,6 @@
       <a href="" data-category="107"><span class="text">문학/수기/시나리오</span></a>
       <a href="" data-category="108"><span class="text">IT/소프트웨어/게임</span></a>
       <a href="" data-category="109"><span class="text">기타</span></a></div> {% endcomment %}
-  </section>
 <div id="container1" style="padding-top: 65px; flex-grow: 1;" >    
     {% if contests %}
     {% for contest in contests %}
@@ -121,8 +146,55 @@
 </nav>
 
 {% else %}
-<h4>아직 게시물이 없습니다.</h4>
+<h4 style="margin-bottom: 13.5rem;">아직 게시물이 없습니다.</h4>
 {% endif %}
+<style>
+    .py-3 {
+        padding-top: 1rem!important;
+        padding-bottom: 1rem!important;
+    }
+    .mb-4 {
+        margin-bottom: 1.5rem!important;
+    }
+    .border-bottom {
+        border-bottom: var(--bs-border-width) var(--bs-border-style) var(--bs-border-color)!important;
+    }
+    .fs-4 {
+        font-size: calc(1.275rem + .3vw)!important;
+    }
+    .d-flex {
+        display: flex!important;
+    }
+    section.search, section.tab {
+        position: static;
+        width: 100%;
+        box-sizing: border-box;
+        font-size: 0;
+    }
+    h4{
+       margin-bottom: 500px; 
+    }
+    section.tab {
+        white-space: nowrap;
+    }
+    section.tab > div.wrap > a {
+        display: inline-block;
+        padding: 0 12px;
+        height: 56px;
+        line-height: 56px;
+        box-sizing: border-box;
+        border-bottom: 3px solid transparent;
+    }
+    section.tab > div.wrap {
+        box-sizing: border-box;
+    }
+    span.text{
+        padding-left: 20px;
+    }
+    section{
+        box-sizing: border-box;
+    }
+</style>
 <link rel="stylesheet" type="text/css" href="{% static 'contest/css/list.css' %}">
 
 

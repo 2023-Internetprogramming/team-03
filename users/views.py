@@ -5,6 +5,7 @@ from django.contrib.auth.forms import AuthenticationForm
 from .forms import SignUpForm
 from django.contrib.auth import logout
 from django.contrib.auth.decorators import login_required
+from datetime import datetime
 
 def main_view(request):
     return render(request, 'users/main_page.html')
@@ -51,5 +52,10 @@ def logout_view(request):
 def mypage_view(request):
     user = request.user
     saved_posts = user.scraped_contests.all()
+    
+    today = datetime.now().date()
+    
+    for contest in saved_posts:
+        contest.deadline = (contest.deadline - today).days
 
     return render(request, 'users/mypage.html', {'saved_posts': saved_posts})

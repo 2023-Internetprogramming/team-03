@@ -18,7 +18,13 @@
               </p>
             </strong>
             <h3 class="mb-0">{{ contest.contest_title }}</h3>
-            <div class="mb-1 text-body-secondary">D-{{ contest.deadline }}</div>
+            <span class="mb-1 text-body-secondary {% if contest.deadline < 0 %}highlight{% endif %}">
+              {% if contest.deadline >= 0 %}
+                D-{{ contest.deadline }}
+              {% else %}
+                <p style="color:#8B2845">마감</p>
+              {% endif %}
+            </span>
             <p class="card-text mb-auto">This is a wider card with supporting text below as a natural lead-in to additional content.</p>
             <a href="https://getbootstrap.com/docs/5.3/examples/blog/#" class="icon-link gap-1 icon-link-hover stretched-link">
               Continue reading
@@ -32,20 +38,5 @@
   {% if not saved_posts %}
     <p>You haven't scraped any contests yet.</p>
   {% endif %}
-  <style>
-    .stretched-link::after {
-      position: absolute;
-      top: 0;
-      right: 0;
-      bottom: 0;
-      left: 0;
-      z-index: 1;
-      content: "";
-    }
-    
-    *, ::after, ::before {
-        box-sizing: border-box;
-    }
-</style>
 
 {% endblock %}

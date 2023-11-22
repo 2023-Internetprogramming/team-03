@@ -50,17 +50,12 @@ def contest_list(request):
 def contest_detail(request, contest_id):
     contest = Contest.objects.get(id=contest_id)
     
-    if 'viewed_contests' not in request.session:
-        request.session['viewed_contests'] = []
+    contest.contest_view_count += 1
+    contest.save()
 
-    if contest_id not in request.session['viewed_contests']:
-        # Increment the view count only if the contest is not already viewed
-        contest.contest_view_count += 1
-        contest.save()
-
-        # Add the contest_id to the viewed_contests list in the session
-        request.session['viewed_contests'].append(contest_id)
-        request.session.modified = True
+    # Add the contest_id to the viewed_contests list in the session
+    request.session['viewed_contests'].append(contest_id)
+    request.session.modified = True
     
     if request.method == 'POST':
         form = CommentForm(request.POST)

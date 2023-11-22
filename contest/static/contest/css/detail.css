@@ -204,3 +204,15 @@ section.title > div.wrap > p.badges > span {
     background-size: 18px 18px;
     background-position: left center;
 }
+
+
+#container2 > div.bottombar > a > form > button {
+    display: inline-block;
+    padding-left: 26px;
+    line-height: 56px;
+    color: #292929;
+    font-size: 14px;
+    background-repeat: no-repeat;
+    background-size: 18px 18px;
+    background-position: left center;
+}

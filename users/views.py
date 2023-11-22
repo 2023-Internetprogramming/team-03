@@ -4,6 +4,7 @@ from django.shortcuts import render, redirect
 from django.contrib.auth.forms import AuthenticationForm
 from .forms import SignUpForm
 from django.contrib.auth import logout
+from django.contrib.auth.decorators import login_required
 
 def main_view(request):
     return render(request, 'users/main_page.html')
@@ -44,3 +45,11 @@ def login_view(request):
 def logout_view(request):
     logout(request)
     return redirect('main')
+
+
+@login_required
+def mypage_view(request):
+    user = request.user
+    saved_posts = user.scraped_contests.all()
+
+    return render(request, 'users/mypage.html', {'saved_posts': saved_posts})

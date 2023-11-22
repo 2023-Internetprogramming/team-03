@@ -5,6 +5,7 @@ from datetime import datetime
 class OttForm(forms.ModelForm):
     class Meta:
         model = Ott
+        exclude = ['author']
         fields = ['type', 'people', 'bill', 'description_OTT']
         
         labels = {

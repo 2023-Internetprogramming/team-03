@@ -12,14 +12,20 @@ from datetime import datetime, timedelta
 
 
 def contest_list(request):
-    contests = Contest.objects.order_by('-pk')
+    category_filter = request.GET.get('category', None)
+    if category_filter:
+        contests = Contest.objects.filter(contest_category=category_filter).order_by('-pk')
+    else:
+        contests = Contest.objects.order_by('-pk')
+
     today = datetime.now().date()
-    
+
     for contest in contests:
         contest.deadline = (contest.deadline - today).days
-    
+
     page = request.GET.get('page', 1)
-    paginator = Paginator(contests, 8) 
+    paginator = Paginator(contests, 8)
+
     try:
         contests = paginator.page(page)
     except PageNotAnInteger:
@@ -50,17 +56,12 @@ def contest_list(request):
 def contest_detail(request, contest_id):
     contest = Contest.objects.get(id=contest_id)
     
-    if 'viewed_contests' not in request.session:
-        request.session['viewed_contests'] = []
+    contest.contest_view_count += 1
+    contest.save()
 
-    if contest_id not in request.session['viewed_contests']:
-        # Increment the view count only if the contest is not already viewed
-        contest.contest_view_count += 1
-        contest.save()
-
-        # Add the contest_id to the viewed_contests list in the session
-        request.session['viewed_contests'].append(contest_id)
-        request.session.modified = True
+    # Add the contest_id to the viewed_contests list in the session
+    request.session['viewed_contests'].append(contest_id)
+    request.session.modified = True
     
     if request.method == 'POST':
         form = CommentForm(request.POST)

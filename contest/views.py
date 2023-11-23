@@ -7,7 +7,7 @@ from django.http import JsonResponse
 from django.views.decorators.http import require_POST
 from django.contrib.auth.decorators import login_required
 from django.http import HttpResponse
-from datetime import datetime, timedelta
+from datetime import datetime, timezone
 
 
 
@@ -59,18 +59,14 @@ def contest_detail(request, contest_id):
     contest.contest_view_count += 1
     contest.save()
 
-    # Add the contest_id to the viewed_contests list in the session
-    request.session['viewed_contests'].append(contest_id)
-    request.session.modified = True
+    # Initialize or retrieve the 'viewed_contests' list in the session
+    viewed_contests = request.session.get('viewed_contests', [])
     
-    if request.method == 'POST':
-        form = CommentForm(request.POST)
-        if form.is_valid():
-            comment = form.save(commit=False)
-            comment.contest = contest
-            comment.save()
-    else:
-        form = CommentForm()
+    # Add the contest_id to the 'viewed_contests' list in the session if not already present
+    if contest_id not in viewed_contests:
+        viewed_contests.append(contest_id)
+        request.session['viewed_contests'] = viewed_contests
+        request.session.modified = True
     
     return render(request, 'contest/contest_detail.html', {'contest': contest})
 
@@ -88,3 +84,21 @@ def scrap_contest(request, contest_id):
     contest.scraped_by_users.add(request.user)
 
     return JsonResponse({'status': 'success', 'message': '공모전이 스크랩되었습니다'})
+
+
+from django.utils import timezone
+
+def comment(request, contest_id):
+    contest = Contest.objects.get(id=contest_id)
+    comments = Comment.objects.filter(contest_post=contest)
+    
+    if request.method == "POST":
+        comment_text = request.POST.get('comment', '')  # 'comment' 필드의 값을 가져옴
+        if comment_text:  # 댓글이 비어있지 않은 경우에만 처리
+            comment = Comment()
+            comment.comment = comment_text
+            comment.created_at = timezone.now()
+            comment.contest_post = contest  # contest_post 필드에 Contest 객체 할당
+            comment.save()
+    
+    return render(request, 'contest/comment.html', {'comments': comments, 'contest': contest})

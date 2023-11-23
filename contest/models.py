@@ -20,23 +20,13 @@ class Contest(models.Model):
     contest_view_count = models.IntegerField(default=0)
     contest_category = models.CharField(max_length=30, choices=CATEGORY_CHOICES, default='기획/아이디어')
     scraped_by_users = models.ManyToManyField(User, related_name='scraped_contests', blank=True)
-    # comments = models.ManyToManyField(User, through='Comment', related_name='comments')
-
-# #댓글
-# class Comment(models.Model):
-#     user = models.ForeignKey(User, on_delete=models.CASCADE)
-#     contest = models.ForeignKey(Contest, on_delete=models.CASCADE)
-#     comment_text = models.TextField()
-#     created_at = models.DateTimeField(auto_now_add=True)
-
-#     def __str__(self):
-#         return f'{self.user.username} - {self.contest.contest_title}'
 
 #댓글
 class Comment(models.Model):
     name = models.CharField(max_length=100, default='Anonymous')
-    content = models.TextField()
+    comment = models.TextField(default='')
     created_at = models.DateTimeField(auto_now_add=True)
+    contest_post = models.ForeignKey(Contest, on_delete=models.CASCADE, null=True, default=None)
 
     def __str__(self):
-        return self.contest_title
+        return self.comment

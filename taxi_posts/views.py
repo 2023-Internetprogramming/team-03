@@ -37,22 +37,6 @@ def ride_create(request):
     form = RideForm()
     return render(request, 'taxi_posts/ride_form.html', {'form': form})
 
-# from django.contrib.auth.decorators import login_required
-# @login_required
-# def ride_create(request):
-#     if request.method == 'POST':
-#         form = RideForm(request.POST)
-#         if form.is_valid():
-#             new_item = form.save(commit=False)
-#             new_item.user = request.user  # 현재 로그인한 사용자 설정
-#             new_item.save()
-#             return redirect('ride_list')  # 게시물이 성공적으로 저장되면 어떤 URL로 이동할지 설정
-#     else:
-#         form = RideForm()
-
-#     return render(request, 'your_template.html', {'form': form})
-
-
 @login_required
 def ride_delete(request):
     ride_id = request.GET.get('id')

@@ -3,6 +3,14 @@ from django.core.validators import MinValueValidator, MaxValueValidator
 
 # Create your models here.
 class Study(models.Model):
+    TYPE_CHOICES = [
+        ('학업', '학업'),
+        ('어학', '어학'),
+        ('자격증', '자격증'),
+        ('고시', '고시'),
+        ('취업', '취업'),
+    ]
+
     post_title = models.CharField(max_length=15)
     user_name = models.CharField(max_length=5)
     user_major = models.CharField(max_length=15)
@@ -10,10 +18,11 @@ class Study(models.Model):
         MaxValueValidator(6),
         MinValueValidator(1)
     ])
-    study_type = models.CharField(max_length=15)
+    study_type = models.CharField(max_length=15, choices=TYPE_CHOICES)
     study_membernum = models.IntegerField(default=1, validators=[
         MinValueValidator(1)
     ])
+
     post_content = models.TextField()
 
     created_at = models.DateTimeField(auto_now_add=True)

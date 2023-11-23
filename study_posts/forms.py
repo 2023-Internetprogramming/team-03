@@ -5,9 +5,10 @@ class StudyForm(forms.ModelForm):
 
     class Meta:
         model = Study
-        fields = ["user_name", "user_major", "user_grade", "study_type", "study_membernum", "post_content"]
+        fields = ["post_title", "user_name", "user_major", "user_grade", "study_type", "study_membernum", "post_content"]
 
         labels = {
+            'post_title' : '제목',
             'user_name' : '모집자',
             'user_major' : '전공',
             'user_grade' : '학년',

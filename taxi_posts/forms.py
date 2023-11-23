@@ -5,6 +5,7 @@ from datetime import datetime
 class RideForm(forms.ModelForm):
     class Meta:
         model = Ride
+        exclude = ['author']
         fields = ['departure_location', 'destination', 'departure_time', 'available_seats', 'description']
         labels = {
             'departure_location': '출발지',

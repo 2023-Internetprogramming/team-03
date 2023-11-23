@@ -8,10 +8,10 @@
       <p>모집 인원: {{ ride.available_seats }}</p>
       <p>세부 사항: {{ ride.description }}</p>
 
-      <a href="{% url 'ride_update' id=ride.id %}" class="btn btn-secondary">수정</a>
+      <a href="{% url 'ride_update' id=ride.id %}" class="btn btn-secondary {% if request.user != ride.author %}d-none{% endif %}">수정</a>
 
       <!-- 삭제 버튼에 onclick 이벤트 추가 -->
-      <button type="button" class="btn btn-danger" onclick="confirmDelete()">삭제</button>
+      <button type="button" class="btn btn-danger {% if request.user != ride.author %}d-none{% endif %}" onclick="confirmDelete()">삭제</button>
 
       <!-- 삭제 확인 모달 -->
       <div class="modal fade" id="confirmDeleteModal" tabindex="-1" role="dialog" aria-labelledby="confirmDeleteModalLabel" aria-hidden="true">

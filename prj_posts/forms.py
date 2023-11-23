@@ -5,6 +5,7 @@ class PrjForm(forms.ModelForm):
 
     class Meta:
         model = Prj
+        exclude = ['author']
         fields = ["user_name", "user_major", 'prj_name',  "user_grade", "prj_membernum", "post_content"]
 
         labels = {

@@ -24,6 +24,7 @@ def ride_detail(request, ride_id):
     ride = Ride.objects.get(id=ride_id)
     return render(request, 'taxi_posts/ride_detail.html', {'ride': ride})
 
+
 @login_required
 def ride_create(request):
     if request.method == 'POST':
@@ -36,6 +37,7 @@ def ride_create(request):
         
     form = RideForm()
     return render(request, 'taxi_posts/ride_form.html', {'form': form})
+
 
 @login_required
 def ride_delete(request):

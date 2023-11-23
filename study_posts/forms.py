@@ -5,6 +5,7 @@ class StudyForm(forms.ModelForm):
 
     class Meta:
         model = Study
+        exclude = ['author']
         fields = ["post_title", "user_name", "user_major", "user_grade", "study_type", "study_membernum", "post_content"]
 
         labels = {

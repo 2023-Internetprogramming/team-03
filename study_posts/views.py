@@ -1,8 +1,10 @@
 from django.shortcuts import render, get_object_or_404, redirect
 from .models import Study
 from .forms import StudyForm
-from django.http import HttpResponseRedirect
+from django.http import HttpResponseRedirect, HttpResponseForbidden
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
+from django.contrib.auth.decorators import login_required
+
 
 def study_list(request):
     studys = Study.objects.all().order_by('-pk')
@@ -25,6 +27,7 @@ def study_list(request):
         }
     )
 
+
 def study_detail(request, study_id):
     study = Study.objects.get(pk=study_id)
 
@@ -36,27 +39,41 @@ def study_detail(request, study_id):
         }
     )
 
+
+@login_required
 def study_create(request):
     if request.method == 'POST': 
         form = StudyForm(request.POST)   
         if form.is_valid():
-            new_item = form.save()
+            new_item = form.save(commit=False)
+            new_item.author = request.user  # 사용자 정보를 글과 연결
+            new_item.save()
             return redirect('/study/')
 
     form = StudyForm()
     return render(request, 'study_posts/study_form.html', {'form': form})
 
+
+@login_required
 def study_delete(request):
     study_id = request.GET.get('id')
     
     if study_id:
         item = get_object_or_404(Study, pk=study_id)
+        
+        if request.user != item.author:
+            return HttpResponseForbidden("글을 삭제할 권한이 없습니다.")
         item.delete()
     
     return redirect('/study/')
 
+
+@login_required
 def study_update(request, id):
     item = get_object_or_404(Study, pk=id)
+    
+    if request.user != item.author:
+        return HttpResponseForbidden("글을 수정할 권한이 없습니다.")
 
     if request.method == "POST":
         form = StudyForm(request.POST, instance=item)

@@ -1,5 +1,6 @@
 from django.db import models
 from django.core.validators import MinValueValidator, MaxValueValidator
+from django.contrib.auth.models import User
 
 # Create your models here.
 class Study(models.Model):
@@ -11,6 +12,7 @@ class Study(models.Model):
         ('취업', '취업'),
     ]
 
+    author = models.ForeignKey(User, on_delete=models.CASCADE)
     post_title = models.CharField(max_length=15)
     user_name = models.CharField(max_length=5)
     user_major = models.CharField(max_length=15)

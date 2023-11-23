@@ -14,10 +14,10 @@
     <p>세부 사항 : {{ study.post_content }}</p>
 
 
-    <a href="{% url 'study_update' id=study.id %}" class="btn btn-secondary">수정</a>
-    
-    <!-- 삭제 버튼에 onclick 이벤트 추가 -->
-    <button type="button" class="btn btn-danger" onclick="confirmDelete()">삭제</button>
+    <a href="{% url 'study_update' id=study.id %}" class="btn btn-secondary {% if request.user != study.author %}d-none{% endif %}">수정</a>
+
+      <!-- 삭제 버튼에 onclick 이벤트 추가 -->
+      <button type="button" class="btn btn-danger {% if request.user != study.author %}d-none{% endif %}" onclick="confirmDelete()">삭제</button>
 
     <!-- 삭제 확인 모달 -->
     <div class="modal fade" id="confirmDeleteModal" tabindex="-1" role="dialog"

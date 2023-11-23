@@ -1,7 +1,7 @@
 {% extends 'taxi_posts/base.html' %}
 
 {% block main_area %}
-<br><br><br><br>
+<br><br>
 <div class="container mt-4" id="container">
     <h2>{{ prj.prj_name }} 팀원 {{ prj.prj_membernum }}명 모집합니다</h2>
     <p>{{prj.created_at}}</p>
@@ -11,10 +11,10 @@
     <p>{{prj.user_grade}}학년 / 학과 : {{prj.user_major}}</p>
     <p>세부 사항 : {{prj.post_content}}</p>
 
-    <a href="{% url 'prj_update' id=prj.id %}" class="btn btn-secondary">수정</a>
+    <a href="{% url 'prj_update' id=prj.id %}" class="btn btn-secondary {% if request.user != prj.author %}d-none{% endif %}">수정</a>
 
     <!-- 삭제 버튼에 onclick 이벤트 추가 -->
-    <button type="button" class="btn btn-danger" onclick="confirmDelete()">삭제</button>
+    <button type="button" class="btn btn-danger {% if request.user != prj.author %}d-none{% endif %}" onclick="confirmDelete()">삭제</button>
 
     <!-- 삭제 확인 모달 -->
     <div class="modal fade" id="confirmDeleteModal" tabindex="-1" role="dialog"

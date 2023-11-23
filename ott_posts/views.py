@@ -21,9 +21,11 @@ def ott_list(request):
 
     return render(request, 'ott_posts/ott_list.html', {'otts': otts, 'page_obj': otts})
 
+
 def ott_detail(request, ott_id):
     ott = Ott.objects.get(id=ott_id)
     return render(request, 'ott_posts/ott_detail.html', {'ott': ott})
+
 
 @login_required
 def ott_create(request):
@@ -52,6 +54,7 @@ def ott_delete(request):
         item.delete()
         
     return redirect('ott_list')
+
 
 @login_required
 def ott_update(request, id):

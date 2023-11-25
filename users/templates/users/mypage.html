@@ -2,15 +2,10 @@
 {% load static %}
 
 {% block main_area %}
-<head>
-  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-4bw+/aepP/YC94hEpVNVgiZdgIC5+VKNBQNGCHeKRQN+PtmoHDEXuppvnDJzQIu9" crossorigin="anonymous">
-  <script src="http://code.jquery.com/jquery-3.3.1.min.js"></script>
-</head>
 <link rel="stylesheet" type="text/css" href="{% static 'contest/css/list.css' %}">
 <br><br><br><br><br><br><br><br>
-  <h2>Your Scraped Contests</h2>
-  {% for contest in saved_posts %}
-
+<h2>스크랩한 공모전</h2>
+{% for contest in saved_posts %}
   <div class="row mb-2">
     <div class="col-md-6">
       <a class="top" href="{% url 'contest_detail' contest.id %}">
@@ -22,13 +17,7 @@
               </p>
             </strong>
             <h3 class="mb-0">{{ contest.contest_title }}</h3>
-            <span class="mb-1 text-body-secondary {% if contest.deadline < 0 %}highlight{% endif %}">
-              {% if contest.deadline >= 0 %}
-                D-{{ contest.deadline }}
-              {% else %}
-                <p style="color:#8B2845">마감</p>
-              {% endif %}
-            </span>
+            <div class="mb-1 text-body-secondary">D-{{ contest.deadline }}</div>
             <p class="card-text mb-auto">This is a wider card with supporting text below as a natural lead-in to additional content.</p>
             <a href="https://getbootstrap.com/docs/5.3/examples/blog/#" class="icon-link gap-1 icon-link-hover stretched-link">
               Continue reading
@@ -38,116 +27,183 @@
         </div>
       </a>
     </div>
-  {% endfor %}
-  {% if not saved_posts %}
-    <p>You haven't scraped any contests yet.</p>
-  {% endif %}
-
-  <div class="card text-center">
-    <div class="card-header">
-      <ul class="nav nav-tabs card-header-tabs">
-        <li class="nav-item">
-          <a class="nav-link active" href="#">전체</a>
-        </li>
-        <li class="nav-item">
-          <a class="nav-link" href="#">공모전/프로젝트</a>
-        </li>
-        <li class="nav-item">
-          <a class="nav-link" href="#">스터디</a>
-        </li>
-        <li class="nav-item">
-            <a class="nav-link" href="#">카풀</a>
-        </li>
-        <li class="nav-item">
-            <a class="nav-link" href="#">OTT</a>
-        </li>
-      </ul>
-    </div>
-
-    <div class="card-body">
-      {% for post in user_posts %}
-        <div class="card text-start">
-            <div class="card-header">
-              {{ post.category }}
-            </div>
-            <div class="card-body">
-              <h5 class="card-title">{{ post.title }}</h5>
-              <p class="card-text">{{ post.content }}</p>
-              <a href="#" class="btn btn-primary">수정</a>
-              <a href="#" class="btn btn-primary">삭제</a>
-            </div>
-        </div>
-      {% endfor %}
-
-      {% if not user_posts %}
-        <p>You haven't written any posts yet.</p>
-      {% endif %}
-    </div>
   </div>
+{% endfor %}
+{% if not saved_posts %}
+  <p>아직 스크랩한 게시물이 없습니다.</p>
+{% endif %}
+
+<!-- User's Own Posts -->
+<div class="card text-center">
+  <div class="card-header">
+    <ul class="nav nav-tabs card-header-tabs">
+      <li class="nav-item">
+        <a class="nav-link active" data-target="all" href="#">전체</a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" data-target="prj" href="#">공모전/프로젝트</a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" data-target="study" href="#">스터디</a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" data-target="taxi" href="#">카풀</a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" data-target="ott" href="#">OTT</a>
+      </li>
+    </ul>
+  </div>
+
+  <div class="category all-posts">
+    {% if not ott_posts and not prj_posts and not study_posts and not taxi_posts %}
+      <p>아직 작성한 게시물이 없습니다.</p>
+    {% endif %}
+
+    {% for ott in ott_posts %}
+    <li class="list-group-item d-flex justify-content-between align-items-center">
+      <a href="{% url 'ott_detail' ott.id %}" style="width: 100%; display: block;">
+        [{{ ott.type }}] {{ ott.people }}명 모집
+      </a>
+    </li>
+    {% endfor %}
+
+    {% for prj in prj_posts %}
+    <li class="list-group-item d-flex justify-content-between align-items-center">
+      <a href="{% url 'prj_detail' prj.id %}" style="width: 100%; display: block;">
+        {{ prj.prj_name }} 팀원 {{ prj.prj_membernum }}명 모집합니다</a>
+    </li>
+    {% endfor %}
+
+    {% for study in study_posts %}
+    <li class="list-group-item d-flex justify-content-between align-items-center">
+      <a href="{% url 'study_detail' study.id %}" style="width: 100%; display: block;">{{ study.post_title }}</a>
+      <span>
+          <a href="{% url 'study_detail' study.id %}">
+            <span class="badge badge-info">{{ study.study_type }}</span>
+          </a>
+      </span>
+    </li>
+    {% endfor %}
+
+    {% for ride in taxi_posts %}
+    <li class="list-group-item d-flex justify-content-between align-items-center">
+      <a href="{% url 'ride_detail' ride.id %}" style="width: 100%; display: block;">{{ ride.departure_location }} -> {{ ride.destination }}</a>
+      <span>
+        <a href="{% url 'ride_detail' ride.id %}">
+          <span class="badge badge-info">{{ ride.departure_time }}</span>
+        </a>
+      </span>
+    </li>
+    {% endfor %}
+  </div>
+</div>
+
+
+
+
+  <div class="card-body">
+  <div class="category ott-posts">
+    {% for ott in ott_posts %}
+    <li class="list-group-item d-flex justify-content-between align-items-center">
+      <a href="{% url 'ott_detail' ott.id %}" style="width: 100%; display: block;">
+        [{{ ott.type }}] {{ ott.people }}명 모집
+      </a>
+    </li>
+    {% endfor %}
+    {% if not ott_posts %}
+      <p>아직 작성한 게시물이 없습니다.</p>
+    {% endif %}
+  </div>
+
+  <div class="category prj-posts">
+    {% for prj in prj_posts %}
+    <li class="list-group-item d-flex justify-content-between align-items-center">
+          <a href="{% url 'prj_detail' prj.id %}" style="width: 100%; display: block;">{{ prj.prj_name }} 팀원 {{ prj.prj_membernum }}명 모집합니다</a>
+      </li>
+    {% endfor %}
+    {% if not prj_posts %}
+      <p>아직 작성한 게시물이 없습니다.</p>
+    {% endif %}
+  </div>
+
+  <div class="category study-posts">
+    {% for study in study_posts %}
+      <li class="list-group-item d-flex justify-content-between align-items-center">
+        <a href="{% url 'study_detail' study.id %}" style="width: 100%; display: block;">{{ study.post_title }}</a>
+        <span>
+            <a href="{% url 'study_detail' study.id %}">
+              <span class="badge badge-info">{{ study.study_type }}</span>
+            </a>
+        </span>
+      </li>
+    {% endfor %}
+    {% if not study_posts %}
+      <p>아직 작성한 게시물이 없습니다.</p>
+    {% endif %}
+    </div>
+
+  <div class="category taxi-posts">
+    {% for ride in taxi_posts %}
+    <li class="list-group-item d-flex justify-content-between align-items-center">
+      <a href="{% url 'ride_detail' ride.id %}" style="width: 100%; display: block;">{{ ride.departure_location }} -> {{ ride.destination }}</a>
+      <span>
+        <a href="{% url 'ride_detail' ride.id %}">
+          <span class="badge badge-info">{{ ride.departure_time }}</span>
+        </a>
+      </span>
+    </li>
+    {% endfor %}
+    {% if not taxi_posts %}
+      <p>아직 작성한 게시물이 없습니다.</p>
+    {% endif %}
+  </div>
+  </div>
+</div>
 
 <style>
   .card-header .nav-link {
     color: black !important;
   }
+
   .card-header .nav-link.active {
     color: blue !important;
   }
 </style>
-
-
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/js/bootstrap.bundle.min.js" integrity="sha384-HwwvtgBNo3bZJJLYd8oVXjrBZt8cqVSpeBNS5n7C8IVInixGAoxmnlMuBnhbgrkm" crossorigin="anonymous"></script>
 <script>
-    $(document).ready(function(){
-        $('.card-header .nav-link').click(function(e){
-            e.preventDefault();
-            $('.card-header .nav-link').removeClass('active');
-            $(this).addClass('active');
-            
-
-            var category = $(this).text().trim();
-
-            $.ajax({
-                type: 'GET',
-                url: '/get_posts_by_category/',
-                data: {'category': category},
-                success: function(data){
-                    updatePosts(data.posts);
-                },
-                error: function(error){
-                    console.log(error);
-                }
-            });
-        });
-
-        function updatePosts(posts) {
-            // 사용자가 작성한 글을 동적으로 업데이트
-            var cardBody = $('.card-body');
-            cardBody.empty();  // 기존 내용 비우기
-
-            if (posts.length > 0) {
-                for (var i = 0; i < posts.length; i++) {
-                    var post = posts[i];
-                    var cardHtml = `
-                        <div class="card text-start">
-                            <div class="card-header">
-                                ${post.category}
-                            </div>
-                            <div class="card-body">
-                                <h5 class="card-title">${post.title}</h5>
-                                <p class="card-text">${post.content}</p>
-                                <a href="#" class="btn btn-primary">수정</a>
-                                <a href="#" class="btn btn-primary">삭제</a>
-                            </div>
-                        </div>
-                    `;
-                    cardBody.append(cardHtml);
-                }
-            }
-            else {
-                cardBody.html('<p>No posts in this category.</p>');
-            }
-        } 
+  $(document).ready(function () {
+    // 특정 카테고리를 보여주는 함수
+    function showCategory(target) {
+      $('.category').hide();
+      $('.' + target + '-posts').show();
+    }
+    
+    // 카테고리 링크에 대한 클릭 이벤트
+    $('.nav-link').click(function (e) {
+      e.preventDefault();
+      
+      // 현재 클릭된 카테고리에 "active" 클래스 추가
+      $(this).addClass('active');
+      
+      // 다른 카테고리에서 "active" 클래스 제거
+      $('.nav-link').not(this).removeClass('active');
+      
+      var target = $(this).data('target');
+      showCategory(target);
     });
-</script>
 
+    // 페이지 로드 시 "전체" 카테고리를 기본으로 보여주기
+    showCategory('all');
+
+    // 삭제 확인 모달
+    $('.btn-danger').click(function () {
+      $('#confirmDeleteModal').modal('show');
+    });
+
+    // 모달 내 취소 버튼에 대한 이벤트 리스너 추가
+    $('#confirmDeleteModal .btn-secondary').click(function () {
+      $('#confirmDeleteModal').modal('hide');
+    });
+  });
+</script>
 {% endblock %}

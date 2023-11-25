@@ -23,7 +23,7 @@ def ott_list(request):
 
 
 def ott_detail(request, ott_id):
-    ott = Ott.objects.get(id=ott_id)
+    ott = get_object_or_404(Ott, id=ott_id)
     return render(request, 'ott_posts/ott_detail.html', {'ott': ott})
 
 

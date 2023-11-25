@@ -8,6 +8,10 @@ from django.contrib.auth.decorators import login_required
 from datetime import datetime
 from .models import UserPost
 from django.http import JsonResponse
+from ott_posts.models import Ott
+from prj_posts.models import Prj
+from study_posts.models import Study
+from taxi_posts.models import Ride
 
 def main_view(request):
     return render(request, 'users/main_page.html')
@@ -53,28 +57,17 @@ def logout_view(request):
 @login_required
 def mypage_view(request):
     user = request.user
+    #스크랩
     saved_posts = user.scraped_contests.all()
-    
     today = datetime.now().date()
     
     for contest in saved_posts:
         contest.deadline = (contest.deadline - today).days
+        
+    #자신이 작성한 글 
+    ott_posts = Ott.objects.filter(author=user)
+    prj_posts = Prj.objects.filter(author=user)
+    study_posts = Study.objects.filter(author=user)
+    taxi_posts = Ride.objects.filter(author=user)
 
-    return render(request, 'users/mypage.html', {'saved_posts': saved_posts})
-
-
-@login_required
-def mypage_view(request):
-    # 현재 로그인한 사용자가 작성한 글 가져오기
-    user_posts = UserPost.objects.filter(author=request.user)
-
-    context = {'user_posts': user_posts}
-    return render(request, 'users/mypage.html', context)
-
-def get_posts_by_category(request):
-    category = request.GET.get('category', '')
-    user_posts = UserPost.objects.filter(author=request.user, category=category)
-
-    # user_posts를 JSON 형태로 변환하여 응답
-    posts_data = [{'title': post.title, 'content': post.content, 'category': post.category} for post in user_posts]
-    return JsonResponse({'posts': posts_data})
+    return render(request, 'users/mypage.html', {'saved_posts': saved_posts, 'ott_posts': ott_posts, 'prj_posts': prj_posts, 'study_posts': study_posts, 'taxi_posts': taxi_posts})

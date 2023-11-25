@@ -25,4 +25,5 @@ urlpatterns = [
     path('', include('users.urls')),
     path('prjs/', include('prj_posts.urls')),
     path('study/', include('study_posts.urls')),
+    path('', include('chat.urls')),
 ]

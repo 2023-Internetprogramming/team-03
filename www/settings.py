@@ -44,6 +44,7 @@ INSTALLED_APPS = [
     'ott_posts',
     'users',
     'contest',
+    'chat',
 ]
 
 MIDDLEWARE = [

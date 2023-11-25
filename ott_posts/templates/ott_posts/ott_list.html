@@ -1,20 +1,24 @@
 {% extends 'taxi_posts/base.html' %}
 
-{% block navbar_area %}
-  <nav class="navbar navbar-expand-lg navbar-light bg-light" id="nav">
-    <div class="container-fluid">
-      <form class="form-inline ml-auto" role="search">
-        <input class="form-control mr-sm-2" type="search" placeholder="검색" aria-label="검색">
-        <button class="btn btn-outline-success my-2 my-sm-0" type="submit">검색</button>
-      </form>
-    </div>
-  </nav>
-{% endblock %}
-
 {% block main_area %}
 <br><br>
+    <div class="py-3 mb-4" style="padding-bottom: 0rem!important; margin-bottom: 0rem!important;">
+      <nav class="navbar bg-body-tertiary" style="padding-left: 10%; width: 90%;">
+        <div class="container-fluid">
+          <h2 class="mb-4" style="margin-bottom: 0rem!important;">OTT</h2>
+          <form class="d-flex" role="search">
+            <input class="form-control me-2" type="search" placeholder="검색어 입력...">
+            <button class="btn btn-outline-success" type="submit" style="padding-left: 10px; padding-right: 10px; padding-bottom: 2px;">
+                <span class="material-symbols-outlined" style="font-size:17px">
+                search
+                </span>
+            </button>
+          </form>
+        </div>
+      </nav>
+      <hr style="width: 90%;">
+    </div>
 <div class="container mt-4" id="container">
-  <h2 class="mb-4">OTT List</h2>
   {% if otts %}
     <ul class="list-group">
       {% for ott in otts %}

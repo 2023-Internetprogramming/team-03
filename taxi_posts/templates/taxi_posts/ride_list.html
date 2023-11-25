@@ -2,8 +2,23 @@
 
 {% block main_area %}
 <br><br>
+<div class="py-3 mb-4" style="padding-bottom: 0rem!important; margin-bottom: 0rem!important;">
+  <nav class="navbar bg-body-tertiary" style="padding-left: 10%; width: 90%;">
+    <div class="container-fluid">
+      <h2 class="mb-4" style="margin-bottom: 0rem!important;">Carpool</h2>
+      <form class="d-flex" role="search">
+        <input class="form-control me-2" type="search" placeholder="검색어 입력...">
+        <button class="btn btn-outline-success" type="submit" style="padding-left: 10px; padding-right: 10px; padding-bottom: 2px;">
+            <span class="material-symbols-outlined" style="font-size:17px">
+            search
+            </span>
+        </button>
+      </form>
+    </div>
+  </nav>
+  <hr style="width: 90%;">
+</div>
 <div class="container mt-4" id="container">
-  <h2 class="mb-4">Carpool List</h2>
   {% if rides %}
     <ul class="list-group">
       {% for ride in rides %}

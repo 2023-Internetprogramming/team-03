@@ -2,28 +2,24 @@
 {% extends 'taxi_posts/base.html' %}
 {% load static %}
 
-{% block navbar_area %}
-  <nav class="navbar navbar-expand-lg navbar-light bg-light" id="nav">
-    <div class="container-fluid">
-      <form class="form-inline ml-auto" role="search">
-        <input class="form-control mr-sm-2" type="search" placeholder="검색" aria-label="검색">
-        <button class="btn btn-outline-success my-2 my-sm-0" type="submit">검색</button>
-      </form>
-    </div>
-  </nav>
-{% endblock %}
 
 {% block main_area %}
   <br><br><br>
-  <div class="py-3 mb-4 border-bottom">
-    <div class="container d-flex flex-wrap justify-content-center">
-      <a class="d-flex align-items-center mb-3 mb-lg-0 me-lg-auto link-body-emphasis text-decoration-none" style="margin-right:600px;">
-        <span class="fs-4">공모전</span>
-      </a>
-      <form class="col-12 col-lg-auto mb-3 mb-lg-0" role="search">
-        <input type="search" class="form-control" placeholder="Search..." aria-label="Search">
-      </form>
-      <hr>
+    <div class="py-3 mb-4" style="padding-top: 0rem!important;">
+      <nav class="navbar bg-body-tertiary" style="padding-left: 10%; width: 90%;">
+        <div class="container-fluid">
+          <a class="navbar-brand"><h4>공모전</h4></a>
+          <form class="d-flex" role="search">
+            <input class="form-control me-2" type="search" placeholder="검색어 입력...">
+            <button class="btn btn-outline-success" type="submit" style="padding-left: 10px; padding-right: 10px; padding-bottom: 2px;">
+                <span class="material-symbols-outlined" style="font-size:17px">
+                search
+                </span>
+            </button>
+          </form>
+        </div>
+        <hr>
+      </nav>
     </div>
     <section style="height: 50px;">
         <div class="wrap">
@@ -132,35 +128,6 @@
 <h4 style="margin-bottom: 13.5rem;">아직 게시물이 없습니다.</h4>
 {% endif %}
 <style>
-    .py-3 {
-        padding-top: 1rem!important;
-        padding-bottom: 1rem!important;
-    }
-    .mb-4 {
-        margin-bottom: 1.5rem!important;
-    }
-    .border-bottom {
-        border-bottom: var(--bs-border-width) var(--bs-border-style) var(--bs-border-color)!important;
-    }
-    .fs-4 {
-        font-size: calc(1.275rem + .3vw)!important;
-        width: max-content;
-    }
-    .d-flex {
-        display: flex!important;
-    }
-    section.search, section.tab {
-        position: static;
-        width: 100%;
-        box-sizing: border-box;
-        font-size: 0;
-    }
-    h4{
-       margin-bottom: 500px; 
-    }
-    section.tab {
-        white-space: nowrap;
-    }
     section.tab > div.wrap > a {
         display: inline-block;
         padding: 0 12px;

@@ -1,65 +1,5 @@
 @charset "utf-8";
 
-/* section.search, section.tab {
-  position: static; width: 100%; box-sizing: border-box; font-size: 0; background-color: #fff;
-}
-section.search.fixed, section.tab.fixed {
-  position: fixed; z-index: 5; transition: transform 0.5s;
-}
-section.tab.fixed {
-  border-bottom: 1px solid #d6d6d6;
-}
-
-section.search {
-  padding: 16px 16px 0 16px;
-}
-section.search > div.wrap {
-  margin: 0 auto; max-width: 440px;
-}
-section.search > div.wrap > form {
-  position: relative;
-}
-section.search > div.wrap > form > input.keyword {
-  width: 100%; height: 40px; line-height: 20px; padding: 10px 48px 10px 16px; border-radius: 20px; color: #292929; font-size: 14px; background-color: #f2f2f2;
-}
-section.search > div.wrap > form > input.submit {
-  position: absolute; right: 0; top: 0; width: 40px; height: 40px; color: transparent; font-size: 0; background: transparent url('/images/filter.search.png') no-repeat center center; background-size: 24px 24px;
-} */
-
-section.tab {
-  white-space: nowrap;
-}
-section.tab {
-  overflow-x: auto; overflow-y: hidden; -webkit-overflow-scrolling: touch;
-}
-section.tab::-webkit-scrollbar {
-  display: none; background-color: transparent;
-}
-section.tab > div.wrap {
-  text-align: center;
-}
-section.tab > div.wrap > a {
-  display: inline-block; padding: 0 12px; height: 56px; line-height: 56px; box-sizing: border-box; border-bottom: 3px solid transparent;
-}
-section.tab > div.wrap > a > span.text {
-  color: #292929; font-size: 14px;
-}
-section.tab > div.wrap > a > span.count {
-  margin-left: 4px; color: #a6a6a6; font-size: 10px; font-weight: bold; letter-spacing: 0;
-}
-section.tab > div.wrap > a > span.count.highlight {
-  color: #ffa81f;
-}
-section.tab > div.wrap > a.active {
-  border-bottom-color: #1dcdff;
-}
-section.tab > div.wrap > a.active > span.text {
-  color: #0aafdf; font-weight: bold;
-}
-section.tab > div.wrap > a.active > span.count {
-  color: #0aafdf;
-}
-
 * {
     margin: 0; padding: 0; border: 0; -webkit-touch-callout: none;
   }
@@ -168,7 +108,6 @@ a {
 }
 
 body {
-    font-family: "맑은 고딕", sans-serif;
     letter-spacing: -0.5px;
 }
 
@@ -363,5 +302,14 @@ body {
     font-size: 14px;
   }
 
+  ::after, ::before {
+    box-sizing: revert;
+  }
+
+  @media (min-width: 992px){
+    .container, .container-lg, .container-md, .container-sm {
+      max-width: 1000px;
+    }
+  }
 
 

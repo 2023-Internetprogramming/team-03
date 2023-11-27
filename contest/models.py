@@ -20,6 +20,9 @@ class Contest(models.Model):
     contest_view_count = models.IntegerField(default=0)
     contest_category = models.CharField(max_length=30, choices=CATEGORY_CHOICES, default='기획/아이디어')
     scraped_by_users = models.ManyToManyField(User, related_name='scraped_contests', blank=True)
+    
+    def __str__(self):
+        return self.contest_title
 
 #댓글
 class Comment(models.Model):

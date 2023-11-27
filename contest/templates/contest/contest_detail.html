@@ -26,10 +26,8 @@
                 <a class="scrap">
                     <form method="post" action="{% url 'contest_detail' contest.id %}" id="scrapForm">
                         {% csrf_token %}
-                        <button type="submit" name="scrap" onclick="handleScrap(event)">
-                            <span class="material-symbols-outlined" style="background-color: white; font-size: 28px;">
-                                bookmark
-                            </span>
+                        <button type="button" name="scrap" onclick="handleScrap()">
+                            <img id="scrapImage" src="{% static 'contest/image/bookmark.png' %}" style="background-color: white; width: 29px;">
                         </button>
                     </form>
                 </a>
@@ -42,13 +40,13 @@
             <a href="{% url 'contest_detail' contest.id %}" class="active">
                 <span class="text">소개</span>
             </a>
-            <a href="{% url 'prj_list' %}" data-menu="team">
+            <a href="{% url 'list_contest' contest.id %}">
                 <span class="text">팀원 모집</span>
-                <span class="teamcount count">0</span>
+                <span class="count">{{ contest.prj_set.count }}</span>
             </a>
             <a href="{% url 'comment' contest.id %}" data-menu="comment">
                 <span class="text">댓글</span>
-                <span class="commentcount count highlight">3</span>
+                <span class="count">{{ comments_count  }}</span>
             </a>
         </div>
     </section>
@@ -101,25 +99,50 @@
                 <br>- 틱톡 : <a href="https://www.campuspick.com/linkclick?referrer_type=activity&amp;referrer_id=24067&amp;url=https%3A%2F%2Fwww.tiktok.com%2F%40wippy_official" target="_blank" rel="nofollow">https://www.tiktok.com/@wippy_official</a>
             </article>
         </div>
-            <script>
-                function handleScrap(event) {
-                    jQuery.ajax({
-                        url: "{% url 'scrap_contest' contest.id %}",
-                        method: "POST",
-                        data: { csrfmiddlewaretoken: '{{ csrf_token }}', contest_id: {{ contest.id }} },
-                        success: function (data) {
-                            console.log(data);
-                            alert(data.message);
-                            if (data.status === 'success') {
-                                // 추가 작업
-                            }
-                        },
-                        error: function (error) {
-                            console.log(error);
-                        },
-                    });
+        <script>
+            // Function to set the initial state of the scrap button based on localStorage
+            function setInitialScrapState() {
+                var scrapButton = document.getElementById('scrapImage');
+                var storedState = localStorage.getItem('scrapState');
+        
+                if (storedState === 'scrap') {
+                    scrapButton.src = "{% static 'contest/image/bookmark_FILL.png' %}";
                 }
-            </script>
+            }
+        
+            // Function to handle the scrap button click
+            function handleScrap() {
+                var scrapButton = document.getElementById('scrapImage');
+                var csrfToken = '{{ csrf_token }}';
+        
+                jQuery.ajax({
+                    url: "{% url 'scrap_contest' contest.id %}",
+                    method: "POST",
+                    data: { csrfmiddlewaretoken: csrfToken, contest_id: {{ contest.id }} },
+                    success: function (data) {
+                        console.log(data);
+                        alert(data.message);
+        
+                        if (data.status === 'success') {
+                            // Toggle the image source
+                            if (scrapButton.src.includes('bookmark.png')) {
+                                scrapButton.src = "{% static 'contest/image/bookmark_FILL.png' %}";
+                                localStorage.setItem('scrapState', 'scrap');
+                            } else {
+                                scrapButton.src = "{% static 'contest/image/bookmark.png' %}";
+                                localStorage.removeItem('scrapState');
+                            }
+                        }
+                    },
+                    error: function (error) {
+                        console.log(error);
+                    },
+                });
+            }
+        
+            // Call setInitialScrapState when the page is loaded
+            document.addEventListener('DOMContentLoaded', setInitialScrapState);
+        </script>
     </div>
     <style>
         section.title > div.wrap > div.content > p.info > span {
@@ -128,6 +151,21 @@
             line-height: 18px;
             color: #a6a6a6;
             font-size: 12px;
+            letter-spacing: 0;
+        }
+        section.tab > div.wrap > a > span.count {
+            margin-left: 4px;
+            color: #a6a6a6;
+            font-size: 10px;
+            font-weight: bold;
+            letter-spacing: 0;
+        }
+
+        span.count {
+            margin-left: 4px;
+            color: #a6a6a6;
+            font-size: 12px;
+            font-weight: bold;
             letter-spacing: 0;
         }
     </style>

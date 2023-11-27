@@ -81,9 +81,9 @@
                 <a href="{% url 'contest_detail' contest.id %}">
                     <span class="text">소개</span>
                 </a>
-                <a href="{% url 'prj_list' %}">
+                <a href="{% url 'list_contest' contest.id %}">
                     <span class="text">팀원 모집</span>
-                    <span class="count">0</span>
+                    <span class="count">{{ contest.prj_set.count }}</span>
                 </a>
                 <a href="{% url 'comment' contest.id %}" data-menu="comment">
                     <span class="text">댓글</span>
@@ -133,23 +133,22 @@
         line-height: 56px;
         box-sizing: border-box;
         border-bottom: 3px solid transparent;
-        display: inline-block; /* Add this line to make sure they stay in a line */
+        display: inline-block; 
     }
     section.tab > div.wrap {
         box-sizing: border-box;
-        white-space: nowrap; /* Prevent line break */
-        overflow-x: auto; /* Add horizontal scrollbar if needed */
+        white-space: nowrap; 
+        overflow-x: auto; 
     }
     span.text1 {
         padding-left: 5%;
     }
 
-    /* Add media query for smaller screens */
     @media (max-width: 768px) {
         section.tab > div.wrap > a {
-            white-space: normal; /* Allow line break for smaller screens */
-            display: block; /* Stack items vertically for smaller screens */
-            margin-bottom: 5px; /* Add space between items */
+            white-space: normal; 
+            display: block; 
+            margin-bottom: 5px; 
         }
     }
 </style>

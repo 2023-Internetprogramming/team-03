@@ -35,7 +35,7 @@ def ride_create(request):
             new_item = form.save(commit=False)
             new_item.author = request.user
             new_item.save()
-            return HttpResponseRedirect('/rides/')
+            return HttpResponseRedirect('ride_create')
         
     form = RideForm()
     return render(request, 'taxi_posts/ride_form.html', {'form': form})

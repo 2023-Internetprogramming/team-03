@@ -14,15 +14,25 @@
                 <img src="https://picsum.photos/seed/{{ contest.id }}/800/200" class="card-img-top" alt="random_image">
             {% endif %}
             <div class="content">
-                <h1>{{ contest.contest_title }}</h1>
+                <h1 style="font-size: 20px;">{{ contest.contest_title }}</h1>
                 <p class="info">
-                    <span class="viewcount">
-                        <span class="material-symbols-outlined" style="font-size: 11px;">
+                    <span class="viewcount" style="font-size: 15px;">
+                        <span class="material-symbols-outlined" style="font-size: 13px; padding-top: 6px;">
                             visibility
                         </span>
                         {{ contest.contest_view_count }}
                     </span>
                 </p>
+                <a class="scrap">
+                    <form method="post" action="{% url 'contest_detail' contest.id %}" id="scrapForm">
+                        {% csrf_token %}
+                        <button type="submit" name="scrap" onclick="handleScrap(event)">
+                            <span class="material-symbols-outlined" style="background-color: white; font-size: 28px;">
+                                bookmark
+                            </span>
+                        </button>
+                    </form>
+                </a>
             </div>
         </div>
     </section>
@@ -91,17 +101,6 @@
                 <br>- 틱톡 : <a href="https://www.campuspick.com/linkclick?referrer_type=activity&amp;referrer_id=24067&amp;url=https%3A%2F%2Fwww.tiktok.com%2F%40wippy_official" target="_blank" rel="nofollow">https://www.tiktok.com/@wippy_official</a>
             </article>
         </div>
-        <div class="bottombar threecols">
-            <a class="website" href="https://www.campuspick.com/linkclick?referrer_type=activity&amp;referrer_id=24067&amp;url=https%3A%2F%2Ftally.so%2Fr%2Fw7Nl9z" target="_blank" rel="nofollow">
-                <span>웹사이트 바로가기</span>
-            </a>
-            <a class="scrap">
-                <form method="post" action="{% url 'contest_detail' contest.id %}" id="scrapForm">
-                    {% csrf_token %}
-                    <button type="submit" name="scrap" onclick="handleScrap(event)">찜하기</button>
-                </form>
-            </a>
-
             <script>
                 function handleScrap(event) {
                     jQuery.ajax({
@@ -121,10 +120,6 @@
                     });
                 }
             </script>
-            <a class="share">
-                <span>공유</span>
-            </a>
-        </div>
     </div>
     <style>
         section.title > div.wrap > div.content > p.info > span {

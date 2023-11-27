@@ -58,6 +58,7 @@ def login_view(request):
 
     return render(request, 'users/login.html', {'form': form})
 
+
 def logout_view(request):
     logout(request)
     return redirect('main')
@@ -66,7 +67,10 @@ def logout_view(request):
 @login_required
 def mypage_view(request):
     user = request.user
-    user_profile = UserProfile.objects.get(user=request.user)
+    try:
+        user_profile = UserProfile.objects.get(user=user)
+    except UserProfile.DoesNotExist:
+        user_profile = None 
     #스크랩
     saved_posts = user.scraped_contests.all()
     today = datetime.now().date()
@@ -79,6 +83,7 @@ def mypage_view(request):
     prj_posts = Prj.objects.filter(author=user)
     study_posts = Study.objects.filter(author=user)
     taxi_posts = Ride.objects.filter(author=user)
+    
 
     return render(request, 'users/mypage.html', {'saved_posts': saved_posts, 'ott_posts': ott_posts, 'prj_posts': prj_posts, 'study_posts': study_posts, 'taxi_posts': taxi_posts, 'user_profile': user_profile})
 

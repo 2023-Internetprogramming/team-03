@@ -45,8 +45,12 @@
             </a>
         </section>
   </div>
-<div id="container1" style="padding-top: 65px; flex-grow: 1;" >    
-    {% if contests %}
+
+
+<div id="container1" style="padding-top: 65px; flex-grow: 1;" >  
+{% if contests %}
+    <h4>"{{ request.GET.q }}" 검색 결과:</h4>
+    <!-- Add the loop for displaying contests as before -->
     {% for contest in contests %}
     <div class="list">
         <div class="item">
@@ -85,17 +89,20 @@
                     <span class="text">팀원 모집</span>
                     <span class="count">0</span>
                 </a>
-                <a href="{% url 'comment' contest.id %}" data-menu="comment">
+                <a href="{% url 'contest_detail' contest.id %}">
                     <span class="text">댓글</span>
-                    <span class="commentcount count highlight">{{ contest.comments_count }}</span>
+                    <span class="count">0</span>
                 </a>
             </div>
         </div>
     </div>
     {% endfor %}
+    {% else %}
+        <h4>"{{ request.GET.q }}" 대한 게시물이 없습니다. </h4>
+    {% endif %}
 </div>
 
-<!-- 페이지네이션 -->
+    <!-- 페이지네이션 -->
 <br><br>
 <nav aria-label="Page navigation example">
     <ul class="pagination justify-content-center">
@@ -122,12 +129,9 @@
         {% endif %}
     </ul>
 </nav>
-
-{% else %}
-<h4 style="margin-bottom: 13.5rem;">아직 게시물이 없습니다.</h4>
-{% endif %}
 <style>
     section.tab > div.wrap > a {
+        display: inline-block;
         padding: 0 12px;
         height: 56px;
         line-height: 56px;

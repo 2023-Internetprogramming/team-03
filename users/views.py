@@ -6,12 +6,13 @@ from .forms import SignUpForm
 from django.contrib.auth import logout
 from django.contrib.auth.decorators import login_required
 from datetime import datetime
-from .models import UserPost
-from django.http import JsonResponse
 from ott_posts.models import Ott
 from prj_posts.models import Prj
 from study_posts.models import Study
 from taxi_posts.models import Ride
+from .forms import EditProfileForm
+from .models import UserProfile
+
 
 def main_view(request):
     return render(request, 'users/main_page.html')
@@ -21,9 +22,15 @@ def signup_view(request):
         form = SignUpForm(request.POST)
         if form.is_valid():
             user = form.save()
-            messages.success(request, f"환영합니다, {user.username}님! 회원가입에 성공했습니다.")
+            
+            UserProfile.objects.create(
+                user=user,
+                phone_number=form.cleaned_data['phone_number'],
+                real_name=form.cleaned_data['real_name']
+            )
+            
             logout(request)  # 현재 사용자 로그아웃
-            return render(request, 'users/signup.html', {'form': form, 'success_modal': True})
+            return render(request, 'users/signup.html', {'form': form, 'success_modal': True, 'user_profile': user.userprofile})
         else:
             for field, errors in form.errors.items():
                 for error in errors:
@@ -44,6 +51,8 @@ def login_view(request):
             login(request, user)
             
             return redirect('main')
+        else:
+            messages.error(request, '유효하지 않은 ID 또는 비밀번호입니다. 다시 시도해주세요.')
     else:
         form = AuthenticationForm()
 
@@ -57,6 +66,7 @@ def logout_view(request):
 @login_required
 def mypage_view(request):
     user = request.user
+    user_profile = UserProfile.objects.get(user=request.user)
     #스크랩
     saved_posts = user.scraped_contests.all()
     today = datetime.now().date()
@@ -70,4 +80,22 @@ def mypage_view(request):
     study_posts = Study.objects.filter(author=user)
     taxi_posts = Ride.objects.filter(author=user)
 
-    return render(request, 'users/mypage.html', {'saved_posts': saved_posts, 'ott_posts': ott_posts, 'prj_posts': prj_posts, 'study_posts': study_posts, 'taxi_posts': taxi_posts})
+    return render(request, 'users/mypage.html', {'saved_posts': saved_posts, 'ott_posts': ott_posts, 'prj_posts': prj_posts, 'study_posts': study_posts, 'taxi_posts': taxi_posts, 'user_profile': user_profile})
+
+
+@login_required
+def editmypage_view(request):
+    user = request.user
+    
+    if request.method == 'POST':
+        profile_form = EditProfileForm(request.POST, request.FILES, instance=request.user.userprofile)
+        if profile_form.is_valid():
+            profile_form.save()
+            messages.success(request, "프로필이 성공적으로 업데이트되었습니다.")
+            return redirect('mypage')
+        else:
+            messages.error(request, "프로필 업데이트에 실패했습니다.")
+    else:
+        profile_form = EditProfileForm(instance=request.user.userprofile)
+
+    return render(request, 'users/edit.html', {'profile_form': profile_form})

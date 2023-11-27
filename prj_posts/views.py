@@ -5,6 +5,7 @@ from .forms import PrjForm
 from django.http import HttpResponseRedirect, HttpResponseForbidden
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 from django.contrib.auth.decorators import login_required
+from django.db.models import Q
 
 
 def prj_list(request):
@@ -32,7 +33,8 @@ def prj_list(request):
 
 def prj_detail(request, prj_id):
     prj = Prj.objects.get(id=prj_id)
-    return render(request, 'prj_posts/prj_detail.html', {'prj': prj})
+    room_name_json = f'/chat/prj{prj_id}/'
+    return render(request, 'prj_posts/prj_detail.html', {'prj': prj, 'room_name_json': room_name_json})
 
 
 @login_required
@@ -80,3 +82,20 @@ def prj_update(request, id):
         form = PrjForm(instance=item)
 
     return render(request, "prj_posts/prj_update.html", {'form': form})
+
+
+#검색
+def prjsearchResult(request):
+    if 'q' in request.GET:
+        query = request.GET.get('q')
+        prjs = Prj.objects.filter(
+            Q(prj_name__icontains=query) |
+            Q(user_major__icontains=query) |
+            Q(user_grade__icontains=query) |
+            Q(post_content__icontains=query) |
+            Q(prj_membernum__icontains=query) |
+            Q(post_title__icontains=query)
+        )
+        return render(request, 'prj_posts/prj_search.html', {'query': query, 'prjs': prjs})
+    else:
+        return render(request, 'prj_posts/prj_search.html')

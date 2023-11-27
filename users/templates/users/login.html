@@ -32,6 +32,16 @@
   </div>
   
     <script>
+
+     // 문서가 로드되면 실행될 JavaScript 코드
+    $(document).ready(function () {
+      // 서버에서 전달된 에러 메시지가 있는지 확인
+      {% if messages %}
+        let errorMessage = "{% for message in messages %}{{ message }}{% endfor %}";
+        alert(errorMessage); // 에러 메시지를 알림창으로 표시
+      {% endif %}
+    });
+
       let id = $('#id');
       let pw = $('#pw');
       let btn = $('#btn');

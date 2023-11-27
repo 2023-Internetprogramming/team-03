@@ -4,6 +4,7 @@ from .forms import StudyForm
 from django.http import HttpResponseRedirect, HttpResponseForbidden
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 from django.contrib.auth.decorators import login_required
+from django.db.models import Q
 
 
 def study_list(request):
@@ -30,12 +31,14 @@ def study_list(request):
 
 def study_detail(request, study_id):
     study = Study.objects.get(pk=study_id)
+    room_name_json = f'/chat/study{study_id}/'
 
     return render(
         request,
         'study_posts/study_detail.html',
         {
-            'study' : study
+            'study' : study,
+            'room_name_json': room_name_json
         }
     )
 
@@ -84,3 +87,21 @@ def study_update(request, id):
         form = StudyForm(instance=item)
     
     return render(request, "study_posts/study_update.html", {'form': form})
+
+
+#검색
+def studysearchResult(request):
+    if 'q' in request.GET:
+        query = request.GET.get('q')
+        studys = Study.objects.filter(
+            Q(post_title__icontains=query) |
+            Q(user_name__icontains=query) |
+            Q(user_major__icontains=query) |
+            Q(user_grade__icontains=query) |
+            Q(study_type__icontains=query) |
+            Q(study_membernum__icontains=query) |
+            Q(post_content__icontains=query)
+        )
+        return render(request, 'study_posts/study_search.html', {'query': query, 'studys': studys})
+    else:
+        return render(request, 'study_posts/study_search.html')

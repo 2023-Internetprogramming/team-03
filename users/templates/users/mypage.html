@@ -4,6 +4,11 @@
 {% block main_area %}
 <link rel="stylesheet" type="text/css" href="{% static 'contest/css/list.css' %}">
 <br><br><br><br><br><br><br><br>
+
+<h2>마이페이지</h2>
+<p>이름: {{ user_profile.real_name }}</p>
+<p>전화번호: {{ user_profile.phone_number }}</p>
+
 <h2>스크랩한 공모전</h2>
 {% for contest in saved_posts %}
   <div class="row mb-2">

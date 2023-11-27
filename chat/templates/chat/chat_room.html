@@ -1,31 +1,10 @@
-<!DOCTYPE html>
-<html lang="ko">
+{% extends 'taxi_posts/base.html' %}
 {% load static %}
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Chat Page</title>
-    <link rel="stylesheet" href="{% static 'chat/css/chat.css' %}">
-    <!--<link rel="icon" href="favicon.png" />-->
-    <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
-    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
-    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@48,400,0,0" />
-</head>
 
-<body style = "margin:0px">
-    <div class="header">
-        <a href= "board/board.html">
-            <span class="material-symbols-outlined" id="back">
-            arrow_back_ios_new
-            </span>
-        </a>
-        <div style="padding-right: 50px;">
-            채팅방
-        </div>
-        <div></div>
-    <!-- n -->
-    </div>
+{% block main_area %}
+<link rel="stylesheet" href="{% static 'chat/css/chat.css' %}">
 
+<body style = "margin:0px; height: 100vh;">
     <div class="chat-container">
         <div class="chat-box">
             <div class="chat-header">
@@ -93,6 +72,4 @@
     getMessages();
     setInterval(getMessages, 5000);  // messages 5초마다 업데이트
 </script>
-
-
-</html>
+{% endblock %}

@@ -34,7 +34,7 @@
         </div>
       </div>
       <a href="{% url 'ott_list' %}" class="btn btn-secondary">목록으로 돌아가기</a>
-      <a href="{% url 'chat_room' room_name='ott_' %}">
+      <a href="{{ room_name_json }}">
         <div id="join-button">
             <button id="join"><span>채팅 참여</span></button>
         </div>
@@ -47,37 +47,4 @@
       }
     </script>
     </div>
-    <style>
-      #join {
-        background-color: #8b2845;
-        color: white;
-        padding: 10px 20px;
-        border: none;
-        border-radius: 5px;
-        cursor: pointer;
-        transition: all 0.5s;
-    }
-    
-    #join span{
-        position: relative;
-        transition: 0.5s;
-    }
-    
-    #join span:after{
-        content: '\00bb';
-        position: absolute;
-        transition: 0.5s;
-        opacity: 0;
-        right: -20px;
-    }
-    
-    #join:hover span{
-        padding-right: 25px;
-    }
-    
-    #join:hover span:after {
-        opacity: 1;
-        right: 0;
-    }
-  </style>
 {% endblock %}

@@ -16,14 +16,9 @@ class Study(models.Model):
     post_title = models.CharField(max_length=15)
     user_name = models.CharField(max_length=5)
     user_major = models.CharField(max_length=15)
-    user_grade = models.IntegerField(default=1, validators=[
-        MaxValueValidator(6),
-        MinValueValidator(1)
-    ])
-    study_type = models.CharField(max_length=15, choices=TYPE_CHOICES)
-    study_membernum = models.IntegerField(default=1, validators=[
-        MinValueValidator(1)
-    ])
+    user_grade = models.IntegerField(default=1)
+    study_type = models.CharField(max_length=15, choices=TYPE_CHOICES, default="학업")
+    study_membernum = models.IntegerField(default=1)
 
     post_content = models.TextField()
 

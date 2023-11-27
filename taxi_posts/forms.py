@@ -3,6 +3,13 @@ from .models import Ride
 from datetime import datetime
 
 class RideForm(forms.ModelForm):
+    
+    available_seats = forms.TypedChoiceField(
+        label='모집 인원',
+        choices=[(1, '1'), (2, '2'), (3, '3'), (4, '4')],
+        coerce=int
+    )
+    
     class Meta:
         model = Ride
         exclude = ['author']

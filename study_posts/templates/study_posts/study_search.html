@@ -20,18 +20,18 @@
 </div>
 <div class="container mt-4" id="container">
     {% if studys %}
-        <ul class="list-group">
-            {% for study in studys %}
-            <li class="list-group-item d-flex justify-content-between align-items-center">
-                <a href="{% url 'study_detail' study.id %}" style="width: 100%; display: block;">[{{ study.user_major }}] {{ study.post_title }}</a>
-                <span>
-                    <a href="{% url 'study_detail' study.id %}">
-                      <span class="badge badge-info">{{ study.study_type }}</span>
-                    </a>
-                </span>
-            </li>
-            {% endfor %}
-        </ul>
+    <ul class="list-group">
+        {% for study in studys %}
+        <li class="list-group-item d-flex justify-content-between align-items-center">
+            <a href="{% url 'study_detail' study.id %}" style="width: 100%; display: block;">[{{ study.user_major }}] {{ study.post_title }}</a>
+            <span>
+                <a href="{% url 'study_detail' study.id %}">
+                  <span class="badge badge-info">{{ study.study_type }}</span>
+                </a>
+            </span>
+        </li>
+        {% endfor %}
+    </ul>
 
     <!--페이지네이션-->
     <br><br>
@@ -62,30 +62,13 @@
     </nav>
 
     {% else %}
-    <h3>아직 게시물이 없습니다.</h3>
+        <h4>"{{ request.GET.q }}" 대한 게시물이 없습니다. </h4>
     {% endif %}
 
-    <a href="{% url 'study_create' %}" id="create-button" onclick="event.preventDefault();">
+    <a href="{% url 'study_create' %}">
         <span class="material-symbols-outlined" id="plus">
             edit_square
         </span>
     </a>
 </div>
-<script>
-    // JavaScript로 로그인 상태 확인 및 알림 창 표시
-    document.addEventListener('DOMContentLoaded', function () {
-      const createButton = document.getElementById('create-button');
-  
-      createButton.addEventListener('click', function () {
-        // 사용자가 로그인 상태인지 확인
-        {% if user.is_authenticated %}
-          window.location.href = '{% url "study_create" %}';
-        {% else %}
-          // 로그인 상태가 아닌 경우, 로그인 페이지로 이동
-          alert('로그인이 필요합니다. 로그인 페이지로 이동합니다.');
-          window.location.href = '{% url "login" %}';
-        {% endif %}
-      });
-    });
-  </script>
 {% endblock %}

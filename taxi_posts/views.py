@@ -5,6 +5,7 @@ from django.http import HttpResponseRedirect, HttpResponseForbidden
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 from django.shortcuts import get_object_or_404
 from django.contrib.auth.decorators import login_required
+from django.db.models import Q
 
 def ride_list(request):
     rides = Ride.objects.order_by('-pk')
@@ -22,7 +23,8 @@ def ride_list(request):
 
 def ride_detail(request, ride_id):
     ride = Ride.objects.get(id=ride_id)
-    return render(request, 'taxi_posts/ride_detail.html', {'ride': ride})
+    room_name_json = f'/chat/ride{ride_id}/'
+    return render(request, 'taxi_posts/ride_detail.html', {'ride': ride, 'room_name_json': room_name_json})
 
 
 @login_required
@@ -71,3 +73,26 @@ def ride_update(request, id):
         form = RideForm(instance=item)
 
     return render(request, 'taxi_posts/ride_update.html', {'form': form})
+
+
+#검색
+def ridesearchResult(request):
+    if 'q' in request.GET:
+        query = request.GET.get('q')
+        rides = Ride.objects.filter(
+            Q(departure_location__icontains=query) |
+            Q(destination__icontains=query) |
+            Q(departure_time__icontains=query) |
+            Q(available_seats__icontains=query) |
+            Q(description__icontains=query) 
+        )
+        return render(request, 'taxi_posts/ride_search.html', {'query': query, 'rides': rides})
+    else:
+        return render(request, 'taxi_posts/ride_search.html')
+    
+    
+    
+
+
+def map(request):
+    return render(request, 'taxi_posts/map.html')

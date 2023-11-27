@@ -8,6 +8,9 @@ from django.views.decorators.http import require_POST
 from django.contrib.auth.decorators import login_required
 from django.http import HttpResponse
 from datetime import datetime, timezone
+from django.db.models import Q
+from django.db.models import Count
+
 
 
 
@@ -22,9 +25,11 @@ def contest_list(request):
 
     for contest in contests:
         contest.deadline = (contest.deadline - today).days
+        contests = contests.annotate(comments_count=Count('comment'))
 
     page = request.GET.get('page', 1)
     paginator = Paginator(contests, 8)
+
 
     try:
         contests = paginator.page(page)
@@ -67,8 +72,10 @@ def contest_detail(request, contest_id):
         viewed_contests.append(contest_id)
         request.session['viewed_contests'] = viewed_contests
         request.session.modified = True
+        
+    comments_count = Comment.objects.filter(contest_post=contest).count()
     
-    return render(request, 'contest/contest_detail.html', {'contest': contest})
+    return render(request, 'contest/contest_detail.html', {'contest': contest, 'comments_count': comments_count})
 
 
 @require_POST
@@ -102,3 +109,17 @@ def comment(request, contest_id):
             comment.save()
     
     return render(request, 'contest/comment.html', {'comments': comments, 'contest': contest})
+
+
+#검색
+def searchResult(request):
+    if 'q' in request.GET:
+        query = request.GET.get('q')
+        contests = Contest.objects.filter(
+            Q(contest_title__icontains=query) |
+            Q(contest_description__icontains=query) |
+            Q(contest_category__icontains=query)
+        )
+        return render(request, 'contest/contest_search.html', {'query': query, 'contests': contests})
+    else:
+        return render(request, 'contest/contest_search.html')

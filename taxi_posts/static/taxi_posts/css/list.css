@@ -106,3 +106,35 @@ footer {
     padding-bottom: 10vh;
     flex-grow: 1;
 }
+
+#join {
+    background-color: #8b2845;
+    color: white;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: all 0.5s;
+}
+
+#join span{
+    position: relative;
+    transition: 0.5s;
+}
+
+#join span:after{
+    content: '\00bb';
+    position: absolute;
+    transition: 0.5s;
+    opacity: 0;
+    right: -20px;
+}
+
+#join:hover span{
+    padding-right: 25px;
+}
+
+#join:hover span:after {
+    opacity: 1;
+    right: 0;
+}

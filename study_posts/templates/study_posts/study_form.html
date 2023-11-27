@@ -4,7 +4,7 @@
     <br><br>
     <div class="container mt-4" id="container">
       <h2>스터디 모집하기</h2><br>
-      <form action="{% url 'study_create' %}" method="post" class="form">
+      <form action="{% url 'study_create' %}" method="post" class="study_form">
         {% csrf_token %}
         <table>
           {{ form.as_table }}
@@ -13,4 +13,165 @@
       </form>
       <a href="{% url 'study_list' %}" class="btn btn-secondary mt-3">Back to Ride List</a>
     </div>
+    <script>
+      document.addEventListener('DOMContentLoaded', function() {
+        const gradeField = document.getElementById('id_user_grade');
+        const majorField = document.getElementById('id_user_major');
+        const studyTypeField = document.getElementById('id_study_type');
+        const postContentField = document.getElementById('id_post_content');
+    
+        // 학년, 학과, 스터디 타입에 따른 추천 스터디
+        const recommendations = {
+            '1': {
+                '컴퓨터공학전공': {
+                    '학업': '추천 스터디 : Python, C언어',
+                    '어학': '추천 스터디 : 토익',
+                    '자격증': '추천 스터디 : 리눅스 마스터',
+                },
+                '디지털소프트웨어공학부': {
+                  '학업': '추천 스터디 : Python, C언어, 데이터 분석',
+                  '어학': '추천 스터디 : 토익',
+                  '자격증': '추천 스터디 : 토익',
+                },
+                'IT미디어공학전공': {
+                  '학업': '추천 스터디 : Python, C언어, IT미디어개론',
+                  '어학': '추천 스터디 : 토익',
+                  '자격증': '추천 스터디 : 토익',
+                },
+                '소프트웨어전공': {
+                  '학업': '추천 스터디 : Python, C언어',
+                  '어학': '추천 스터디 : 토익',
+                  '자격증': '추천 스터디 : 토익',
+                },
+                '사이버보안전공': {
+                  '학업': '추천 스터디 : Python, C언어',
+                  '어학': '추천 스터디 : 토익',
+                  '자격증': '추천 스터디 : 토익',
+                },
+                '경영학전공': {
+                  '학업': '추천 스터디 : 경영, 마케팅',
+                  '어학': '추천 스터디 : 토익, 비즈니스 영어',
+                  '자격증': '추천 스터디 : 컴퓨터활용능력',
+                },
+            },
+            '2': {
+                '컴퓨터공학전공': {
+                    '학업': '추천 스터디 : Java, Django, C++, 자료구조',
+                    '어학': '추천 스터디 : 토익',
+                    '자격증': '추천 스터디 : 네트워크 관리사',
+                },
+                '디지털소프트웨어공학부': {
+                  '학업': '추천 스터디 : 데이터 분석',
+                  '어학': '추천 스터디 : 토익',
+                  '자격증': '추천 스터디 : 토익',
+                },
+                'IT미디어공학전공': {
+                  '학업': '추천 스터디 : Python, C언어, 영상분석과 제작',
+                  '어학': '추천 스터디 : 토익',
+                  '자격증': '추천 스터디 : 토익',
+                },
+                '소프트웨어전공': {
+                  '학업': '추천 스터디 : 데이터 구조',
+                  '어학': '추천 스터디 : 토익',
+                  '자격증': '추천 스터디 : 토익',
+                },
+                '사이버보안전공': {
+                  '학업': '추천 스터디 : Python, C언어',
+                  '어학': '추천 스터디 : 토익',
+                  '자격증': '추천 스터디 : 토익',
+                },
+                '경영학전공': {
+                  '학업': '추천 스터디 : 경영전산처리, 경영수학',
+                  '어학': '추천 스터디 : 토익',
+                  '자격증': '추천 스터디 : 컴퓨터활용능력',
+                },
+            },
+            '3': {
+              '컴퓨터공학전공': {
+                '학업': '추천 스터디 : 데이터베이스, 알고리즘, 컴퓨터네트워크',
+                '어학': '추천 스터디 : 토익',
+                '자격증': '추천 스터디 : 정보처리산업기사',
+              },
+              '디지털소프트웨어공학부': {
+                '학업': '추천 스터디 : 데이터 분석',
+                '어학': '추천 스터디 : 토익',
+                '자격증': '추천 스터디 : 토익',
+              },
+              'IT미디어공학전공': {
+                '학업': '추천 스터디 : 머신비전, 엔진프로그래밍',
+                '어학': '추천 스터디 : 토익',
+                '자격증': '추천 스터디 : 토익',
+              },
+              '소프트웨어전공': {
+                '학업': '추천 스터디 : JSP 서버, 딥러닝',
+                '어학': '추천 스터디 : 토익',
+                '자격증': '추천 스터디 : 토익',
+              },
+              '사이버보안전공': {
+                '학업': '추천 스터디 : Python, C언어',
+                '어학': '추천 스터디 : 토익',
+                '자격증': '추천 스터디 : 토익',
+              },
+              '경영학전공': {
+                '학업': '추천 스터디 : 재무관리, 마케팅조사론',
+                '어학': '추천 스터디 : 토익',
+                '자격증': '추천 스터디 : 토익',
+              },
+            },
+            '4': {
+              '컴퓨터공학전공': {
+                '학업': '추천 스터디 : 인공지능, 인터넷보안',
+                '어학': '추천 스터디 : 토익',
+                '자격증': '추천 스터디 : 정보처리기사',
+              },
+              '디지털소프트웨어공학부': {
+                '학업': '추천 스터디 : Python, C언어, 데이터 분석',
+                '어학': '추천 스터디 : 토익',
+                '자격증': '추천 스터디 : 토익',
+              },
+              'IT미디어공학전공': {
+                '학업': '추천 스터디 : 시스템소프트웨어, 데이터베이스응용',
+                '어학': '추천 스터디 : 토익',
+                '자격증': '추천 스터디 : 토익',
+              },
+              '소프트웨어전공': {
+                '학업': '추천 스터디 : 사물인터넷, 머신러닝',
+                '어학': '추천 스터디 : 토익',
+                '자격증': '추천 스터디 : 토익',
+              },
+              '사이버보안전공': {
+                '학업': '추천 스터디 : Python, C언어',
+                '어학': '추천 스터디 : 토익',
+                '자격증': '추천 스터디 : 토익',
+              },
+              '경영학전공': {
+                '학업': '추천 스터디 : 국제금융시장론',
+                '어학': '추천 스터디 : 토익',
+                '자격증': '추천 스터디 : 토익',
+              },
+            }
+        };
+    
+        function updatePostContent() {
+            const selectedGrade = gradeField.value;
+            const selectedMajor = majorField.value;
+            const selectedStudyType = studyTypeField.value;
+    
+            // 선택한 학년, 학과, 스터디 타입에 대한 권장사항이 있는지 확인
+            const recommendation = recommendations[selectedGrade] && 
+                                  recommendations[selectedGrade][selectedMajor] &&
+                                  recommendations[selectedGrade][selectedMajor][selectedStudyType];
+    
+            // post_content 필드 업데이트
+            postContentField.value = recommendation || ''; // 권장사항이 없으면 빈 문자열을 설정합니다.
+        }
+    
+        gradeField.addEventListener('change', updatePostContent);
+        majorField.addEventListener('change', updatePostContent);
+        studyTypeField.addEventListener('change', updatePostContent);
+    
+        // 페이지 로딩 시 초기 업데이트
+        updatePostContent();
+    });
+    </script>
 {% endblock %}

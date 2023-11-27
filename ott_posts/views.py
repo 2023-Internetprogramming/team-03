@@ -5,6 +5,7 @@ from django.http import HttpResponseRedirect, HttpResponseForbidden
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 from django.shortcuts import get_object_or_404
 from django.contrib.auth.decorators import login_required
+from django.db.models import Q
 
 def ott_list(request):
     otts = Ott.objects.order_by('-pk')
@@ -24,7 +25,8 @@ def ott_list(request):
 
 def ott_detail(request, ott_id):
     ott = get_object_or_404(Ott, id=ott_id)
-    return render(request, 'ott_posts/ott_detail.html', {'ott': ott})
+    room_name_json = f'/chat/ott{ott_id}/'
+    return render(request, 'ott_posts/ott_detail.html', {'ott': ott, 'room_name_json': room_name_json})
 
 
 @login_required
@@ -73,4 +75,19 @@ def ott_update(request, id):
         form = OttForm(instance=item)
 
     return render(request, 'ott_posts/ott_update.html', {'form': form})
+
+
+#검색
+def ottsearchResult(request):
+    if 'q' in request.GET:
+        query = request.GET.get('q')
+        otts = Ott.objects.filter(
+            Q(type__icontains=query) |
+            Q(people__icontains=query) |
+            Q(bill__icontains=query) |
+            Q(description_OTT__icontains=query)
+        )
+        return render(request, 'ott_posts/ott_search.html', {'query': query, 'otts': otts})
+    else:
+        return render(request, 'ott_posts/ott_search.html')
 

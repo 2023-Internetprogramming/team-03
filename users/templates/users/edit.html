@@ -1,0 +1,15 @@
+{% extends 'taxi_posts/base.html' %}
+{% block main_area %}
+    <br><br><br><br>
+    <div class="container">
+        <h2>Edit Profile</h2>
+        <form action="{% url 'editmypage' %}" method="post">
+            {% csrf_token %}
+            <input type="hidden">
+            <table>
+                {{ profile_form.as_p }}
+            </table>
+            <button type="submit">수정완료</button>
+        </form>
+    </div>
+{% endblock %}

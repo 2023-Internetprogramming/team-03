@@ -39,23 +39,6 @@ def contest_list(request):
         contests = paginator.page(paginator.num_pages)
 
     return render(request, 'contest/contest_list.html', {'contests': contests, 'page_obj': contests})
-
-# def contest_detail(request, contest_id):
-    # contest = get_object_or_404(Contest, id=contest_id)
-    # comments = Comment.objects.filter(contest=contest)
-
-    # if request.method == 'POST':
-    #     form = CommentForm(request.POST)
-    #     if form.is_valid():
-    #         comment = form.save(commit=False)
-    #         comment.user = request.user
-    #         comment.contest = contest
-    #         comment.save()
-    #         return redirect('contest_detail', contest_id=contest.id)
-    # else:
-    #     form = CommentForm()
-
-    # return render(request, 'contest_detail.html', {'contest': contest, 'comments': comments, 'form': form})
     
     
 def contest_detail(request, contest_id):

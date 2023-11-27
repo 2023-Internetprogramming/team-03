@@ -14,15 +14,25 @@
             <img src="https://picsum.photos/seed/{{ contest.id }}/800/200" class="card-img-top" alt="random_image">
         {% endif %}
         <div class="content">
-            <h1>{{ contest.contest_title }}</h1>
+            <h1 style="font-size: 20px;">{{ contest.contest_title }}</h1>
             <p class="info">
-                <span class="viewcount">
-                    <span class="material-symbols-outlined" style="font-size: 11px;">
+                <span class="viewcount" style="font-size: 15px;">
+                    <span class="material-symbols-outlined" style="font-size: 13px; padding-top: 6px;">
                         visibility
                     </span>
                     {{ contest.contest_view_count }}
                 </span>
             </p>
+            <a class="scrap">
+                <form method="post" action="{% url 'comment' contest.id %}" id="scrapForm">
+                    {% csrf_token %}
+                    <button type="submit" name="scrap" onclick="handleScrap(event)">
+                        <span class="material-symbols-outlined" style="background-color: white; font-size: 28px;">
+                            bookmark
+                        </span>
+                    </button>
+                </form>
+            </a>
         </div>
     </div>
 </section>
@@ -87,6 +97,25 @@
         margin-top: 20px;
     }
 </style>
+<script>
+    function handleScrap(event) {
+        jQuery.ajax({
+            url: "{% url 'scrap_contest' contest.id %}",
+            method: "POST",
+            data: { csrfmiddlewaretoken: '{{ csrf_token }}', contest_id: {{ contest.id }} },
+            success: function (data) {
+                console.log(data);
+                alert(data.message);
+                if (data.status === 'success') {
+                    // 추가 작업
+                }
+            },
+            error: function (error) {
+                console.log(error);
+            },
+        });
+    }
+</script>
 
 <link rel="stylesheet" type="text/css" href="{% static 'contest/css/detail.css' %}">
 

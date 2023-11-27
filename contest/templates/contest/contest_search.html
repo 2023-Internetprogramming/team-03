@@ -85,13 +85,13 @@
                 <a href="{% url 'contest_detail' contest.id %}">
                     <span class="text">소개</span>
                 </a>
-                <a href="{% url 'prj_list' %}">
+                <a href="{% url 'list_contest' contest.id %}">
                     <span class="text">팀원 모집</span>
-                    <span class="count">0</span>
+                    <span class="count">{{ contest.prj_set.count }}</span>
                 </a>
-                <a href="{% url 'contest_detail' contest.id %}">
+                <a href="{% url 'comment' contest.id %}" data-menu="comment">
                     <span class="text">댓글</span>
-                    <span class="count">0</span>
+                    <span class="count">{{ contest.comments_count }}</span>
                 </a>
             </div>
         </div>
@@ -154,6 +154,14 @@
             display: block; /* Stack items vertically for smaller screens */
             margin-bottom: 5px; /* Add space between items */
         }
+    }
+
+    span.count {
+        margin-left: 4px;
+        color: #a6a6a6;
+        font-size: 12px;
+        font-weight: bold;
+        letter-spacing: 0;
     }
 </style>
 <link rel="stylesheet" type="text/css" href="{% static 'contest/css/list.css' %}">

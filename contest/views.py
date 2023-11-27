@@ -39,7 +39,7 @@ def contest_list(request):
         contests = paginator.page(paginator.num_pages)
 
     return render(request, 'contest/contest_list.html', {'contests': contests, 'page_obj': contests})
-    
+
     
 def contest_detail(request, contest_id):
     contest = Contest.objects.get(id=contest_id)
@@ -66,17 +66,18 @@ def contest_detail(request, contest_id):
 def scrap_contest(request, contest_id):
     contest = get_object_or_404(Contest, id=contest_id)
 
-    # 사용자가 이미 해당 콘테스트를 스크랩한 경우 중복을 피하기 위해 체크
+    # 사용자가 이미 해당 콘테스트를 스크랩한 경우
     if request.user in contest.scraped_by_users.all():
-        return JsonResponse({'status': 'error', 'message': '이미 스크랩한 공모전입니다'})
+        # 스크랩 취소
+        contest.scraped_by_users.remove(request.user)
+        message = '공모전 스크랩이 취소되었습니다.'
+    else:
+        # 스크랩
+        contest.scraped_by_users.add(request.user)
+        message = '공모전이 스크랩되었습니다.'
 
-    # 현재 사용자를 스크랩한 사용자 목록에 추가
-    contest.scraped_by_users.add(request.user)
+    return JsonResponse({'status': 'success', 'message': message})
 
-    return JsonResponse({'status': 'success', 'message': '공모전이 스크랩되었습니다'})
-
-
-from django.utils import timezone
 
 def comment(request, contest_id):
     contest = Contest.objects.get(id=contest_id)
@@ -90,6 +91,8 @@ def comment(request, contest_id):
             comment.created_at = timezone.now()
             comment.contest_post = contest  # contest_post 필드에 Contest 객체 할당
             comment.save()
+            
+            comments = Comment.objects.filter(contest_post=contest)
     
     return render(request, 'contest/comment.html', {'comments': comments, 'contest': contest})
 

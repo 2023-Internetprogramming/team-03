@@ -6,6 +6,7 @@ from django.http import HttpResponseRedirect, HttpResponseForbidden
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 from django.contrib.auth.decorators import login_required
 from django.db.models import Q
+from contest.models import Contest
 
 
 def prj_list(request):
@@ -99,3 +100,24 @@ def prjsearchResult(request):
         return render(request, 'prj_posts/prj_search.html', {'query': query, 'prjs': prjs})
     else:
         return render(request, 'prj_posts/prj_search.html')
+    
+    
+def list_contest(request, contest_id):
+    contest = get_object_or_404(Contest, id=contest_id)
+    prjs = Prj.objects.filter(contest=contest).order_by('-pk')
+
+    page = request.GET.get('page', '1')
+    paginator = Paginator(prjs, 10)
+    
+    try:
+        prjs = paginator.page(page)
+    except PageNotAnInteger:
+        prjs = paginator.page(1)
+    except EmptyPage:
+        prjs = paginator.page(paginator.num_pages)
+
+    return render(
+        request,
+        'prj_posts/prj_list.html',
+        {'prjs': prjs, 'page_obj': prjs, 'contest': contest},
+    )

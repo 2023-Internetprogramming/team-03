@@ -8,4 +8,5 @@ urlpatterns = [
     path('prj_update/<int:id>/', views.prj_update, name='prj_update'),
     path('prj_delete/', views.prj_delete, name="prj_delete"),
     path('prj_search/', views.prjsearchResult, name='prjsearchResult'),
+    path('list_contest/<int:contest_id>/', views.list_contest, name='list_contest'),
 ] 

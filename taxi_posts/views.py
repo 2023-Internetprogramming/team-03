@@ -1,7 +1,7 @@
 from django.shortcuts import render, redirect
 from .models import Ride
 from .forms import RideForm
-from django.http import HttpResponseRedirect, HttpResponseForbidden
+from django.http import HttpResponseRedirect, HttpResponseForbidden, JsonResponse
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 from django.shortcuts import get_object_or_404
 from django.contrib.auth.decorators import login_required
@@ -92,6 +92,23 @@ def ridesearchResult(request):
     else:
         return render(request, 'taxi_posts/ride_search.html')
     
+@login_required
+def ride_join(request, id):
+    item = get_object_or_404(Ride, pk=id)
+
+    esisted_user = item.join_list.filter(pk=request.user.id).exists()
+    
+    if (request.user == item.author or esisted_user):
+        return JsonResponse({'success': True})
+
+    else:
+        if (item.available_seats > 0):
+            item.join_list.add(request.user)
+            item.available_seats -= 1
+            item.save()
+            return JsonResponse({'success': True})
+        else:
+            return JsonResponse({'success': False})    
 
 def map_view(request):
     return render(request, 'taxi_posts/map.html')

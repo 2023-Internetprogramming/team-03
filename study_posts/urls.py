@@ -8,5 +8,5 @@ urlpatterns = [
     path('study_update/<int:id>/', views.study_update, name='study_update'),
     path('study_delete/', views.study_delete, name="study_delete"),
     path('study_search/', views.studysearchResult, name='studysearchResult'),
-
+    path('<int:id>/study_join/', views.study_join, name="study_join"),
 ] 

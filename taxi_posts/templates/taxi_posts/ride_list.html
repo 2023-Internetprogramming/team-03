@@ -29,6 +29,17 @@
               <span class="badge badge-info">{{ ride.departure_time }}</span>
             </a>
           </span>
+          <span>
+            <a href="{% url 'ride_detail' ride.id %}">
+              <span class="badge badge-info">
+                {% if ride.available_seats == 0 %}
+                    마감
+                {% else %}
+                    모집 중
+                {% endif %}
+              </span>
+            </a>
+          </span>
         </li>
       {% endfor %}
     </ul>

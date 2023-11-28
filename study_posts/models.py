@@ -18,9 +18,15 @@ class Study(models.Model):
     user_major = models.CharField(max_length=15)
     user_grade = models.IntegerField(default=1)
     study_type = models.CharField(max_length=15, choices=TYPE_CHOICES, default="학업")
-    study_membernum = models.IntegerField(default=1)
+    study_member = models.IntegerField(default=1)
 
     post_content = models.TextField()
+
+    join_list = models.ManyToManyField(
+        User,
+        blank=True,
+        related_name='study_user'
+    )
 
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)

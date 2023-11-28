@@ -3,9 +3,17 @@
 {% block main_area %}
     <br><br>
     <div class="container mt-4" id="container">
-      <h2>{{ ott.type }} {{ ott.people }}명 모집</h2>
+      <h2>{{ ott.type }} {{ ott.people }}명 모집
+        <span class="badge badge-info">
+          {% if ott.people == 0 %}
+          마감
+          {% else %}
+          모집 중
+          {% endif %}
+        </span>
+      </h2>
+      <p>모집 인원 : {{ ott.people }}</p>
       <p>요금제: {{ ott.bill }}</p>
-      <p>모집 인원: {{ ott.people }}</p>
       <p>세부 사항: {{ ott.description_OTT }}</p>
 
       <a href="{% url 'ott_update' id=ott.id %}" class="btn btn-secondary {% if request.user != ott.author %}d-none{% endif %}">수정</a>
@@ -34,7 +42,7 @@
         </div>
       </div>
       <a href="{% url 'ott_list' %}" class="btn btn-secondary">목록으로 돌아가기</a>
-      <a href="{{ room_name_json }}">
+      <a href="#" onclick="join_user(); return false;">
         <div id="join-button">
             <button id="join"><span>채팅 참여</span></button>
         </div>
@@ -44,6 +52,27 @@
     <script>
       function confirmDelete() {
         $('#confirmDeleteModal').modal('show');
+      }
+    </script>
+    <script>
+      function join_user() {
+        // AJAX를 이용하여 ott.people 값을 1 줄입니다.
+        $.ajax({
+          url: "{% url 'ott_join' id=ott.id %}",
+          method: 'GET',
+          success: function (response) {
+            if (response.success) {
+              // ott.people 값을 성공적으로 줄였으면 채팅 방으로 이동합니다.
+              window.location.href = "{{ room_name_json }}";
+            } else {
+              // 실패한 경우에 대한 처리를 추가할 수 있습니다.
+              alert("모집이 마감되었습니다.");
+            }
+          },
+          error: function (xhr, errmsg, err) {
+            console.error(xhr.status + ": " + xhr.responseText);
+          }
+        });
       }
     </script>
     </div>

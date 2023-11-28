@@ -1,5 +1,6 @@
 from django.db import models
 from django.contrib.auth.models import User
+from django.utils import timezone
 
 class Contest(models.Model):
     
@@ -30,6 +31,12 @@ class Comment(models.Model):
     name = models.CharField(max_length=100, default='Anonymous')
     comment = models.TextField(default='')
     contest_post = models.ForeignKey(Contest, on_delete=models.CASCADE, null=True, default=None)
+    created_at = models.DateTimeField(default=timezone.now)
+    
+    def save(self, *args, **kwargs):
+        if not self.id:
+            self.created_at = timezone.now()
+        return super(Comment, self).save(*args, **kwargs)
 
     def __str__(self):
         return self.comment

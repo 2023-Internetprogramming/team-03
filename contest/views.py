@@ -78,7 +78,7 @@ def scrap_contest(request, contest_id):
 
 def comment(request, contest_id):
     contest = Contest.objects.get(id=contest_id)
-    comments = Comment.objects.filter(contest_post=contest).order_by('-created_at')  # 작성 시간에 따라 내림차순 정렬
+    comments = Comment.objects.filter(contest_post=contest)  # 작성 시간에 따라 내림차순 정렬
     comments_count = comments.count()  # 댓글 수를 미리 계산
 
     if request.method == "POST":
@@ -91,7 +91,7 @@ def comment(request, contest_id):
             comment.save()
 
             # 댓글이 추가된 후에 새로고침 시 새 댓글이 맨 위에 보이도록 함
-            comments = Comment.objects.filter(contest_post=contest).order_by('-created_at')
+            # comments = Comment.objects.filter(contest_post=contest).order_by('-created_at')
             comments_count = comments.count()
 
     return render(request, 'contest/comment.html', {'comments': comments, 'contest': contest, 'comments_count': comments_count})

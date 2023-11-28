@@ -7,7 +7,7 @@
 | <center> 김희원  </center> | <center>심수빈 </center> | <center>조수아</center> | 
 | --- | --- | --- |
 | <center> <img width="150px" src="https://avatars.githubusercontent.com/u/139496729?v=4" /></center> | <center><img width="150px" src="https://avatars.githubusercontent.com/u/133107887?s=96&v=4" /></center> | <center><img width="150px" src="https://avatars.githubusercontent.com/u/144154104?s=96&v=4" /></center> | 
-| <center> 로그인&회원가입, <br>게시판, 마이페이지, <br> 채팅, 스크랩, 검색, 댓글</center> | <center> 게시판, 마감 표시 </center> | <center> 댓글 수정/삭제 </center> |
+| <center> 로그인&회원가입, <br>게시판, 마이페이지, <br> 채팅, 스크랩, 검색, 댓글</center> | <center> 게시판, 마감 표시 </center> | <center> 댓글 수정</center> |
 | [@heeone1](https://github.com/heeone1)  | [@ssxbin](https://github.com/ssxbin) |  [@tyoryoroc](https://github.com/tyoryoroc) |
 
 ### Front-end developer

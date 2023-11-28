@@ -17,5 +17,11 @@ class Ott(models.Model):
     people = models.IntegerField(choices=PEOPLE_CHOICES, default='1')
     description_OTT = models.TextField(blank=True)
 
+    join_list = models.ManyToManyField(
+        User,
+        blank=True,
+        related_name='ott_user'
+    )
+    
     def __str__(self):
         return f"[{self.type}] {self.people}명 모집중"

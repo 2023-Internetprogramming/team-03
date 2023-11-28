@@ -1,7 +1,7 @@
 from django.shortcuts import render, redirect
 from .models import Ott
 from .forms import OttForm
-from django.http import HttpResponseRedirect, HttpResponseForbidden
+from django.http import HttpResponseRedirect, HttpResponseForbidden, JsonResponse
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 from django.shortcuts import get_object_or_404
 from django.contrib.auth.decorators import login_required
@@ -91,3 +91,20 @@ def ottsearchResult(request):
     else:
         return render(request, 'ott_posts/ott_search.html')
 
+@login_required
+def ott_join(request, id):
+    item = get_object_or_404(Ott, pk=id)
+
+    esisted_user = item.join_list.filter(pk=request.user.id).exists()
+    
+    if (request.user == item.author or esisted_user):
+        return JsonResponse({'success': True})
+
+    else:
+        if (item.people > 0):
+            item.join_list.add(request.user)
+            item.people -= 1
+            item.save()
+            return JsonResponse({'success': True})
+        else:
+            return JsonResponse({'success': False})

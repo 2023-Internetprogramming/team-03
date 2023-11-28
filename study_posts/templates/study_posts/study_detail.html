@@ -4,16 +4,24 @@
 
 <div class="container mt-4" id="container">
     
-    <h2>{{ study.post_title }}</h2>
+    <h2>{{ study.post_title }}
+        <span class="badge badge-info">
+            {% if study.study_member == 0 %}
+                마감
+            {% else %}
+                모집 중
+            {% endif %}
+          </span>
+    </h2>
     <span class="rounded border border-dark p-1 small">{{ study.study_type }}</span>
     <p>{{study.created_at}}</p>
+    <p>모집 인원 : {{ study.study_member }}</p>
+    <p>세부 사항 : {{ study.post_content }}</p>
+    <br><br>
+
     <p>{{study.user_name}}</p>
     <p>{{study.user_grade}}학년 / 학과 : {{study.user_major}}</p>
-    <br>
-    <p>모집 인원 : {{ study.study_membernum }}</p>
-    <p>세부 사항 : {{ study.post_content }}</p>
-
-
+    
     <a href="{% url 'study_update' id=study.id %}" class="btn btn-secondary {% if request.user != study.author %}d-none{% endif %}">수정</a>
 
       <!-- 삭제 버튼에 onclick 이벤트 추가 -->
@@ -41,7 +49,7 @@
         </div>
     </div>
     <a href="{% url 'study_list' %}" class="btn btn-secondary">목록으로 돌아가기</a>
-    <a href="{{ room_name_json }}">
+    <a href="#" onclick="join_user(); return false;">
         <div id="join-button">
             <button id="join"><span>채팅 참여</span></button>
         </div>
@@ -53,6 +61,27 @@
         $('#confirmDeleteModal').modal('show');
     }
 </script>
+<script>
+    function join_user() {
+      // AJAX를 이용하여 study.study_member 값을 1 줄입니다.
+      $.ajax({
+        url: "{% url 'study_join' id=study.id %}",
+        method: 'GET',
+        success: function (response) {
+          if (response.success) {
+            // study.study_member 값을 성공적으로 줄였으면 채팅 방으로 이동합니다.
+            window.location.href = "{{ room_name_json }}";
+          } else {
+            // 실패한 경우에 대한 처리를 추가할 수 있습니다.
+            alert("모집이 마감되었습니다.");
+          }
+        },
+        error: function (xhr, errmsg, err) {
+          console.error(xhr.status + ": " + xhr.responseText);
+        }
+      });
+    }
+  </script>
 <style>
     .mt-4, .my-4 {
         margin-top: 5.5rem!important;

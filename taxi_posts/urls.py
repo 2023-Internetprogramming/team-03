@@ -8,5 +8,6 @@ urlpatterns = [
     path('rides_delete/', views.ride_delete, name='ride_delete'),
     path('rides_update/<int:id>/', views.ride_update, name='ride_update'),
     path('ride_search/', views.ridesearchResult, name='ridesearchResult'),
+    path('<int:id>/ride_join/', views.ride_join, name="ride_join"),
     path('map/', views.map_view, name='map_view'),
 ]

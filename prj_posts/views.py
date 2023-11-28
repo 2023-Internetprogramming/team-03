@@ -2,7 +2,7 @@
 from django.shortcuts import render, get_object_or_404, redirect
 from .models import Prj
 from .forms import PrjForm
-from django.http import HttpResponseRedirect, HttpResponseForbidden
+from django.http import HttpResponseRedirect, HttpResponseForbidden, JsonResponse
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 from django.contrib.auth.decorators import login_required
 from django.db.models import Q
@@ -121,3 +121,21 @@ def list_contest(request, contest_id):
         'prj_posts/prj_list.html',
         {'prjs': prjs, 'page_obj': prjs, 'contest': contest},
     )
+
+@login_required
+def prj_join(request, id):
+    item = get_object_or_404(Prj, pk=id)
+
+    esisted_user = item.join_list.filter(pk=request.user.id).exists()
+    
+    if (request.user == item.author or esisted_user):
+        return JsonResponse({'success': True})
+
+    else:
+        if (item.prj_member > 0):
+            item.join_list.add(request.user)
+            item.prj_member -= 1
+            item.save()
+            return JsonResponse({'success': True})
+        else:
+            return JsonResponse({'success': False})

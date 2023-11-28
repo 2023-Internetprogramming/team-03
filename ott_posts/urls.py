@@ -8,4 +8,5 @@ urlpatterns = [
     path('ott_delete/', views.ott_delete, name='ott_delete'),
     path('ott_update/<int:id>/', views.ott_update, name='ott_update'),
     path('ott_search/', views.ottsearchResult, name='ottsearchResult'),
+    path('<int:id>/ott_join/', views.ott_join, name="ott_join"),
 ]

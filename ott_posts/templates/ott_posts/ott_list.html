@@ -26,6 +26,17 @@
           <a href="{% url 'ott_detail' ott.id %}" style="width: 100%; display: block;">
             [{{ ott.type }}] {{ ott.people }}명 모집
           </a>
+          <span>
+            <a href="{% url 'ott_detail' ott.id %}">
+              <span class="badge badge-info">
+                {% if ott.people == 0 %}
+                    마감
+                {% else %}
+                    모집 중
+                {% endif %}
+              </span>
+            </a>
+          </span>
         </li>
       {% endfor %}
     </ul>

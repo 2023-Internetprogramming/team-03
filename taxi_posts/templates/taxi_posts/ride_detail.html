@@ -3,7 +3,15 @@
 {% block main_area %}
     <br><br>
     <div class="container mt-4" id="container">
-      <h2>{{ ride.departure_location }} -> {{ ride.destination }}</h2>
+      <h2>{{ ride.departure_location }} -> {{ ride.destination }}
+        <span class="badge badge-info">
+          {% if ride.available_seats == 0 %}
+          마감
+          {% else %}
+          모집 중
+          {% endif %}
+        </span>
+      </h2>
       <p>시간: {{ ride.departure_time }}</p>
       <p>모집 인원: {{ ride.available_seats }}</p>
       <p>세부 사항: {{ ride.description }}</p>
@@ -34,8 +42,7 @@
         </div>
       </div>
       <a href="{% url 'ride_list' %}" class="btn btn-secondary">목록으로 돌아가기</a>
-      <a href="{{ room_name_json }}">
-        <div id="join-button">
+      <a href="#" onclick="join_user(); return false;">        <div id="join-button">
             <button id="join"><span>채팅 참여</span></button>
         </div>
       </a>
@@ -46,5 +53,26 @@
         $('#confirmDeleteModal').modal('show');
       }
     </script>
+    <script>
+      function join_user() {
+        // AJAX를 이용하여 ride.available_seats 값을 1 줄입니다.
+        $.ajax({
+          url: "{% url 'ride_join' id=ride.id %}",
+          method: 'GET',
+          success: function (response) {
+            if (response.success) {
+              // ride.available_seats 값을 성공적으로 줄였으면 채팅 방으로 이동합니다.
+              window.location.href = "{{ room_name_json }}";
+            } else {
+              // 실패한 경우에 대한 처리를 추가할 수 있습니다.
+              alert("모집이 마감되었습니다.");
+            }
+          },
+          error: function (xhr, errmsg, err) {
+            console.error(xhr.status + ": " + xhr.responseText);
+          }
+        });
+      }
+    </script>  
 
 {% endblock %}

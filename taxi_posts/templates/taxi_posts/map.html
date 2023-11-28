@@ -161,6 +161,10 @@ function displayPlaces(places) {
                 infowindow.close();
             });
 
+            kakao.maps.event.addListener(marker, 'click', function () {
+                updateDestination(marker, title);
+            });
+
             itemEl.onmouseover =  function () {
                 displayInfowindow(marker, title);
             };
@@ -226,6 +230,23 @@ function addMarker(position, idx, title) {
     return marker;
 }
 
+// 마커 클릭 시, 목적지 업데이트 및 창 닫기
+function updateDestination(marker, title) {
+    event.preventDefault();
+
+    // 기존의 코드는 sendMapData 함수를 호출하는 것으로 변경합니다.
+    sendMapData(title);
+}
+
+// 오프너 창으로 데이터를 보내는 함수
+function sendMapData(title) {
+    // 오프너 창에서 receiveMapData 함수를 호출합니다
+    window.opener.receiveMapData(title);
+
+    // 지도 창을 닫습니다
+    window.close();
+}
+
 // 지도 위에 표시되고 있는 마커를 모두 제거합니다
 function removeMarker() {
     for ( var i = 0; i < markers.length; i++ ) {
@@ -279,7 +300,17 @@ function displayInfowindow(marker, title) {
     // Set the content of the new div below the map
     var titleDisplay = document.getElementById('titleDisplay');
     titleDisplay.innerHTML = '<strong>Selected Place:</strong> ' + title;
+
+    selectPlaceAndRedirect(title);
 }
+
+{% comment %} function sendMapData(title) {
+    // 오프너 창에서 receiveMapData 함수를 호출합니다
+    window.opener.receiveMapData(title);
+
+    // 지도 창을 닫습니다
+    window.close();
+} {% endcomment %}
 
 
  // 검색결과 목록의 자식 Element를 제거하는 함수입니다

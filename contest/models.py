@@ -1,5 +1,6 @@
 from django.db import models
 from django.contrib.auth.models import User
+from django.utils import timezone
 
 class Contest(models.Model):
     
@@ -20,6 +21,8 @@ class Contest(models.Model):
     contest_view_count = models.IntegerField(default=0)
     contest_category = models.CharField(max_length=30, choices=CATEGORY_CHOICES, default='기획/아이디어')
     scraped_by_users = models.ManyToManyField(User, related_name='scraped_contests', blank=True)
+    company = models.CharField(max_length=10, blank=True)
+    subject = models.CharField(max_length=40, blank=True)
     
     def __str__(self):
         return self.contest_title
@@ -30,6 +33,12 @@ class Comment(models.Model):
     name = models.CharField(max_length=100, default='Anonymous')
     comment = models.TextField(default='')
     contest_post = models.ForeignKey(Contest, on_delete=models.CASCADE, null=True, default=None)
+    created_at = models.DateTimeField(default=timezone.now)
+    
+    def save(self, *args, **kwargs):
+        if not self.id:
+            self.created_at = timezone.now()
+        return super(Comment, self).save(*args, **kwargs)
 
     def __str__(self):
         return self.comment

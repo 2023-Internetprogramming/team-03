@@ -9,7 +9,7 @@ from django.contrib.auth.decorators import login_required
 from django.http import HttpResponse
 from django.db.models import Q
 from django.db.models import Count
-
+from datetime import datetime, timedelta
 
 
 
@@ -20,13 +20,12 @@ def contest_list(request):
     else:
         contests = Contest.objects.order_by('-pk')
 
-
     for contest in contests:
-        contests = contests.annotate(comments_count=Count('comment'))
+        contest.deadline = contest.deadline - datetime.now().date()
+        contest.comments_count = Comment.objects.filter(contest_post=contest).count()
 
     page = request.GET.get('page', 1)
     paginator = Paginator(contests, 8)
-
 
     try:
         contests = paginator.page(page)
@@ -37,25 +36,25 @@ def contest_list(request):
 
     return render(request, 'contest/contest_list.html', {'contests': contests, 'page_obj': contests})
 
-    
+
 def contest_detail(request, contest_id):
     contest = Contest.objects.get(id=contest_id)
-    
+
     contest.contest_view_count += 1
     contest.save()
 
-    # Initialize or retrieve the 'viewed_contests' list in the session
     viewed_contests = request.session.get('viewed_contests', [])
-    
-    # Add the contest_id to the 'viewed_contests' list in the session if not already present
+
     if contest_id not in viewed_contests:
         viewed_contests.append(contest_id)
         request.session['viewed_contests'] = viewed_contests
         request.session.modified = True
-        
+
+    contest.deadline1 = contest.deadline - datetime.now().date()
+    result_date = contest.deadline + timedelta(days=3)
     comments_count = Comment.objects.filter(contest_post=contest).count()
-    
-    return render(request, 'contest/contest_detail.html', {'contest': contest, 'comments_count': comments_count})
+
+    return render(request, 'contest/contest_detail.html', {'contest': contest, 'comments_count': comments_count, 'result_date':result_date})
 
 
 @require_POST

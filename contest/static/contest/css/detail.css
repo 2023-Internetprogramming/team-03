@@ -215,3 +215,41 @@ section.title > div.wrap > p.badges > span {
     background-size: 18px 18px;
     background-position: left center;
 }
+
+section.title > div.wrap > div.content > p.info > span {
+    display: inline-block;
+    margin-right: 8px;
+    line-height: 18px;
+    color: #a6a6a6;
+    font-size: 12px;
+    letter-spacing: 0;
+}
+section.tab > div.wrap > a > span.count {
+    margin-left: 4px;
+    color: #a6a6a6;
+    font-size: 10px;
+    font-weight: bold;
+    letter-spacing: 0;
+}
+
+span.count {
+    margin-left: 4px;
+    color: #a6a6a6;
+    font-size: 12px;
+    font-weight: bold;
+    letter-spacing: 0;
+}
+
+#container2 > div.section > p.dday.highlight {
+    background-color: #8B2845;
+}
+#container2 > div.section > p.dday {
+    position: absolute;
+    padding: 1.5px 8px;
+    line-height: 20px;
+    border-radius: 10px;
+    color: #fff;
+    font-size: 14px;
+    font-weight: bold;
+    background-color: #a6a6a6;
+}

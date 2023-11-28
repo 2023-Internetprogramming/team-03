@@ -62,8 +62,8 @@
                 <h2>{{ contest.contest_title }}</h2>
                 <p class="info">
                     <span class="dday {% if contest.deadline < 0 %}highlight{% endif %}">
-                        {% if contest.deadline >= 0 %}
-                          D-{{ contest.deadline }}
+                        {% if contest.deadline.days >= 0 %}
+                          D-{{ contest.deadline.days }}
                         {% else %}
                           마감
                         {% endif %}

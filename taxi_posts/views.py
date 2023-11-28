@@ -37,10 +37,11 @@ def ride_create(request):
             new_item = form.save(commit=False)
             new_item.author = request.user
             new_item.save()
-            return HttpResponseRedirect('ride_create')
-        
-    form = RideForm()
+            return HttpResponseRedirect('/rides/')  # 변경된 부분
+    else:
+        form = RideForm()
     return render(request, 'taxi_posts/ride_form.html', {'form': form})
+
 
 
 @login_required
@@ -111,4 +112,10 @@ def ride_join(request, id):
             return JsonResponse({'success': False})    
 
 def map_view(request):
-    return render(request, 'taxi_posts/map.html')
+    destination_title = request.GET.get('title', '')
+    return render(request, 'taxi_posts/map.html', {'destination_title': destination_title})
+
+
+def map2_view(request):
+    destination_title = request.GET.get('title', '')
+    return render(request, 'taxi_posts/map2.html', {'destination_title': destination_title})

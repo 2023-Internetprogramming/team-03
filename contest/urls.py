@@ -9,4 +9,5 @@ urlpatterns = [
     path('contest/<int:contest_id>/scrap/', views.scrap_contest, name='scrap_contest'),
     path('comment/<int:contest_id>/', views.comment, name='comment'),
     path('contest_search/', views.searchResult, name='searchResult'),
+    path('delete_comment/<int:comment_id>/', views.delete_comment, name='delete_comment'),
 ]+ static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

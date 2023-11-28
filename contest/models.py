@@ -26,9 +26,9 @@ class Contest(models.Model):
 
 #댓글
 class Comment(models.Model):
+    author = models.ForeignKey(User, on_delete=models.CASCADE, null=True, default=None)
     name = models.CharField(max_length=100, default='Anonymous')
     comment = models.TextField(default='')
-    created_at = models.DateTimeField(auto_now_add=True)
     contest_post = models.ForeignKey(Contest, on_delete=models.CASCADE, null=True, default=None)
 
     def __str__(self):

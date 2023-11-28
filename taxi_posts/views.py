@@ -6,6 +6,8 @@ from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 from django.shortcuts import get_object_or_404
 from django.contrib.auth.decorators import login_required
 from django.db.models import Q
+from django.http import HttpResponse
+
 
 def ride_list(request):
     rides = Ride.objects.order_by('-pk')
@@ -90,9 +92,6 @@ def ridesearchResult(request):
     else:
         return render(request, 'taxi_posts/ride_search.html')
     
-    
-    
 
-
-def map(request):
+def map_view(request):
     return render(request, 'taxi_posts/map.html')

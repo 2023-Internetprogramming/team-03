@@ -10,4 +10,5 @@ urlpatterns = [
     path('ride_search/', views.ridesearchResult, name='ridesearchResult'),
     path('<int:id>/ride_join/', views.ride_join, name="ride_join"),
     path('map/', views.map_view, name='map_view'),
+    path('map2/', views.map2_view, name='map2_view'),
 ]

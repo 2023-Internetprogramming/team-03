@@ -162,7 +162,7 @@ function displayPlaces(places) {
             });
 
             kakao.maps.event.addListener(marker, 'click', function () {
-                updateDestination(marker, title);
+                updateDestination2(marker, title);
             });
 
             itemEl.onmouseover =  function () {
@@ -231,17 +231,17 @@ function addMarker(position, idx, title) {
 }
 
 // 마커 클릭 시, 목적지 업데이트 및 창 닫기
-function updateDestination(marker, title) {
+function updateDestination2(marker, title) {
     event.preventDefault();
 
     // 기존의 코드는 sendMapData 함수를 호출하는 것으로 변경합니다.
-    sendMapData(title);
+    sendMapData2(title);
 }
 
 // 오프너 창으로 데이터를 보내는 함수
-function sendMapData(title) {
+function sendMapData2(title) {
     // 오프너 창에서 receiveMapData 함수를 호출합니다
-    window.opener.receiveMapData(title);
+    window.opener.receiveMapData2(title);
 
     // 지도 창을 닫습니다
     window.close();

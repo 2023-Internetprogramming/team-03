@@ -7,7 +7,6 @@ from django.http import JsonResponse
 from django.views.decorators.http import require_POST
 from django.contrib.auth.decorators import login_required
 from django.http import HttpResponse
-from datetime import datetime, timezone
 from django.db.models import Q
 from django.db.models import Count
 
@@ -21,10 +20,8 @@ def contest_list(request):
     else:
         contests = Contest.objects.order_by('-pk')
 
-    today = datetime.now().date()
 
     for contest in contests:
-        contest.deadline = (contest.deadline - today).days
         contests = contests.annotate(comments_count=Count('comment'))
 
     page = request.GET.get('page', 1)
@@ -81,20 +78,39 @@ def scrap_contest(request, contest_id):
 
 def comment(request, contest_id):
     contest = Contest.objects.get(id=contest_id)
-    comments = Comment.objects.filter(contest_post=contest)
-    
+    comments = Comment.objects.filter(contest_post=contest).order_by('-created_at')  # 작성 시간에 따라 내림차순 정렬
+    comments_count = comments.count()  # 댓글 수를 미리 계산
+
     if request.method == "POST":
-        comment_text = request.POST.get('comment', '')  # 'comment' 필드의 값을 가져옴
-        if comment_text:  # 댓글이 비어있지 않은 경우에만 처리
+        comment_text = request.POST.get('comment', '')
+        if comment_text:
             comment = Comment()
             comment.comment = comment_text
-            comment.created_at = timezone.now()
-            comment.contest_post = contest  # contest_post 필드에 Contest 객체 할당
+            comment.author = request.user
+            comment.contest_post = contest
             comment.save()
-            
-            comments = Comment.objects.filter(contest_post=contest)
-    
-    return render(request, 'contest/comment.html', {'comments': comments, 'contest': contest})
+
+            # 댓글이 추가된 후에 새로고침 시 새 댓글이 맨 위에 보이도록 함
+            comments = Comment.objects.filter(contest_post=contest).order_by('-created_at')
+            comments_count = comments.count()
+
+    return render(request, 'contest/comment.html', {'comments': comments, 'contest': contest, 'comments_count': comments_count})
+
+
+@require_POST
+@login_required
+def delete_comment(request, comment_id):
+    comment = get_object_or_404(Comment, id=comment_id)
+
+    # Check if the logged-in user is the author of the comment
+    if request.user == comment.author:
+        comment.delete()
+        message = '댓글이 삭제되었습니다.'
+    else:
+        message = '댓글을 삭제할 권한이 없습니다.'
+
+    return JsonResponse({'status': 'success', 'message': message})
+
 
 
 #검색

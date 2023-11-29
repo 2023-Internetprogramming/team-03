@@ -26,7 +26,18 @@
           <a href="{% url 'ride_detail' ride.id %}" style="width: 100%; display: block;">{{ ride.departure_location }} -> {{ ride.destination }}</a>
           <span>
             <a href="{% url 'ride_detail' ride.id %}">
-              <span class="badge badge-info">{{ ride.departure_time }}</span>
+              <span class="badge badge-info" style="margin-right: 5px;">{{ ride.departure_time }}</span>
+            </a>
+          </span>
+          <span>
+            <a href="{% url 'ride_detail' ride.id %}">
+              <span class="badge badge-info">
+                {% if ride.available_seats == 0 %}
+                    마감
+                {% else %}
+                    모집 중
+                {% endif %}
+              </span>
             </a>
           </span>
         </li>

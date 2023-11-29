@@ -12,9 +12,6 @@
             </div>
             <div class="chat-content">
                 <div class="message">
-                    <div class="profile">
-                        <img src="https://i.imgur.com/ooRMUd8.png" width="50px" height="50px" alt="Profile">
-                    </div>
                     <div class="text" id="chat-messages"></div>
                 </div>
             </div>
@@ -38,6 +35,12 @@
     function displayMessage(message) {
         const messageElement = document.createElement('p');
         messageElement.textContent = `${message.user}: ${message.message}`;
+        
+        // Check if the message is from the current user
+        if (message.user === '{{ request.user.username }}') {
+            messageElement.classList.add('my-message'); // Add a class for styling
+        }
+
         chatMessages.appendChild(messageElement);
     }
 
@@ -70,6 +73,6 @@
     });
 
     getMessages();
-    setInterval(getMessages, 5000);  // messages 5초마다 업데이트
+    setInterval(getMessages, 5000);  // Update messages every 5 seconds
 </script>
 {% endblock %}

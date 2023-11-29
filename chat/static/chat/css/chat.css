@@ -117,7 +117,7 @@
 
 .message {
     display: flex;
-    margin-bottom: 10px; /* 새로운 채팅을 오른쪽에 위치 */
+    width: 50%;
 }
 
 .message .sender {
@@ -162,4 +162,9 @@
 .chat-content {
     max-height: 356px; /* 적절한 높이로 조정 */
     overflow-y: auto; /* 세로 스크롤 활성화 */
+}
+.my-message {
+    align-items: right;
+    text-align: right;
+    margin-left: 100px;
 }

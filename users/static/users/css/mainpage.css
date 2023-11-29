@@ -58,8 +58,9 @@
         left: 10px;
         content: ""; /* 이미지의 URL을 여기에 입력하세요 */
         background-image: url('https://i.imgur.com/ooRMUd8.png'); /* 이미지 URL 설정 */
-        background-size: 100%; /* 이미지 크기를 부모 요소에 맞게 조절 */
+        background-size: 107%; /* 이미지 크기를 부모 요소에 맞게 조절 */
         background-color: rgba(255, 255, 255, .1);
+        background-position: center;
       }
     
     .product-device-2 {

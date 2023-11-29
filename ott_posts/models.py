@@ -5,10 +5,10 @@ from django.contrib.auth.models import User
 class Ott(models.Model):
     
     PEOPLE_CHOICES = [
-        (1, '1'),
-        (2, '2'),
-        (3, '3'),
-        (4, '4'),
+        (1, '1명'),
+        (2, '2명'),
+        (3, '3명'),
+        (4, '4명'),
     ]
     
     author = models.ForeignKey(User, on_delete=models.CASCADE)

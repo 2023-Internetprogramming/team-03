@@ -6,7 +6,7 @@ class RideForm(forms.ModelForm):
     
     available_seats = forms.TypedChoiceField(
         label='모집 인원',
-        choices=[(1, '1'), (2, '2'), (3, '3'), (4, '4')],
+        choices=[(1, '1명'), (2, '2명'), (3, '3명'), (4, '4명')],
         coerce=int
     )
     

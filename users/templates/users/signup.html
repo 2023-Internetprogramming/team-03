@@ -3,8 +3,6 @@
 
 {% block main_area %}
   <head>
-    <meta charset="UTF-8">
-    <title>Sign Up</title>
     <link rel="stylesheet" href="{% static 'users/css/signup.css' %}">
     <script src="http://code.jquery.com/jquery-3.3.1.min.js"></script>
   </head>
@@ -49,7 +47,7 @@
           {% endif %}
         </div>
         <div class="btn-area">
-          <button type="submit">SIGN UP</button>
+          <button type="submit" id="signup">SIGN UP</button>
         </div>
       </form>
       <div class="caption">
@@ -71,7 +69,7 @@
               <p>{{ user_profile.real_name }}님. 환영합니다!</p>
             </div>
             <div class="modal-footer">
-                <button type="button" class="btn btn-primary" data-dismiss="modal" onclick="window.location.href='{% url 'login' %}'">로그인하러 가기</button>
+                <button type="button" class="btn btn-outline-primary" data-dismiss="modal" onclick="window.location.href='{% url 'login' %}'">로그인하러 가기</button>
             </div>
         </div>
     </div>

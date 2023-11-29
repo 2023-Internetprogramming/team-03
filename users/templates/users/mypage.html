@@ -3,112 +3,6 @@
 
 {% block main_area %}
 <link rel="stylesheet" type="text/css" href="{% static 'contest/css/list.css' %}">
-<link rel="stylesheet" type="mypage/css" href="{% static 'users/css/mypage.css' %}">
-<head>
-  <style>
-    /* 전반적인 스타일 */
-    body {
-      background-color: #fff;
-      margin: 0;
-      padding: 0;
-      height: 100vh;
-    }
-  
-    h2 {
-      color: #333;
-      margin-bottom: 10px;
-    }
-  
-    p {
-      margin-bottom: 5px;
-      color: #555;
-    }
-  
-    /* 스크랩한 공모전에 대한 스타일 */
-    .container {
-      background-color: #f8f9fa;
-      border-bottom: 1px solid #ddd;
-      border-top: 1px solid #ddd;
-      padding: 15px;
-      padding-bottom: 10px;
-
-    }
-
-    .border {
-      border-color: #ddd;
-      border-width: 1px;
-      border-style: solid;
-      padding: 15px;
-      margin-bottom: 20px;
-    }
-  
-    .text-primary-emphasis {
-      color: #007bff;
-    }
-  
-    .card-text {
-      color: #777;
-      margin-bottom: 10px;
-    }
-  
-    .icon-link {
-      color: #007bff;
-      text-decoration: none;
-      display: inline-block;
-    }
-  
-    .icon-link:hover {
-      text-decoration: underline;
-    }
-
-    
-  
-    /* 사용자가 작성한 게시물에 대한 스타일 */
-    .card-header {
-      background-color: #f8f9fa;
-      border-bottom: 1px solid #ddd;
-    }
-  
-  
-    .list-group-item {
-      border: none;
-      border-bottom: 1px solid #ddd;
-      padding: 10px 0;
-    }
-  
-    .badge-info {
-      background-color: #17a2b8;
-    }
-
-    .badge-container {
-      margin-right: 10px; /* 원하는 여백 크기 */
-    }
-
-    .custom-card {
-      margin-bottom: 20px;
-    }
-  
-    .custom-card .row {
-      margin-right: 5px;
-      margin-left: 5px;
-    }
-  
-    .custom-card .col {
-      padding-right: 8px; /* 컬럼 사이의 간격을 조절합니다 */
-      padding-left: 8px;
-    }
-
-    .custom-card .border {
-      background-color: #fff; /* 배경색을 흰색으로 지정 */
-    }
-
-    .userthing {
-      padding-left: 15px;
-    }
-
-  </style>
-  
-</head>
 <br><br><br><br>
 <div class="container">
 <h2>마이페이지</h2>
@@ -131,8 +25,8 @@
 <br>
 
 <div class="container">
-<h2>스크랩한 공모전</h2>
-<div class="row">
+<h3>스크랩한 공모전</h3>
+<div class="row" style="margin-left:0px;">
 {% for contest in saved_posts %}
   <div class="custom-card row mb-2 col-md-3">
       <a class="top" href="{% url 'contest_detail' contest.id %}">
@@ -144,12 +38,15 @@
               </p>
             </strong>
             <h3 class="mb-0">{{ contest.contest_title }}</h3>
-            <div class="mb-1 text-body-secondary">D-{{ contest.deadline }}</div>
-            <p class="card-text mb-auto">This is a wider card with supporting text below as a natural lead-in to additional content.</p>
-            <a href="https://getbootstrap.com/docs/5.3/examples/blog/#" class="icon-link gap-1 icon-link-hover stretched-link">
-              Continue reading
-              <svg class="bi"><use xlink:href="#chevron-right"></use></svg>
-            </a>
+            <div class="mb-1 text-body-secondary"> 
+              <span class="dday {% if contest.deadline < 0 %}highlight{% endif %}">
+                {% if contest.deadline.days >= 0 %}
+                  D-{{ contest.deadline.days }}
+                {% else %}
+                  마감
+                {% endif %}
+              </span>
+            </div>
           </div>
         </div>
       </a>
@@ -159,141 +56,259 @@
   <p>아직 스크랩한 게시물이 없습니다.</p>
 {% endif %}
   </div>
+</div><br>
 
-<!-- User's Own Posts -->
-<div class="card text-center">
-  <div class="card-header">
-    <ul class="nav nav-tabs card-header-tabs">
-      <li class="nav-item">
-        <a class="nav-link active" data-target="all" href="#">전체</a>
-      </li>
-      <li class="nav-item">
-        <a class="nav-link" data-target="prj" href="#">공모전/프로젝트</a>
-      </li>
-      <li class="nav-item">
-        <a class="nav-link" data-target="study" href="#">스터디</a>
-      </li>
-      <li class="nav-item">
-        <a class="nav-link" data-target="taxi" href="#">카풀</a>
-      </li>
-      <li class="nav-item">
-        <a class="nav-link" data-target="ott" href="#">OTT</a>
-      </li>
-    </ul>
-  </div>
-
-  <div class="category all-posts">
-    {% if not ott_posts and not prj_posts and not study_posts and not taxi_posts %}
-      <p>아직 작성한 게시물이 없습니다.</p>
-    {% endif %}
-
-    {% for ott in ott_posts %}
-    <li class="list-group-item d-flex justify-content-between align-items-center">
-      <a href="{% url 'ott_detail' ott.id %}" style="width: 100%; display: block;">
-        [{{ ott.type }}] {{ ott.people }}명 모집
-      </a>
-    </li>
-    {% endfor %}
-
-    {% for prj in prj_posts %}
-    <li class="list-group-item d-flex justify-content-between align-items-center">
-      <a href="{% url 'prj_detail' prj.id %}" style="width: 100%; display: block;">
-        {{ prj.prj_name }} 팀원 {{ prj.prj_membernum }}명 모집합니다</a>
-    </li>
-    {% endfor %}
-
-    {% for study in study_posts %}
-    <li class="list-group-item d-flex justify-content-between align-items-center">
-      <a href="{% url 'study_detail' study.id %}" style="width: 100%; display: block;">{{ study.post_title }}</a>
-      <span class="badge-container">
-      <span>
-          <a href="{% url 'study_detail' study.id %}">
-            <span class="badge badge-info">{{ study.study_type }}</span>
-          </a>
-      </span>
-      </span>
-
-    </li>
-    {% endfor %}
-
-    {% for ride in taxi_posts %}
-    <li class="list-group-item d-flex justify-content-between align-items-center">
-      <a href="{% url 'ride_detail' ride.id %}" style="width: 100%; display: block;">{{ ride.departure_location }} -> {{ ride.destination }}</a>
-      <span class="badge-container">
-      <span>
-        <a href="{% url 'ride_detail' ride.id %}">
-          <span class="badge badge-info">{{ ride.departure_time }}</span>
-        </a>
-      </span>
-      </span>
-    </li>
-    {% endfor %}
-    
-  </div>
-</div>
-
-
-  <div class="card-body">
-  <div class="category ott-posts">
-    {% for ott in ott_posts %}
-    <li class="list-group-item d-flex justify-content-between align-items-center">
-      <a href="{% url 'ott_detail' ott.id %}" style="width: 100%; display: block;">
-        [{{ ott.type }}] {{ ott.people }}명 모집
-      </a>
-    </li>
-    {% endfor %}
-    {% if not ott_posts %}
-      <p>아직 작성한 게시물이 없습니다.</p>
-    {% endif %}
-  </div>
-
-  <div class="category prj-posts">
-    {% for prj in prj_posts %}
-    <li class="list-group-item d-flex justify-content-between align-items-center">
-          <a href="{% url 'prj_detail' prj.id %}" style="width: 100%; display: block;">{{ prj.prj_name }} 팀원 {{ prj.prj_membernum }}명 모집합니다</a>
-      </li>
-    {% endfor %}
-    {% if not prj_posts %}
-      <p>아직 작성한 게시물이 없습니다.</p>
-    {% endif %}
-  </div>
-
-  <div class="category study-posts">
-    {% for study in study_posts %}
-      <li class="list-group-item d-flex justify-content-between align-items-center">
-        <a href="{% url 'study_detail' study.id %}" style="width: 100%; display: block;">{{ study.post_title }}</a>
-        <span>
-            <a href="{% url 'study_detail' study.id %}">
-              <span class="badge badge-info">{{ study.study_type }}</span>
-            </a>
-        </span>
-      </li>
-    {% endfor %}
-    {% if not study_posts %}
-      <p>아직 작성한 게시물이 없습니다.</p>
-    {% endif %}
+<div class="container">
+  <h3>작성한 글</h3>
+  <!-- User's Own Posts -->
+  <div class="card text-center">
+    <div class="card-header">
+      <ul class="nav nav-tabs card-header-tabs">
+        <li class="nav-item">
+          <a class="nav-link active" data-target="all" href="#">전체</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" data-target="prj" href="#">공모전/프로젝트</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" data-target="study" href="#">스터디</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" data-target="taxi" href="#">카풀</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" data-target="ott" href="#">OTT</a>
+        </li>
+      </ul>
     </div>
 
-  <div class="category taxi-posts">
-    {% for ride in taxi_posts %}
-    <li class="list-group-item d-flex justify-content-between align-items-center">
-      <a href="{% url 'ride_detail' ride.id %}" style="width: 100%; display: block;">{{ ride.departure_location }} -> {{ ride.destination }}</a>
-      <span>
-        <a href="{% url 'ride_detail' ride.id %}">
-          <span class="badge badge-info">{{ ride.departure_time }}</span>
+    <div class="category all-posts">
+      {% if not ott_posts and not prj_posts and not study_posts and not taxi_posts %}
+        <p>아직 작성한 게시물이 없습니다.</p>
+      {% endif %}
+
+      {% for ott in ott_posts %}
+      <li class="list-group-item d-flex justify-content-between align-items-center">
+        <a href="{% url 'ott_detail' ott.id %}" style="width: 100%; display: block;">
+          [{{ ott.type }}] {{ ott.people }}명 모집
         </a>
-      </span>
-    </li>
-    {% endfor %}
-    {% if not taxi_posts %}
-      <p>아직 작성한 게시물이 없습니다.</p>
-    {% endif %}
+      </li>
+      {% endfor %}
+
+      {% for prj in prj_posts %}
+      <li class="list-group-item d-flex justify-content-between align-items-center">
+        <a href="{% url 'prj_detail' prj.id %}" style="width: 100%; display: block;">
+          {% if prj.contest %}
+              [{{ prj.contest.contest_title }}] 공모전 팀원
+            {% elif prj.prj_name %}
+              {{ prj.prj_name }} 프로젝트 팀원
+            {% endif %}
+        </a>
+      </li>
+      {% endfor %}
+
+      {% for study in study_posts %}
+        <li class="list-group-item d-flex justify-content-between align-items-center">
+          <a href="{% url 'study_detail' study.id %}" style="width: 100%; display: block;">
+                <span>{{ study.post_title }}</span></a>
+          <span>
+            <a href="{% url 'study_detail' study.id %}">
+              <span class="badge badge-info">{{ study.study_type }}</span>
+          </a>
+        </li>
+      {% endfor %}
+
+
+      {% for ride in taxi_posts %}
+      <li class="list-group-item d-flex justify-content-between align-items-center">
+        <a href="{% url 'ride_detail' ride.id %}" style="width: 100%; display: block;">{{ ride.departure_location }} -> {{ ride.destination }}</a>
+        <span class="badge-container">
+        <span>
+          <a href="{% url 'ride_detail' ride.id %}">
+            <span class="badge badge-info">{{ ride.departure_time }}</span>
+          </a>
+        </span>
+        </span>
+      </li>
+      {% endfor %}
+      
+    </div>
+  </div>
+
+    <div class="card-body">
+    <div class="category ott-posts">
+      {% for ott in ott_posts %}
+      <li class="list-group-item d-flex justify-content-between align-items-center">
+        <a href="{% url 'ott_detail' ott.id %}" style="width: 100%; display: block;">
+          [{{ ott.type }}] {{ ott.people }}명 모집
+        </a>
+      </li>
+      {% endfor %}
+      {% if not ott_posts %}
+        <p>아직 작성한 게시물이 없습니다.</p>
+      {% endif %}
+    </div>
+
+    <div class="category prj-posts">
+      {% for prj in prj_posts %}
+      <li class="list-group-item d-flex justify-content-between align-items-center">
+            <a href="{% url 'prj_detail' prj.id %}" style="width: 100%; display: block;">{{ prj.prj_name }} 팀원 {{ prj.prj_membernum }}명 모집합니다</a>
+        </li>
+      {% endfor %}
+      {% if not prj_posts %}
+        <p>아직 작성한 게시물이 없습니다.</p>
+      {% endif %}
+    </div>
+
+    <div class="category study-posts">
+      {% for study in study_posts %}
+        <li class="list-group-item d-flex justify-content-between align-items-center">
+          <a href="{% url 'study_detail' study.id %}" style="width: 100%; display: block;">{{ study.post_title }}</a>
+          <span>
+              <a href="{% url 'study_detail' study.id %}">
+                <span class="badge badge-info">{{ study.study_type }}</span>
+              </a>
+          </span>
+        </li>
+      {% endfor %}
+      {% if not study_posts %}
+        <p>아직 작성한 게시물이 없습니다.</p>
+      {% endif %}
+      </div>
+
+    <div class="category taxi-posts">
+      {% for ride in taxi_posts %}
+      <li class="list-group-item d-flex justify-content-between align-items-center">
+        <a href="{% url 'ride_detail' ride.id %}" style="width: 100%; display: block;">{{ ride.departure_location }} -> {{ ride.destination }}</a>
+        <span>
+          <a href="{% url 'ride_detail' ride.id %}">
+            <span class="badge badge-info">{{ ride.departure_time }}</span>
+          </a>
+        </span>
+      </li>
+      {% endfor %}
+      {% if not taxi_posts %}
+        <p>아직 작성한 게시물이 없습니다.</p>
+      {% endif %}
+    </div>
+    </div>
   </div>
   </div>
-</div>
 </div>
 <br>
 <style>
+  /* 전반적인 스타일 */
+  body {
+    background-color: #fff;
+    margin: 0;
+    padding: 0;
+    height: 100vh;
+  }
+
+  h2 {
+    color: #333;
+    margin-bottom: 10px;
+  }
+
+  p {
+    margin-bottom: 5px;
+    color: #555;
+  }
+
+  /* 스크랩한 공모전에 대한 스타일 */
+  .container {
+    background-color: #f8f9fa;
+    border-bottom: 1px solid #ddd;
+    border-top: 1px solid #ddd;
+    padding: 15px;
+    padding-bottom: 10px;
+
+  }
+
+  .border {
+    border-color: #ddd;
+    border-width: 1px;
+    border-style: solid;
+    padding: 15px;
+    margin-bottom: 20px;
+  }
+
+  .text-primary-emphasis {
+    color: #007bff;
+  }
+
+  .card-text {
+    color: #777;
+    margin-bottom: 10px;
+  }
+
+  .icon-link {
+    color: #007bff;
+    text-decoration: none;
+    display: inline-block;
+  }
+
+  .icon-link:hover {
+    text-decoration: underline;
+  }
+
+  .card-body {
+    padding: 0rem;
+}
+
+  
+
+  /* 사용자가 작성한 게시물에 대한 스타일 */
+  .card-header {
+    background-color: #f8f9fa;
+    border-bottom: 1px solid #ddd;
+  }
+
+
+  .list-group-item {
+    border: none;
+    border-bottom: 1px solid #ddd;
+    padding: 10px 0;
+    text-align: justify;
+  }
+
+  .badge-info {
+    background-color: #17a2b8;
+  }
+
+  .badge-container {
+    margin-right: 10px; /* 원하는 여백 크기 */
+  }
+
+  .custom-card {
+    margin-bottom: 20px;
+  }
+
+  .custom-card .row {
+    margin-right: 5px;
+    margin-left: 5px;
+  }
+
+  .row {
+    display: -ms-flexbox;
+    display: inline-table;
+    -ms-flex-wrap: wrap;
+    flex-wrap: wrap;
+    margin-right: -15px;
+  }
+
+  .custom-card .col {
+    padding-right: 8px; /* 컬럼 사이의 간격을 조절합니다 */
+    padding-left: 8px;
+  }
+
+  .custom-card .border {
+    background-color: #fff; /* 배경색을 흰색으로 지정 */
+  }
+
+  .userthing {
+    padding-left: 15px;
+  }
   .card-header .nav-link {
     color: black !important;
   }
@@ -301,6 +316,18 @@
   .card-header .nav-link.active {
     color: blue !important;
   }
+  .list-group-item {
+    border: 1px solid #ddd;
+  }
+  .list-group-item {
+    padding: 10px;
+}
+.custom-card .row {
+  margin-right: 5px;
+  margin-left: 5px;
+  width: 217px;
+  text-align: center;
+}
 </style>
 <script>
   $(document).ready(function () {
@@ -335,6 +362,14 @@
     // 모달 내 취소 버튼에 대한 이벤트 리스너 추가
     $('#confirmDeleteModal .btn-secondary').click(function () {
       $('#confirmDeleteModal').modal('hide');
+    });
+  });
+
+  $(document).ready(function () {
+    // 네비게이션 메뉴 클릭 시 페이지 이동
+    $('.nav-link').click(function () {
+      var targetUrl = $(this).attr('href');
+      window.location.href = targetUrl;
     });
   });
 </script>

@@ -14,7 +14,7 @@ class PrjForm(forms.ModelForm):
     
     prj_membernum = forms.TypedChoiceField(
         label='모집 인원',
-        choices=[(1, '1'), (2, '2'), (3, '3'), (4, '4'), (5, '5'), (6, '6'), (7, '7'), (8, '8'), (9, '9'), (10, '10')],
+        choices=[(1, '1명'), (2, '2명'), (3, '3명'), (4, '4명'), (5, '5명'), (6, '6명'), (7, '7명'), (8, '8명'), (9, '9명'), (10, '10명')],
         coerce=int
     )
     
@@ -66,17 +66,29 @@ class PrjForm(forms.ModelForm):
         label='공모전 선택',
         widget=forms.Select(attrs={'class': 'form-control'}),
     )
+    
+    prj_name = forms.CharField(
+        required=False,
+        label='프로젝트 이름',
+        help_text='공모전을 선택하거나 프로젝트 이름을 입력해야 합니다.',
+    )
+    
+    def clean(self):
+        cleaned_data = super().clean()
+        contest = cleaned_data.get("contest")
+        prj_name = cleaned_data.get("prj_name")
+
+        if not contest and not prj_name:
+            raise forms.ValidationError("공모전을 선택하거나 프로젝트 이름을 입력해야 합니다.")
 
     class Meta:
         model = Prj
         exclude = ['author']
-        fields = ["user_name", "user_major", "contest", 'prj_name',  "user_grade", "prj_membernum", "post_content"]
+        fields = ["user_major", "contest", 'prj_name',  "user_grade", "prj_membernum", "post_content"]
 
         labels = {
-            'user_name' : '모집자',
             'user_major' : '전공',
             'user_grade' : '학년',
-            'prj_name' : '프로젝트 이름',
             'prj_membernum' : '모집 인원',
             'post_content' : '내용',      
         }

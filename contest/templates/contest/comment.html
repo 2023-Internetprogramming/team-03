@@ -51,9 +51,26 @@
     </div>
 </section>
 
-<div class="container">
+<br><br>
+<div class="container" style="hight:80%;">
+        {% if user.is_authenticated %}
+        <!-- 댓글 작성 폼 -->
+        <form method="post" action="{% url 'comment' contest.id %}">
+            {% csrf_token %}
+            <div class="form-group d-flex">
+                <label for="comment" class="mr-2">댓글:</label>
+                <textarea class="form-control" id="comment" name="comment" cols="30" rows="2"></textarea>
+            </div>
+            <button type="submit" class="btn btn-primary">Submit</button>
+        </form>
+    {% else %}
+        <!-- 로그인하지 않은 경우 -->
+        <div class="alert alert-warning" role="alert">
+            로그인이 필요합니다. <a href="{% url 'login' %}" style="color=blue;">로그인</a> 하시겠습니까?
+        </div>
+    {% endif %}
+    </div>
     <div class="comments">
-        <h4>댓글:</h4>
         <div class="container">
             <div class="comments">
                 {% for comment in comments %}
@@ -68,23 +85,6 @@
                 </div>
             {% endfor %}
             </div>
-        {% if user.is_authenticated %}
-        <!-- 댓글 작성 폼 -->
-        <form method="post" action="{% url 'comment' contest.id %}">
-            {% csrf_token %}
-            <div class="form-group">
-                <label for="comment">댓글:</label>
-                <textarea class="form-control" id="comment" name="comment" rows="3"></textarea>
-            </div>
-            <button type="submit" class="btn btn-primary">Submit</button>
-        </form>
-    {% else %}
-        <!-- 로그인하지 않은 경우 -->
-        <div class="alert alert-warning" role="alert">
-            로그인이 필요합니다. <a href="{% url 'login' %}" style="color=blue;">로그인</a> 하시겠습니까?
-        </div>
-    {% endif %}
-    </div>
     
     <!-- 모달 창 -->
 <div class="modal fade" id="deleteCommentModal" tabindex="-1" role="dialog" aria-labelledby="deleteCommentModalLabel" aria-hidden="true">
@@ -106,6 +106,34 @@
         </div>
     </div>
 </div>
+
+<!-- 페이지네이션 -->
+<nav aria-label="Page navigation example">
+    <ul class="pagination justify-content-center">
+        {% if comments.has_previous %}
+            <li class="page-item">
+                <a class="page-link" href="?page=1" aria-label="Previous">
+                    <span aria-hidden="true">&laquo;</span>
+                </a>
+            </li>
+        {% endif %}
+
+        {% for i in comments.paginator.page_range %}
+            <li class="page-item {% if comments.number == i %}active{% endif %}">
+                <a class="page-link" href="?page={{ i }}">{{ i }}</a>
+            </li>
+        {% endfor %}
+
+        {% if comments.has_next %}
+            <li class="page-item">
+                <a class="page-link" href="?page={{ comments.paginator.num_pages }}" aria-label="Next">
+                    <span aria-hidden="true">&raquo;</span>
+                </a>
+            </li>
+        {% endif %}
+    </ul>
+</nav>
+
 
 <!-- comment.html -->
 <script>
@@ -270,5 +298,6 @@
 </script>
 
 <link rel="stylesheet" type="text/css" href="{% static 'contest/css/detail.css' %}">
+<link rel="stylesheet" type="text/css" href="{% static 'contest/css/comment.css' %}">
 
 {% endblock %}

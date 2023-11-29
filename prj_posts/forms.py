@@ -70,7 +70,7 @@ class PrjForm(forms.ModelForm):
     class Meta:
         model = Prj
         exclude = ['author']
-        fields = ["user_name", "user_major", 'prj_name',  "user_grade", "prj_membernum", "post_content", "contest"]
+        fields = ["user_name", "user_major", "contest", 'prj_name',  "user_grade", "prj_membernum", "post_content"]
 
         labels = {
             'user_name' : '모집자',

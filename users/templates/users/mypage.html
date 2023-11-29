@@ -3,16 +3,138 @@
 
 {% block main_area %}
 <link rel="stylesheet" type="text/css" href="{% static 'contest/css/list.css' %}">
-<br><br><br><br><br><br><br><br>
+<link rel="stylesheet" type="mypage/css" href="{% static 'users/css/mypage.css' %}">
+<head>
+  <style>
+    /* 전반적인 스타일 */
+    body {
+      background-color: #fff;
+      margin: 0;
+      padding: 0;
+      height: 100vh;
+    }
+  
+    h2 {
+      color: #333;
+      margin-bottom: 10px;
+    }
+  
+    p {
+      margin-bottom: 5px;
+      color: #555;
+    }
+  
+    /* 스크랩한 공모전에 대한 스타일 */
+    .container {
+      background-color: #f8f9fa;
+      border-bottom: 1px solid #ddd;
+      border-top: 1px solid #ddd;
+      padding: 15px;
+      padding-bottom: 10px;
 
+    }
+
+    .border {
+      border-color: #ddd;
+      border-width: 1px;
+      border-style: solid;
+      padding: 15px;
+      margin-bottom: 20px;
+    }
+  
+    .text-primary-emphasis {
+      color: #007bff;
+    }
+  
+    .card-text {
+      color: #777;
+      margin-bottom: 10px;
+    }
+  
+    .icon-link {
+      color: #007bff;
+      text-decoration: none;
+      display: inline-block;
+    }
+  
+    .icon-link:hover {
+      text-decoration: underline;
+    }
+
+    
+  
+    /* 사용자가 작성한 게시물에 대한 스타일 */
+    .card-header {
+      background-color: #f8f9fa;
+      border-bottom: 1px solid #ddd;
+    }
+  
+  
+    .list-group-item {
+      border: none;
+      border-bottom: 1px solid #ddd;
+      padding: 10px 0;
+    }
+  
+    .badge-info {
+      background-color: #17a2b8;
+    }
+
+    .badge-container {
+      margin-right: 10px; /* 원하는 여백 크기 */
+    }
+
+    .custom-card {
+      margin-bottom: 20px;
+    }
+  
+    .custom-card .row {
+      margin-right: 5px;
+      margin-left: 5px;
+    }
+  
+    .custom-card .col {
+      padding-right: 8px; /* 컬럼 사이의 간격을 조절합니다 */
+      padding-left: 8px;
+    }
+
+    .custom-card .border {
+      background-color: #fff; /* 배경색을 흰색으로 지정 */
+    }
+
+    .userthing {
+      padding-left: 15px;
+    }
+
+  </style>
+  
+</head>
+<br><br><br><br>
+<div class="container">
 <h2>마이페이지</h2>
-<p>이름: {{ user_profile.real_name }}</p>
-<p>전화번호: {{ user_profile.phone_number }}</p>
+</div>
+<br>
+<div class="container">
+  <div class="d-flex align-items-center">
+    <div class="rounded-circle overflow-hidden me-4" style="width: 50px; height: 50px;">
+      <span class="material-symbols-outlined" alt="프로필 이미지" style="width: 100%; height: 100%; object-fit: cover; font-size:50px;">
+        account_circle
+    </span>
+    </div>
+    <div class="userthing">
+    <p class="mb-1">이름: {{ user_profile.real_name }}</p>
+    <p class="mb-0">전화번호: {{ user_profile.phone_number }}</p>
+    </div>
+  </div>
+</div>
 
+<br>
+
+<div class="container">
 <h2>스크랩한 공모전</h2>
+<div class="row">
 {% for contest in saved_posts %}
-  <div class="row mb-2">
-    <div class="col-md-6">
+  <div class="custom-card row mb-2 col-md-3">
       <a class="top" href="{% url 'contest_detail' contest.id %}">
         <div class="row g-0 border rounded overflow-hidden flex-md-row mb-4 shadow-sm h-md-250 position-relative">
           <div class="col p-4 d-flex flex-column position-static">
@@ -31,12 +153,12 @@
           </div>
         </div>
       </a>
-    </div>
   </div>
 {% endfor %}
 {% if not saved_posts %}
   <p>아직 스크랩한 게시물이 없습니다.</p>
 {% endif %}
+  </div>
 
 <!-- User's Own Posts -->
 <div class="card text-center">
@@ -83,28 +205,32 @@
     {% for study in study_posts %}
     <li class="list-group-item d-flex justify-content-between align-items-center">
       <a href="{% url 'study_detail' study.id %}" style="width: 100%; display: block;">{{ study.post_title }}</a>
+      <span class="badge-container">
       <span>
           <a href="{% url 'study_detail' study.id %}">
             <span class="badge badge-info">{{ study.study_type }}</span>
           </a>
       </span>
+      </span>
+
     </li>
     {% endfor %}
 
     {% for ride in taxi_posts %}
     <li class="list-group-item d-flex justify-content-between align-items-center">
       <a href="{% url 'ride_detail' ride.id %}" style="width: 100%; display: block;">{{ ride.departure_location }} -> {{ ride.destination }}</a>
+      <span class="badge-container">
       <span>
         <a href="{% url 'ride_detail' ride.id %}">
           <span class="badge badge-info">{{ ride.departure_time }}</span>
         </a>
       </span>
+      </span>
     </li>
     {% endfor %}
+    
   </div>
 </div>
-
-
 
 
   <div class="card-body">
@@ -165,7 +291,8 @@
   </div>
   </div>
 </div>
-
+</div>
+<br>
 <style>
   .card-header .nav-link {
     color: black !important;

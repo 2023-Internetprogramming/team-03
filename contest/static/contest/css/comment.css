@@ -1,0 +1,49 @@
+.comments {
+    margin-top: 20px;
+    background-color: #f8f8f8; /* 변경할 배경색 */
+    padding: 10px;
+    border-radius: 8px;
+  }
+  
+  .comment {
+    margin-bottom: 10px;
+    border: 1px solid #ccc; /* 테두리 추가 */
+    padding: 8px;
+    border-radius: 5px;
+    background-color: #fff; /* 배경색 */
+  }
+  
+  .comment-form {
+    margin-top: 20px;
+    background-color: #f5f5f5;
+    padding: 15px;
+    border-radius: 8px;
+  }
+  
+  .form-group {
+    margin-bottom: 15px;
+  }
+  
+  .label {
+    font-weight: bold;
+    color: #333;
+  }
+  
+  .comment-input {
+    display: flex;
+    flex-direction: column;
+  }
+  
+  .comment-input-wrapper {
+    display: flex;
+    align-items: flex-end; /* 아래로 정렬 */
+  }
+  
+  textarea {
+    flex: 1; /* 입력창이 남은 공간을 차지하도록 설정 */
+    padding: 8px;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    resize: vertical;
+    margin-right: 5px; /* 버튼과 간격 주기 */
+  }

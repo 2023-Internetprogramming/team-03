@@ -1,0 +1,86 @@
+.carousel-item img {
+    height: 100%; /* 이미지 높이 조정 */
+    object-fit: cover; /* 이미지 비율 유지 */
+  }
+  .carousel-indicators {
+    display: flex;
+    justify-content: center;
+  }
+  .carousel-indicators li {
+    width: 15px;
+    height: 3px;
+    background-color: #888;
+    margin: 0 3px;
+    cursor: pointer;
+  }
+  .carousel-indicators .active {
+    background-color: #333;
+  }
+  .spacer {
+    height: 20px; /* 원하는 간격의 높이를 설정합니다. */
+  }
+  .rounded-circle-small {
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
+  }
+  .rounded-corner {
+    border-radius: 10px;
+    margin: 5px;
+  }
+  .custom-hr {
+      border: 2px solid #8B2845; /* 선의 두께를 조절합니다. */
+    }
+    .bi {
+      vertical-align: -.125em;
+      fill: currentColor;
+    }
+    .icon-link > .bi {
+      width: .75em;
+      height: .75em;
+    }
+    .product-device {
+      position: absolute;
+      right: 10%;
+      bottom: -30%;
+      width: 300px;
+      height: 540px;
+      background-color: #333;
+      border-radius: 21px;
+      transform: rotate(30deg);
+    }
+    
+    .product-device::before {
+        position: absolute;
+        top: 10%;
+        right: 10px;
+        bottom: 10%;
+        left: 10px;
+        content: ""; /* 이미지의 URL을 여기에 입력하세요 */
+        background-image: url('https://i.imgur.com/ooRMUd8.png'); /* 이미지 URL 설정 */
+        background-size: 100%; /* 이미지 크기를 부모 요소에 맞게 조절 */
+        background-color: rgba(255, 255, 255, .1);
+      }
+    
+    .product-device-2 {
+      top: -25%;
+      right: auto;
+      bottom: 0;
+      left: 5%;
+      background-color: #e5e5e5;
+    }
+    
+    .flex-equal > * {
+      flex: 1;
+    }
+    @media (min-width: 768px) {
+      .flex-md-equal > * {
+        flex: 1;
+      }
+    }
+
+    @media (max-width: 1122px){
+        .d-md-block {
+            display: block!important;
+        }
+    }

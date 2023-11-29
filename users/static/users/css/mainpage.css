@@ -85,3 +85,7 @@
             display: block!important;
         }
     }
+
+    .container, .container-fluid, .container-lg, .container-md, .container-sm, .container-xl, .container-xxl {
+      display: inherit;
+    }

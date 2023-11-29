@@ -93,6 +93,9 @@
         </div>
     </div>
     {% endfor %}
+    {% else %}
+        <h4 style="margin-bottom: 13.5rem;">아직 게시물이 없습니다.</h4>
+    {% endif %}
 </div>
 
 <!-- 페이지네이션 -->
@@ -122,10 +125,6 @@
         {% endif %}
     </ul>
 </nav>
-
-{% else %}
-<h4 style="margin-bottom: 13.5rem;">아직 게시물이 없습니다.</h4>
-{% endif %}
 <style>
     section.tab > div.wrap > a {
         padding: 0 12px;

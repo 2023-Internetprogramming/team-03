@@ -8,6 +8,7 @@ class Ride(models.Model):
     departure_time = models.DateTimeField()
     available_seats = models.IntegerField()
     description = models.TextField()
+    created_at = models.DateTimeField(auto_now_add=True)
 
     join_list = models.ManyToManyField(
         User,

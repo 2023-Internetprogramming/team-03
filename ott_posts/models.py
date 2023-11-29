@@ -16,6 +16,7 @@ class Ott(models.Model):
     bill = models.IntegerField()
     people = models.IntegerField(choices=PEOPLE_CHOICES, default='1')
     description_OTT = models.TextField(blank=True)
+    created_at = models.DateTimeField(auto_now_add=True)
 
     join_list = models.ManyToManyField(
         User,

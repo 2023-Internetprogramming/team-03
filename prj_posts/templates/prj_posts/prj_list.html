@@ -25,10 +25,16 @@
         <li class="list-group-item d-flex justify-content-between align-items-center">
           <a href="{% url 'prj_detail' prj.id %}" style="width: 100%; display: block;">
             {% if prj.contest %}
-              {{ prj.contest.contest_title }} 공모전 팀원 {{ prj.prj_member }}명 모집합니다
+              [{{ prj.contest.contest_title }}] 공모전 팀원
             {% elif prj.prj_name %}
-              {{ prj.prj_name }} 팀원 {{ prj.prj_member }}명 모집합니다
+              {{ prj.prj_name }} 프로젝트 팀원
             {% endif %}
+            {% if prj.prj_member == 0 %}
+              마감
+            {% else %}
+              모집 중
+            {% endif %}
+          </span>
           </a>
           <span>
             <a href="{% url 'prj_detail' prj.id %}">

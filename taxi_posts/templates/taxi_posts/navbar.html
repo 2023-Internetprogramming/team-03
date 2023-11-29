@@ -1,6 +1,8 @@
+{% load static %}
+
 <nav class="navbar navbar-expand-lg navbar-light bg-light" id = "nav">
     <div class="container-fluid">
-        <a class="navbar-brand" href="/">WWW</a>
+        <a class="navbar-brand" href="/"><img src="{% static 'contest/image/favicon.png' %}" style="width:56px; height:24px;"></a>
         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavDropdown"
             aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
@@ -13,18 +15,18 @@
                         공모전/프로젝트
                     </a>
                     <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
-                        <a class="dropdown-item" href="/prjs/">팀원 모집</a>
-                        <a class="dropdown-item" href="/contest/">추천 공모전</a>
+                        <a class="dropdown-item" href="{% url 'prj_list' %}">팀원 모집</a>
+                        <a class="dropdown-item" href="{% url 'contest_list' %}">추천 공모전</a>
                     </div>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="/study/">스터디</a>
+                    <a class="nav-link" href="{% url 'study_list' %}">스터디</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="/rides/">카풀</a>
+                    <a class="nav-link" href="{% url 'ride_list' %}">카풀</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="/ott/">OTT</a>
+                    <a class="nav-link" href="{% url 'ott_list' %}">OTT</a>
                 </li>
             </ul>
             <ul class="navbar-nav">
@@ -50,10 +52,10 @@
                     </li>
                 {% else %}
                     <li class="nav-item">
-                        <a class="nav-link" href="/login/">로그인</a>
+                        <a class="nav-link" href="{% url 'login' %}">로그인</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="/signup/">회원가입</a>
+                        <a class="nav-link" href="{% url 'signup' %}">회원가입</a>
                     </li>
                 {% endif %}
             </ul>

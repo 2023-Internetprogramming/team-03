@@ -11,6 +11,11 @@
         </table>
         <button type="submit" class="btn btn-primary">글쓰기</button>
       </form>
-      <a href="{% url 'prj_list' %}" class="btn btn-secondary mt-3">Back to Ride List</a>
+      <a href="{% url 'prj_list' %}" class="btn btn-secondary mt-3">목록으로 돌아가기</a>
     </div>
+    <style>
+      button, input, optgroup, select, textarea {
+        margin: 3px;
+      }
+    </style>
 {% endblock %}

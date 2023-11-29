@@ -5,22 +5,19 @@
 <div class="container mt-4" id="container">
     
     <h2>{{ study.post_title }}
-        <span class="badge badge-info">
+      <span class="badge badge-info">
             {% if study.study_member == 0 %}
                 마감
             {% else %}
                 모집 중
             {% endif %}
-          </span>
+      </span>
     </h2>
-    <span class="rounded border border-dark p-1 small">{{ study.study_type }}</span>
-    <p>{{study.created_at}}</p>
-    <p>모집 인원 : {{ study.study_member }}</p>
+    <p style="color:gray; font-size:13px;">{{study.created_at}}</p>
+    <p>스터디 종류: <span class="rounded border border-dark p-1 small">{{ study.study_type }}</span> </p>
+    <p>모집 인원 : {{ study.study_member }} 명</p>
+    <p>학년: {{study.user_grade}} 학년 / 학과 : {{study.user_major}}</p>
     <p>세부 사항 : {{ study.post_content }}</p>
-    <br><br>
-
-    <p>{{study.user_name}}</p>
-    <p>{{study.user_grade}}학년 / 학과 : {{study.user_major}}</p>
     
     <a href="{% url 'study_update' id=study.id %}" class="btn btn-secondary {% if request.user != study.author %}d-none{% endif %}">수정</a>
 

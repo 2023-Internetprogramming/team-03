@@ -10,12 +10,18 @@ from ott_posts.models import Ott
 from prj_posts.models import Prj
 from study_posts.models import Study
 from taxi_posts.models import Ride
+from contest.models import Contest
 from .forms import EditProfileForm
 from .models import UserProfile
 
 
 def main_view(request):
-    return render(request, 'users/main_page.html')
+    Prj_data = Prj.objects.all()
+    Ride_data = Ride.objects.all()
+    Ott_data = Ott.objects.all()
+    Study_data = Study.objects.all()
+    Contest_data = Contest.objects.all()
+    return render(request, 'users/main_page.html', {'Prj_data': Prj_data, 'Ride_data': Ride_data, 'Ott_data': Ott_data, 'Study_data': Study_data, 'Contest_data': Contest_data})
 
 def signup_view(request):
     if request.method == 'POST':
@@ -76,7 +82,7 @@ def mypage_view(request):
     today = datetime.now().date()
     
     for contest in saved_posts:
-        contest.deadline = (contest.deadline - today).days
+        contest.deadline = contest.deadline - datetime.now().date()
         
     #자신이 작성한 글 
     ott_posts = Ott.objects.filter(author=user)

@@ -26,7 +26,7 @@
           <a href="{% url 'ride_detail' ride.id %}" style="width: 100%; display: block;">{{ ride.departure_location }} -> {{ ride.destination }}</a>
           <span>
             <a href="{% url 'ride_detail' ride.id %}">
-              <span class="badge badge-info">{{ ride.departure_time }}</span>
+              <span class="badge badge-info" style="margin-right: 5px;">{{ ride.departure_time }}</span>
             </a>
           </span>
           <span>

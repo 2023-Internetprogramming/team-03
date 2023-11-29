@@ -3,7 +3,12 @@
 {% block main_area %}
 <br><br>
 <div class="container mt-4" id="container">
-    <h2>{{prj.post_title}}
+    <h2>
+        {% if prj.contest %}
+          [{{ prj.contest.contest_title }}] 공모전 팀원
+        {% elif prj.prj_name %}
+          {{ prj.prj_name }} 프로젝트 팀원
+        {% endif %}
         <span class="badge badge-info">
             {% if prj.prj_member == 0 %}
             마감
@@ -12,13 +17,11 @@
             {% endif %}
           </span>
     </h2>
-    <p>{{prj.created_at}}</p>
+    <p style="color:gray; font-size:13px;">{{prj.created_at}}</p>
     <p>프로젝트/공모전 : {{prj.prj_name}}</p>
-    <p>모집 인원 : {{prj.prj_member}}</p>
+    <p>모집 인원 : {{prj.prj_member}} 명</p>
+    <p>학년: {{prj.user_grade}} 학년 / 학과 : {{prj.user_major}}</p>
     <p>세부 사항 : {{prj.post_content}}</p>
-    <br><br>
-    <p>{{prj.user_name}}</p>
-    <p>{{prj.user_grade}}학년 / 학과 : {{prj.user_major}}</p>
 
     <a href="{% url 'prj_update' id=prj.id %}" class="btn btn-secondary {% if request.user != prj.author %}d-none{% endif %}">수정</a>
 

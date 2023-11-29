@@ -99,7 +99,7 @@ def studysearchResult(request):
             Q(user_major__icontains=query) |
             Q(user_grade__icontains=query) |
             Q(study_type__icontains=query) |
-            Q(study_membernum__icontains=query) |
+            Q(study_member__icontains=query) |
             Q(post_content__icontains=query)
         )
         return render(request, 'study_posts/study_search.html', {'query': query, 'studys': studys})

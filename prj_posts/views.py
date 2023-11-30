@@ -15,6 +15,8 @@ def prj_list(request):
     page = request.GET.get('page', '1')
     paginator = Paginator(prjs, 10)
     
+    room_name_json = f'/chat/prj'
+    
     try:
         prjs = paginator.page(page)
     except PageNotAnInteger:
@@ -27,15 +29,15 @@ def prj_list(request):
         'prj_posts/prj_list.html',
         {
             'prjs': prjs, 
-            'page_obj': prjs        
+            'page_obj': prjs,
+            'room_name_json': room_name_json,       
         },
     )
 
 
 def prj_detail(request, prj_id):
     prj = Prj.objects.get(id=prj_id)
-    room_name_json = f'/chat/prj{prj_id}/'
-    return render(request, 'prj_posts/prj_detail.html', {'prj': prj, 'room_name_json': room_name_json})
+    return render(request, 'prj_posts/prj_detail.html', {'prj': prj})
 
 
 @login_required
@@ -78,7 +80,8 @@ def prj_update(request, id):
         form = PrjForm(request.POST, instance=item)
         if form.is_valid():
             form.save()
-            return redirect('prj_detail', prj_id=item.id)
+            return redirect('prj_list')
+        # 모달창으로 돌아가지는게 안되서 일단 list페이지로 넘어가게 함
     else:
         form = PrjForm(instance=item)
 

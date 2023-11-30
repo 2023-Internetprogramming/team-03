@@ -14,6 +14,9 @@ def ride_list(request):
     
     page = request.GET.get('page', 1)
     paginator = Paginator(rides, 10) 
+
+    room_name_json = f'/chat/ride'
+
     try:
         rides = paginator.page(page)
     except PageNotAnInteger:
@@ -21,12 +24,11 @@ def ride_list(request):
     except EmptyPage:
         rides = paginator.page(paginator.num_pages)
 
-    return render(request, 'taxi_posts/ride_list.html', {'rides': rides, 'page_obj': rides})
+    return render(request, 'taxi_posts/ride_list.html', {'rides': rides, 'page_obj': rides, 'room_name_json': room_name_json})
 
 def ride_detail(request, ride_id):
     ride = Ride.objects.get(id=ride_id)
-    room_name_json = f'/chat/ride{ride_id}/'
-    return render(request, 'taxi_posts/ride_detail.html', {'ride': ride, 'room_name_json': room_name_json})
+    return render(request, 'taxi_posts/ride_detail.html', {'ride': ride})
 
 
 @login_required
@@ -70,8 +72,8 @@ def ride_update(request, id):
         form = RideForm(request.POST, instance=item)
         if form.is_valid():
             form.save()
-            return redirect('ride_detail', ride_id=item.id)
-
+            return redirect('ride_list')
+        # 모달창으로 돌아가지는게 안되서 일단 list페이지로 넘어가게 함
     else:
         form = RideForm(instance=item)
 

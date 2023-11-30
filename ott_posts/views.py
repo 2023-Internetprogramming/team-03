@@ -13,6 +13,8 @@ def ott_list(request):
     page_number = request.GET.get('page', 1)
     paginator = Paginator(otts, 10)
 
+    room_name_json = f'/chat/ott'
+
     try:
         otts = paginator.page(page_number)
     except PageNotAnInteger:
@@ -20,13 +22,12 @@ def ott_list(request):
     except EmptyPage:
         otts = paginator.page(paginator.num_pages)
 
-    return render(request, 'ott_posts/ott_list.html', {'otts': otts, 'page_obj': otts})
+    return render(request, 'ott_posts/ott_list.html', {'otts': otts, 'page_obj': otts, 'room_name_json': room_name_json})
 
 
 def ott_detail(request, ott_id):
     ott = get_object_or_404(Ott, id=ott_id)
-    room_name_json = f'/chat/ott{ott_id}/'
-    return render(request, 'ott_posts/ott_detail.html', {'ott': ott, 'room_name_json': room_name_json})
+    return render(request, 'ott_posts/ott_detail.html', {'ott': ott})
 
 
 @login_required
@@ -69,7 +70,7 @@ def ott_update(request, id):
         form = OttForm(request.POST, instance=item)
         if form.is_valid():
             form.save()
-            return redirect('ott_detail', ott_id=item.id)
+            return redirect('ott_list') # 모달창으로 돌아가지는게 안되서 일단 list페이지로 넘어가게 함
 
     else:
         form = OttForm(instance=item)

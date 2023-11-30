@@ -23,14 +23,15 @@
     <ul class="list-group">
       {% for ride in rides %}
         <li class="list-group-item d-flex justify-content-between align-items-center">
-          <a href="{% url 'ride_detail' ride.id %}" style="width: 100%; display: block;">{{ ride.departure_location }} -> {{ ride.destination }}</a>
+          <a href="#" onclick="openDetailPopup('{{ ride.id }}')" style="width: 100%; display: block;">
+            {{ ride.departure_location }} -> {{ ride.destination }}</a>
           <span>
-            <a href="{% url 'ride_detail' ride.id %}">
+            <a href="#" onclick="openDetailPopup('{{ ride.id }}')">
               <span class="badge badge-info" style="margin-right: 5px;">{{ ride.departure_time }}</span>
             </a>
           </span>
           <span>
-            <a href="{% url 'ride_detail' ride.id %}">
+            <a href="#" onclick="openDetailPopup('{{ ride.id }}')">
               <span class="badge badge-info">
                 {% if ride.available_seats == 0 %}
                     마감
@@ -41,6 +42,31 @@
             </a>
           </span>
         </li>
+        <div id="rideDetailModal" class="modal">
+          <div class="modal-content">
+            <span class="close" onclick="closeDetailPopup()">&times;</span>
+            <div id="rideDetailContent"></div>
+            <div class="container mt-4 d-flex justify-content-between align-items-end">
+              <div>
+                <a href="{% url 'ride_update' id=ride.id %}"
+                  class="btn btn-secondary {% if request.user != ride.author %}d-none{% endif %}">수정</a>
+        
+                <!-- 모달창 안에서 모달창이 작동을 안해서 일단 버튼으로 대체 -->
+                <a href="{% url 'ride_delete' %}?id={{ ride.id }} "
+                  class="btn btn-danger {% if request.user != ride.author %}d-none{% endif %}">삭제</a>
+        
+                <a href="{% url 'ride_list' %}" class="btn btn-secondary">목록으로 돌아가기</a>
+              </div>
+              <div>
+                <a href="#" onclick="join_user('{{ ride.id }}'); return false;">
+                  <div id="join-button">
+                    <button id="join"><span>채팅 참여</span></button>
+                  </div>
+                </a>
+              </div>
+            </div>
+          </div>
+        </div>
       {% endfor %}
     </ul>
 
@@ -82,6 +108,52 @@
     </span>
   </a>
 </div>
+
+<script>
+  var ride_id;
+  // 모달 열기
+  function openDetailPopup(rideId) {
+    ride_id = rideId;
+    const modal = document.getElementById('rideDetailModal');
+    modal.style.display = 'block';
+
+    // AJAX 요청 보내기
+    const xhttp = new XMLHttpRequest();
+    xhttp.onreadystatechange = function () {
+      if (this.readyState == 4 && this.status == 200) {
+        document.getElementById("rideDetailContent").innerHTML = this.responseText;
+      }
+    };
+    xhttp.open("GET", "{% url 'ride_detail' 0 %}".replace('0', rideId), true);
+    xhttp.send();
+  }
+  function join_user() {
+    // AJAX를 이용하여 ride.people 값을 1 줄입니다.
+    $.ajax({
+      url: "/" + ride_id + "/ride_join/",
+      method: 'GET',
+      success: function (response) {
+        if (response.success) {
+          // ride.people 값을 성공적으로 줄였으면 채팅 방으로 이동합니다.
+          window.location.href = "{{ room_name_json }}" + ride_id;
+        } else {
+          // 실패한 경우에 대한 처리를 추가할 수 있습니다.
+          alert("모집이 마감되었습니다.");
+        }
+      },
+      error: function (xhr, errmsg, err) {
+        console.error(xhr.status + ": " + xhr.responseText);
+      }
+    });
+  }
+
+  // 모달 닫기
+  function closeDetailPopup() {
+    const modal = document.getElementById('rideDetailModal');
+    modal.style.display = 'none';
+  }
+</script>
+
 <script>
   // JavaScript로 로그인 상태 확인 및 알림 창 표시
   document.addEventListener('DOMContentLoaded', function () {

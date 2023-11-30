@@ -1,8 +1,113 @@
-{% extends 'taxi_posts/base.html' %}
+<link rel="stylesheet" href="../../../taxi_posts/static/taxi_posts/css/list.css">
 
-{% block main_area %}
-    <br><br>
-    <div class="container mt-4" id="container">
+<style>
+  .modal {
+    display: none;
+    position: fixed;
+    z-index: 10;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    overflow: auto;
+    background-color: rgba(0, 0, 0, 0.4);
+  }
+
+  .modal-content {
+    background-color: #fefefe;
+    margin: 10% auto;
+    padding: 20px;
+    border: 1px solid #888;
+    width: 50%;
+  }
+
+  .close {
+    color: #aaa;
+    float: right;
+    font-size: 28px;
+    font-weight: bold;
+  }
+
+  .close:hover,
+  .close:focus {
+    color: black;
+    text-decoration: none;
+    cursor: pointer;
+  }
+
+  /* 모달 스타일 */
+  .modal-content {
+    border-radius: 8px;
+  }
+
+  .modal-header {
+    background-color: #f8f9fa;
+    border-bottom: 1px solid #dee2e6;
+    padding: 15px;
+  }
+
+  .modal-footer {
+    background-color: #f8f9fa;
+    border-top: 1px solid #dee2e6;
+    padding: 15px;
+  }
+
+  /* 삭제 버튼 */
+  .btn-danger {
+    background-color: #dc3545;
+    border-color: #dc3545;
+  }
+
+  .btn-danger:hover {
+    background-color: #c82333;
+    border-color: #bd2130;
+  }
+
+  /* 채팅 참여 버튼 */
+  #join-button {
+    margin-top: none;
+  }
+
+  #join {
+    background-color: #8B2845;
+    color: #fff;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 5px;
+    cursor: pointer;
+  }
+
+  #join:hover {
+    background-color: #8B2845;
+  }
+
+  /* 디테일 페이지 내용 스타일 */
+  .detail-content {
+    /* 원하는 디테일 페이지 내용에 맞게 스타일을 추가하세요 */
+    font-family: Arial, sans-serif;
+    font-size: 16px;
+    line-height: 1.6;
+    color: #333;
+  }
+
+  .detail-title {
+    font-size: 24px;
+    font-weight: bold;
+    margin-bottom: 10px;
+  }
+
+  .detail-content>.container {
+    margin-top: 10px;
+    background-color: #f8f9fa;
+    border-bottom: 1px solid #ddd;
+    border-top: 1px solid #ddd;
+    padding: 15px;
+    padding-bottom: 10px;
+
+  }
+</style>
+<div class="detail-content">
+  <div class="container mt-4" id="container">
       <h2>{{ ride.departure_location }} -> {{ ride.destination }}
         <span class="badge badge-info">
           {% if ride.available_seats == 0 %}
@@ -15,64 +120,5 @@
       <p>시간: {{ ride.departure_time }}</p>
       <p>모집 인원: {{ ride.available_seats }} 명</p>
       <p>세부 사항: {{ ride.description }}</p>
-
-      <a href="{% url 'ride_update' id=ride.id %}" class="btn btn-secondary {% if request.user != ride.author %}d-none{% endif %}">수정</a>
-
-      <!-- 삭제 버튼에 onclick 이벤트 추가 -->
-      <button type="button" class="btn btn-danger {% if request.user != ride.author %}d-none{% endif %}" onclick="confirmDelete()">삭제</button>
-
-      <!-- 삭제 확인 모달 -->
-      <div class="modal fade" id="confirmDeleteModal" tabindex="-1" role="dialog" aria-labelledby="confirmDeleteModalLabel" aria-hidden="true">
-        <div class="modal-dialog" role="document">
-          <div class="modal-content">
-            <div class="modal-header">
-              <h5 class="modal-title" id="confirmDeleteModalLabel">삭제 확인</h5>
-              <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                <span aria-hidden="true">&times;</span>
-              </button>
-            </div>
-            <div class="modal-body">
-              <p>게시물을 삭제하시겠습니까?</p>
-            </div>
-            <div class="modal-footer">
-              <button type="button" class="btn btn-secondary" data-dismiss="modal">취소</button>
-              <a href="{% url 'ride_delete' %}?id={{ ride.id }}" class="btn btn-danger">삭제</a>
-            </div>
-          </div>
-        </div>
-      </div>
-      <a href="{% url 'ride_list' %}" class="btn btn-secondary">목록으로 돌아가기</a>
-      <a href="#" onclick="join_user(); return false;">        <div id="join-button">
-            <button id="join"><span>채팅 참여</span></button>
-        </div>
-      </a>
-    </div>
-    
-    <script>
-      function confirmDelete() {
-        $('#confirmDeleteModal').modal('show');
-      }
-    </script>
-    <script>
-      function join_user() {
-        // AJAX를 이용하여 ride.available_seats 값을 1 줄입니다.
-        $.ajax({
-          url: "{% url 'ride_join' id=ride.id %}",
-          method: 'GET',
-          success: function (response) {
-            if (response.success) {
-              // ride.available_seats 값을 성공적으로 줄였으면 채팅 방으로 이동합니다.
-              window.location.href = "{{ room_name_json }}";
-            } else {
-              // 실패한 경우에 대한 처리를 추가할 수 있습니다.
-              alert("모집이 마감되었습니다.");
-            }
-          },
-          error: function (xhr, errmsg, err) {
-            console.error(xhr.status + ": " + xhr.responseText);
-          }
-        });
-      }
-    </script>  
-
-{% endblock %}
+</div>
+</div>

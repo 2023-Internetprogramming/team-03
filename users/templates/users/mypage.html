@@ -152,7 +152,7 @@
     <div class="category prj-posts">
       {% for prj in prj_posts %}
       <li class="list-group-item d-flex justify-content-between align-items-center">
-            <a href="{% url 'prj_detail' prj.id %}" style="width: 100%; display: block;">{{ prj.prj_name }} 팀원 {{ prj.prj_membernum }}명 모집합니다</a>
+            <a href="{% url 'prj_detail' prj.id %}" style="width: 100%; display: block;">{{ prj.prj_name }} 팀원 {{ prj.prj_member }}명 모집합니다</a>
         </li>
       {% endfor %}
       {% if not prj_posts %}

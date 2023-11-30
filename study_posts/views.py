@@ -12,6 +12,9 @@ def study_list(request):
 
     page = request.GET.get('page', 1)
     paginator = Paginator(studys, 10)
+
+    room_name_json = f'/chat/study'    
+
     try:
         studys = paginator.page(page)
     except PageNotAnInteger:
@@ -25,20 +28,19 @@ def study_list(request):
         {
             'studys' : studys,
             'page_obj': studys,
+            'room_name_json': room_name_json
         }
     )
 
 
 def study_detail(request, study_id):
     study = Study.objects.get(pk=study_id)
-    room_name_json = f'/chat/study{study_id}/'
 
     return render(
         request,
         'study_posts/study_detail.html',
         {
             'study' : study,
-            'room_name_json': room_name_json
         }
     )
 
@@ -82,7 +84,8 @@ def study_update(request, id):
         form = StudyForm(request.POST, instance=item)
         if form.is_valid():
             form.save()
-            return redirect('study_detail', study_id=item.id)
+            return redirect('study_list')
+        # 모달창으로 돌아가지는게 안되서 일단 list페이지로 넘어가게 함
     else:
         form = StudyForm(instance=item)
     

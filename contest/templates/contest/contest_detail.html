@@ -105,9 +105,9 @@
             </article>
         </div>
         <script>
-            function setInitialScrapState() {
+
+            function setInitialScrapState(contestId) {
                 var scrapButton = document.getElementById('scrapImage');
-                var contestId = {{ contest.id }};
                 var storedState = localStorage.getItem('scrapState_' + contestId);
             
                 if (storedState && storedState === 'scrap') {
@@ -147,9 +147,10 @@
                 });
             }
             
-            
-            // Call setInitialScrapState when the page is loaded
-            document.addEventListener('DOMContentLoaded', setInitialScrapState);
+            // 스크랩 상태를 페이지 로드 시 반영
+            document.addEventListener('DOMContentLoaded', function() {
+                setInitialScrapState({{ contest.id }});
+            });
         </script>
     </div>
     <link rel="stylesheet" type="text/css" href="{% static 'contest/css/detail.css' %}">

@@ -136,7 +136,7 @@
 }
 
 .text p {
-    margin: 0;
+    margin: 5px;
     padding: 5px 10px;
     background-color: #f2f2f2;
     border-radius: 10px;

@@ -2,107 +2,99 @@
 
 {% block main_area %}
 <br><br>
-<div class="py-3 mb-4" style="padding-bottom: 0rem!important; margin-bottom: 0rem!important; padding-top: 1.5rem!important;">
+<div class="py-3 mb-4"
+  style="padding-bottom: 0rem!important; margin-bottom: 0rem!important; padding-top: 1.5rem!important;">
   <nav class="navbar bg-body-tertiary" style="padding-left: 10%; width: 90%;">
     <div class="container-fluid">
       <h2 class="mb-4" style="margin-bottom: 0rem!important;">Carpool</h2>
       <form class="d-flex" role="search" method="GET" action="{% url 'ridesearchResult' %}">
         <input class="form-control me-2" type="search" placeholder="검색어 입력..." name="q" value="{{ request.GET.q }}">
-        <button class="btn btn-outline-success" type="submit" style="padding-left: 10px; padding-right: 10px; padding-bottom: 2px;">
-            <span class="material-symbols-outlined" style="font-size:17px">
-                search
-            </span>
+        <button class="btn btn-outline-success" type="submit"
+          style="padding-left: 10px; padding-right: 10px; padding-bottom: 2px;">
+          <span class="material-symbols-outlined" style="font-size:17px">
+            search
+          </span>
         </button>
-    </form>
+      </form>
     </div>
   </nav>
   <hr style="width: 90%;">
 </div>
 <div class="container mt-4" id="container">
   {% if rides %}
-    <ul class="list-group">
-      {% for ride in rides %}
-        <li class="list-group-item d-flex justify-content-between align-items-center">
-          <a href="#" onclick="openDetailPopup('{{ ride.id }}')" style="width: 100%; display: block;">
-            {{ ride.departure_location }} -> {{ ride.destination }}</a>
-          <span>
-            <a href="#" onclick="openDetailPopup('{{ ride.id }}')">
-              <span class="badge badge-info" style="margin-right: 5px;">{{ ride.departure_time }}</span>
-            </a>
+  <ul class="list-group">
+    {% for ride in rides %}
+    <li class="list-group-item d-flex justify-content-between align-items-center">
+      <a href="#" onclick="openDetailPopup('{{ ride.id }}')" style="width: 100%; display: block;">
+        {{ ride.departure_location }} -> {{ ride.destination }}</a>
+      <span>
+        <a href="#" onclick="openDetailPopup('{{ ride.id }}')">
+          <span class="badge badge-info" style="margin-right: 5px;">{{ ride.departure_time }}</span>
+        </a>
+      </span>
+      <span>
+        <a href="#" onclick="openDetailPopup('{{ ride.id }}')">
+          <span class="badge badge-info">
+            {% if ride.available_seats == 0 %}
+            마감
+            {% else %}
+            모집 중
+            {% endif %}
           </span>
-          <span>
-            <a href="#" onclick="openDetailPopup('{{ ride.id }}')">
-              <span class="badge badge-info">
-                {% if ride.available_seats == 0 %}
-                    마감
-                {% else %}
-                    모집 중
-                {% endif %}
-              </span>
+        </a>
+      </span>
+    </li>
+    <div id="rideDetailModal" class="modal">
+      <div class="modal-content">
+        <span class="close" onclick="closeDetailPopup()">&times;</span>
+        <div id="rideDetailContent"></div>
+        <div class="container mt-4 d-flex justify-content-between align-items-end">
+          <div>
+            <a href="#" onclick="join_user('{{ ride.id }}'); return false;">
+              <div id="join-button">
+                <button id="join"><span>채팅 참여</span></button>
+              </div>
             </a>
-          </span>
-        </li>
-        <div id="rideDetailModal" class="modal">
-          <div class="modal-content">
-            <span class="close" onclick="closeDetailPopup()">&times;</span>
-            <div id="rideDetailContent"></div>
-            <div class="container mt-4 d-flex justify-content-between align-items-end">
-              <div>
-                <a href="{% url 'ride_update' id=ride.id %}"
-                  class="btn btn-secondary {% if request.user != ride.author %}d-none{% endif %}">수정</a>
-        
-                <!-- 모달창 안에서 모달창이 작동을 안해서 일단 버튼으로 대체 -->
-                <a href="{% url 'ride_delete' %}?id={{ ride.id }} "
-                  class="btn btn-danger {% if request.user != ride.author %}d-none{% endif %}">삭제</a>
-        
-                <a href="{% url 'ride_list' %}" class="btn btn-secondary">목록으로 돌아가기</a>
-              </div>
-              <div>
-                <a href="#" onclick="join_user('{{ ride.id }}'); return false;">
-                  <div id="join-button">
-                    <button id="join"><span>채팅 참여</span></button>
-                  </div>
-                </a>
-              </div>
-            </div>
           </div>
         </div>
+      </div>
+    </div>
+    {% endfor %}
+  </ul>
+
+  <!--페이지네이션-->
+  <br><br>
+  <nav aria-label="Page navigation example">
+    <ul class="pagination d-flex justify-content-center">
+      {% if page_obj.has_previous %}
+      <li class="page-item">
+        <a class="page-link" href="?page=1" aria-label="Previous">
+          <span aria-hidden="true">&laquo;</span>
+        </a>
+      </li>
+      {% endif %}
+
+      {% for i in page_obj.paginator.page_range %}
+      <li class="page-item {% if page_obj.number == i %}active{% endif %}">
+        <a class="page-link" href="?page={{ i }}">{{ i }}</a>
+      </li>
       {% endfor %}
+
+      {% if page_obj.has_next %}
+      <li class="page-item">
+        <a class="page-link" href="?page={{ page_obj.paginator.num_pages }}" aria-label="Next">
+          <span aria-hidden="true">&raquo;</span>
+        </a>
+      </li>
+      {% endif %}
     </ul>
+  </nav>
 
-    <!--페이지네이션-->
-    <br><br>
-    <nav aria-label="Page navigation example">
-      <ul class="pagination d-flex justify-content-center">
-        {% if page_obj.has_previous %}
-          <li class="page-item">
-            <a class="page-link" href="?page=1" aria-label="Previous">
-              <span aria-hidden="true">&laquo;</span>
-            </a>
-          </li>
-        {% endif %}
-    
-        {% for i in page_obj.paginator.page_range %}
-          <li class="page-item {% if page_obj.number == i %}active{% endif %}">
-            <a class="page-link" href="?page={{ i }}">{{ i }}</a>
-          </li>
-        {% endfor %}
-    
-        {% if page_obj.has_next %}
-          <li class="page-item">
-            <a class="page-link" href="?page={{ page_obj.paginator.num_pages }}" aria-label="Next">
-              <span aria-hidden="true">&raquo;</span>
-            </a>
-          </li>
-        {% endif %}
-      </ul>
-    </nav>
+  {% else %}
+  <h3>아직 게시물이 없습니다.</h3>
+  {% endif %}
 
-    {% else %}
-      <h3>아직 게시물이 없습니다.</h3>
-    {% endif %}
-
-    <a href="{% url 'ride_create' %}" id="create-button" onclick="event.preventDefault();">
+  <a href="{% url 'ride_create' %}" id="create-button" onclick="event.preventDefault();">
     <span class="material-symbols-outlined" id="plus">
       edit_square
     </span>
@@ -162,11 +154,11 @@
     createButton.addEventListener('click', function () {
       // 사용자가 로그인 상태인지 확인
       {% if user.is_authenticated %}
-        window.location.href = '{% url "ride_create" %}';
+      window.location.href = '{% url "ride_create" %}';
       {% else %}
-        // 로그인 상태가 아닌 경우, 로그인 페이지로 이동
-        alert('로그인이 필요합니다. 로그인 페이지로 이동합니다.');
-        window.location.href = '{% url "login" %}';
+      // 로그인 상태가 아닌 경우, 로그인 페이지로 이동
+      alert('로그인이 필요합니다. 로그인 페이지로 이동합니다.');
+      window.location.href = '{% url "login" %}';
       {% endif %}
     });
   });

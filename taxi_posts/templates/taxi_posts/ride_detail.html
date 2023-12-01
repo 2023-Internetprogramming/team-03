@@ -108,17 +108,29 @@
 </style>
 <div class="detail-content">
   <div class="container mt-4" id="container">
-      <h2>{{ ride.departure_location }} -> {{ ride.destination }}
-        <span class="badge badge-info">
-          {% if ride.available_seats == 0 %}
-          마감
-          {% else %}
-          모집 중
-          {% endif %}
-        </span>
-      </h2>
-      <p>시간: {{ ride.departure_time }}</p>
-      <p>모집 인원: {{ ride.available_seats }} 명</p>
-      <p>세부 사항: {{ ride.description }}</p>
-</div>
+    <h2>{{ ride.departure_location }} -> {{ ride.destination }}
+      <span class="badge badge-info">
+        {% if ride.available_seats == 0 %}
+        마감
+        {% else %}
+        모집 중
+        {% endif %}
+      </span>
+    </h2>
+    <p>시간: {{ ride.departure_time }}</p>
+    <p>모집 인원: {{ ride.available_seats }} 명</p>
+    <p>세부 사항: {{ ride.description }}</p>
+    <div class="container mt-4 d-flex justify-content-between align-items-end">
+      <div>
+        <a href="{% url 'ride_update' id=ride.id %}"
+          class="btn btn-secondary {% if request.user != ride.author %}d-none{% endif %}">수정</a>
+
+        <!-- 모달창 안에서 모달창이 작동을 안해서 일단 버튼으로 대체 -->
+        <a href="{% url 'ride_delete' %}?id={{ ride.id }} "
+          class="btn btn-danger {% if request.user != ride.author %}d-none{% endif %}">삭제</a>
+
+        <a href="{% url 'ride_list' %}" class="btn btn-secondary">목록으로 돌아가기</a>
+      </div>
+    </div>
+  </div>
 </div>

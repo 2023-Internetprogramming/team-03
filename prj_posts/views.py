@@ -97,7 +97,7 @@ def prjsearchResult(request):
             Q(user_major__icontains=query) |
             Q(user_grade__icontains=query) |
             Q(post_content__icontains=query) |
-            Q(prj_membernum__icontains=query) |
+            Q(prj_member__icontains=query) |
             Q(post_title__icontains=query)
         )
         return render(request, 'prj_posts/prj_search.html', {'query': query, 'prjs': prjs})

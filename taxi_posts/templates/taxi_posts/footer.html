@@ -1,23 +1,57 @@
-<footer id="footer">
-  <a class="copyright">인터넷프로그래밍(01)_03조</a>
-  <a class="people">개발자: 김희원, 노도경, 심수빈, 이채원, 조수아</a>
-  <br>
-  <a class="privacy">서울 도봉구 삼양로144길 33 덕성여자대학교 과학기술대학 컴퓨터공학전공</a>
-  <hr>
-  <a style="color: white;">&copy; Computer Language and Literature. All right reserved.</a>
+{% load static %}
+<footer class="bg-primary text-white small" id="footer" style="background-color: #adadad!important;" style="padding:5%;"> 
+  <div class="pt-6 pb-4 pt-lg-7 pb-lg-6" style="padding-bottom: 1rem!important; padding-top: 1rem;">
+      <div class="container">
+          <div class="row"style="margin-left:5px;">
+              <div class="col-md-4">
+                  <img src="{% static "contest/image/favicon.png" %}" style="width: 175px; height: 95px; margin-top: -7px; margin-left: 35px;">
+                  <div class="mt-4" style="margin-top: 0rem!important; margin-left:40px;">
+                      <a href="https://github.com/2023-Internetprogramming/team-03" class="text-reset text-decoration-none">
+                          <img style="width:57px; height:33px;" src="https://usingu.co.kr/wp-content/uploads/2022/05/thubmnail-icon-github.png">
+                      </a>
+                      <a href="https://www.instagram.com/dswu_cse/" class="text-white text-decoration-none" style="margin-right:12px;">
+                        <img style="width:27px; height:25px;" src="https://cdn.icon-icons.com/icons2/3261/PNG/512/instagram_logo_icon_206739.png">
+                      </a>
+                      <a href="https://www.duksung.ac.kr/computer/main.do" class="text-white text-decoration-none">
+                        <img style="width:36px; height:33px;" src="https://cdn-icons-png.flaticon.com/512/1987/1987950.png">
+                      </a>
+                  </div>
+              </div>
+              <div class="col-md-7 col-lg-6 mt-5 mt-md-0 ">
+                  <!-- Footer links -->
+                  <div class="row" style="flex-wrap: nowrap;">
+                      <div class="col-6 col-md-4 mb-4 mb-md-0" style="margin-top:21px;">
+                          <h3 class="h6 text-uppercase mb-3">team</h3>
+                          <ul class="list-unstyled">
+                              <li class="mb-1"><a class="text-reset">3조</a></li>
+                              <li class="mb-1"><a class="text-reset">인터넷 프로그래밍</a></li>
+                          </ul>
+                      </div>
+                      <div class="col-6 col-md-4 mb-4 mb-md-0" style="margin-top:21px;">
+                          <h3 class="h6 text-uppercase mb-3">Front-end</h3>
+                          <ul class="list-unstyled">
+                              <li class="mb-1"><a class="text-reset">김희원⠀⠀⠀심수빈</a></li>
+                              <li class="mb-1"><a class="text-reset">노도경⠀⠀⠀이채원</a></li>
+                              <li class="mb-1"><a class="text-reset">조수아</a></li>
+                          </ul>
+                      </div>
+                      <div class="col-6 col-md-4 mb-4 mb-md-0" style="margin-top:21px;">
+                          <h3 class="h6 text-uppercase mb-3">Back-end</h3>
+                          <ul class="list-unstyled">
+                            <li class="mb-1"><a class="text-reset">김희원⠀⠀심수빈</a></li>
+                            <li class="mb-1"><a class="text-reset">조수아</a></li>
+                          </ul>
+                      </div>
+                      <div class="col-6 col-md-4" style="margin-top:19px;">
+                        <h3 class="h6 text-uppercase mb-3">introduce</h3>
+                        <ul class="list-unstyled">
+                          <li class="mb-1"><a class="text-reset">덕성여자대학교</a></li>
+                          <li class="mb-1"><a class="text-reset">컴퓨터공학전공</a></li>
+                        </ul>
+                      </div>
+                  </div>
+              </div>
+          </div>
+      </div>
+  </div>
 </footer>
-
-<style>
-  footer {
-    padding: 16px 0; width: 100%; box-sizing: border-box; border-top: 1px solid #d6d6d6; font-size: 0; text-align: center;
-  }
-  footer > a {
-    display: inline-block; margin: 0 4px 4px 4px; color: #737373; font-size: 12px; word-break: keep-all;
-  }
-  footer > a.copyright, footer > a.privacy, footer > a.people {
-    font-weight: bold;
-  }
-  footer > span {
-    display: inline-block; color: #a6a6a6; font-size: 12px;
-  }
-</style>

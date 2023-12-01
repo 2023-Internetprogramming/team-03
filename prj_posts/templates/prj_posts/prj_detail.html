@@ -114,11 +114,11 @@
       {% elif prj.prj_name %}
       {{ prj.prj_name }} 프로젝트 팀원
       {% endif %}
-      <span class="badge badge-info">
+      <span class="badge {% if prj.prj_member == 0 %}badge-danger{% else %}badge-info{% endif %}">
         {% if prj.prj_member == 0 %}
-        마감
+            마감
         {% else %}
-        모집 중
+            모집 중
         {% endif %}
       </span>
     </h2>

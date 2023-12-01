@@ -108,12 +108,12 @@
 </style>
 <div class="detail-content">
   <div class="container mt-4" id="container">
-    <h2>{{ ride.departure_location }} -> {{ ride.destination }}
-      <span class="badge badge-info">
+    <h2>{{ ride.departure_location }} → {{ ride.destination }}
+      <span class="badge {% if ride.available_seats == 0 %}badge-danger{% else %}badge-info{% endif %}">
         {% if ride.available_seats == 0 %}
-        마감
+            마감
         {% else %}
-        모집 중
+            모집 중
         {% endif %}
       </span>
     </h2>

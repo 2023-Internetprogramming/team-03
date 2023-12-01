@@ -90,7 +90,7 @@ def ridesearchResult(request):
             Q(departure_time__icontains=query) |
             Q(available_seats__icontains=query) |
             Q(description__icontains=query) 
-        )
+        ).order_by('-created_at')
         return render(request, 'taxi_posts/ride_search.html', {'query': query, 'rides': rides})
     else:
         return render(request, 'taxi_posts/ride_search.html')

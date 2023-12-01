@@ -52,7 +52,7 @@
           <div class="modal-content">
             <span class="close" onclick="closeDetailPopup()">&times;</span>
             <div id="prjDetailContent"></div>
-            <div class="container mt-4 d-flex justify-content-between align-items-end">
+            <div class="container mt-4 d-flex justify-content-between align-items-end" style="margin-top: 1rem!important;">
               <div>
                 <a href="#" onclick="join_user('{{ prj.id }}'); return false;">
                   <div id="join-button">
@@ -163,6 +163,21 @@
         // 로그인 상태가 아닌 경우, 로그인 페이지로 이동
         alert('로그인이 필요합니다. 로그인 페이지로 이동합니다.');
         window.location.href = '{% url "login" %}';
+      {% endif %}
+    });
+
+    // 채팅 참여 버튼 클릭 시 로그인 확인
+    const joinButton = document.getElementById('join-button');
+
+    joinButton.addEventListener('click', function () {
+      // 사용자가 로그인 상태인지 확인
+      {% if user.is_authenticated %}
+      // 채팅 참여 로직 추가 (여기에 채팅 참여 코드를 넣으세요)
+      join_user('{{ ride.id }}');
+      {% else %}
+      // 로그인 상태가 아닌 경우, 알림창 표시
+      alert('로그인이 필요합니다. 로그인 페이지로 이동합니다.');
+      window.location.href = '{% url "login" %}';
       {% endif %}
     });
   });

@@ -84,15 +84,15 @@ body {
     font-family: 'Noto Sans KR', sans-serif;
 }
 
-/* footer {
+footer {
     padding-top: 20%;
     padding: 40px;
-    background-color: #747476a8;
+    background-color: #adadad;
     width: 100%;
     height: 20vh;
     box-sizing: border-box;
     position: relative;
-} */
+}
 
 #nav {
     width: 100%;

@@ -1,14 +1,10 @@
 {% extends 'taxi_posts/base.html' %}
 {% load static %}
 
-  {% block main_area %}
-  <head>
-    <meta charset="UTF-8">
-    <title>LogIn</title>
-    <link rel="stylesheet" href="{% static 'users/css/login.css' %}">
-    <script src="http://code.jquery.com/jquery-3.3.1.min.js"></script>
-  </head>
-  <div class="login-box" style="margin-top:270px; margin-bottom:90px;">
+{% block main_area %}
+<link rel="stylesheet" href="{% static 'users/css/login.css' %}">
+<script src="http://code.jquery.com/jquery-3.3.1.min.js"></script>
+<div class="login-box" style="margin-top:270px; margin-bottom:90px;">
     <section class="login-form">
       <h1>Log In</h1>
       <form method="post" action="{% url 'login' %}">
@@ -22,47 +18,46 @@
           <label for="pw">Password</label>
         </div>
         <div class="btn-area">
-          <button type="submit">LOGIN</button>
+          <button type="submit" id="login">LOGIN</button>
         </div>
       </form>
       <div class="caption">
         <a href="{% url 'signup' %}">Sign Up?</a>
       </div>
     </section>
-  </div>
-  
-    <script>
+</div>
+<script>
 
-     // 문서가 로드되면 실행될 JavaScript 코드
-    $(document).ready(function () {
-      // 서버에서 전달된 에러 메시지가 있는지 확인
-      {% if messages %}
-        {% for message in messages %}
-            {% if message.tags == 'error' %}
-                let errorMessage = "{{ message }}";
-                alert(errorMessage); // 에러 메시지를 알림창으로 표시
-            {% endif %}
-        {% endfor %}
-    {% endif %}
-    });
+    // 문서가 로드되면 실행될 JavaScript 코드
+   $(document).ready(function () {
+     // 서버에서 전달된 에러 메시지가 있는지 확인
+     {% if messages %}
+       {% for message in messages %}
+           {% if message.tags == 'error' %}
+               let errorMessage = "{{ message }}";
+               alert(errorMessage); // 에러 메시지를 알림창으로 표시
+           {% endif %}
+       {% endfor %}
+   {% endif %}
+   });
 
-      let id = $('#id');
-      let pw = $('#pw');
-      let btn = $('#btn');
+     let id = $('#id');
+     let pw = $('#pw');
+     let btn = $('#btn');
 
-      $(btn).on('click', function() {
-        if($(id).val() == "") {
-          $(id).next('label').addClass('warning');
-          setTimeout(function() {
-            $('label').removeClass('warning');
-          },1500);
-        }
-        else if($(pw).val() == "") {
-          $(pw).next('label').addClass('warning');
-          setTimeout(function() {
-            $('label').removeClass('warning');
-          },1500);
-        }
-      });
-    </script>
+     $(btn).on('click', function() {
+       if($(id).val() == "") {
+         $(id).next('label').addClass('warning');
+         setTimeout(function() {
+           $('label').removeClass('warning');
+         },1500);
+       }
+       else if($(pw).val() == "") {
+         $(pw).next('label').addClass('warning');
+         setTimeout(function() {
+           $('label').removeClass('warning');
+         },1500);
+       }
+     });
+   </script>
 {% endblock %}

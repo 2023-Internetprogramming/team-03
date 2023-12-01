@@ -1,7 +1,7 @@
 {% extends 'taxi_posts/base.html' %}
 {% block main_area %}
     <br><br><br><br>
-    <div class="container">
+    <div class="container" style="height: 100vh;">
         <h2>공모전/프로젝트 모집하기</h2><br>
         <form action="{% url 'prj_update' id=form.instance.id %}" method="post">
             {% csrf_token %}

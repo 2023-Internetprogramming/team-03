@@ -125,13 +125,15 @@ def delete_comment(request, comment_id):
 
 #검색
 def searchResult(request):
+    
     if 'q' in request.GET:
         query = request.GET.get('q')
         contests = Contest.objects.filter(
             Q(contest_title__icontains=query) |
             Q(contest_description__icontains=query) |
             Q(contest_category__icontains=query)
-        )
+        ).annotate(comments_count=Count('comment'))
+        
         return render(request, 'contest/contest_search.html', {'query': query, 'contests': contests})
     else:
         return render(request, 'contest/contest_search.html')

@@ -52,10 +52,10 @@
           <div class="modal-content">
             <span class="close" onclick="closeDetailPopup()">&times;</span>
             <div id="prjDetailContent"></div>
-            <div class="container mt-4 d-flex justify-content-between align-items-end" style="margin-top: 1rem!important;">
+            <div style="margin-top: 1rem!important;">
               <div>
                 <a href="#" onclick="join_user('{{ prj.id }}'); return false;">
-                  <div id="join-button">
+                  <div id="join-button" style="text-align: right; margin-top:5px;">
                     <button id="join"><span>채팅 참여</span></button>
                   </div>
                 </a>
@@ -147,6 +147,7 @@
   function closeDetailPopup() {
     const modal = document.getElementById('prjDetailModal');
     modal.style.display = 'none';
+    window.location.href = "{% url 'prj_list' %}";
   }
 </script>
 

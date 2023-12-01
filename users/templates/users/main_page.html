@@ -29,11 +29,18 @@
             팀원 모집
             <svg class="bi"><use xlink:href="#chevron-right"/></svg>
           </a>
-          <a class="icon-link" href="{%url 'login'%}">
-            로그인
-            <svg class="bi"><use xlink:href="#chevron-right"/></svg>
-          </a>
-        </div>
+          {% if user.is_authenticated %}
+            <a class="icon-link" href="{% url 'contest_list' %}">
+                추천 공모전
+                <svg class="bi"><use xlink:href="#chevron-right"/></svg>
+            </a>
+          {% else %}
+              <a class="icon-link" href="{% url 'login' %}">
+                  로그인
+                  <svg class="bi"><use xlink:href="#chevron-right"/></svg>
+              </a>
+          {% endif %}
+          </div>
       </div>
       <div class="product-device shadow-sm d-none d-md-block"></div>
       <div class="product-device product-device-2 shadow-sm d-none d-md-block"></div>
@@ -48,10 +55,6 @@
 
   <!--  슬라이드  --> 
   <div id="carouselExampleIndicators" class="carousel slide" data-bs-ride="carousel">
-    <!-- 간격을 주는 div -->
-  <div class="spacer"></div>
-  <div class="spacer"></div>
-  <div class="spacer"></div>
     <!--페이지 버튼 -->
     <div class="carousel-indicators">
       <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="0" class="active" aria-current="true" aria-label="Slide 1"></button>
@@ -60,7 +63,7 @@
       <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="3" aria-label="Slide 4"></button>
       <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="4" aria-label="Slide 5"></button>
     </div>
-    
+
     <div class="carousel-inner">
         <!-- 슬라이드1 -->
       <div class="carousel-item active" data-bs-interval="5000">
@@ -84,11 +87,11 @@
       </div>
     </div>
     <!-- 양옆 버튼 -->
-    <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide="prev">
+    <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide="prev" style="padding-top: 4%;">
       <span class="carousel-control-prev-icon" aria-hidden="true"></span>
       <span class="visually-hidden">Previous</span>
     </button>
-    <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide="next">
+    <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide="next" style="padding-top: 4%;">
       <span class="carousel-control-next-icon" aria-hidden="true"></span>
       <span class="visually-hidden">Next</span>
     </button>
@@ -99,8 +102,6 @@
 <!-- 네비 -->
   <class id="carouselContents" class="carousel slide" data-ride="carousel">
     <!-- 간격을 주는 div -->
-    <div class="spacer"></div>
-    <div class="spacer"></div>
     <div class="spacer"></div>
 
     <div class="container">
@@ -145,9 +146,9 @@
             <div class="container mt-5" style="margin-top: 1rem!important;">
                 <!-- 부트스트랩 둥근 모서리 카드 시작 -->
                 {% for prj_instance in Prj_data %}
-                <a href="{% url 'prj_detail' prj_instance.id %}">
-                    <div class="card" style="width: 18rem; margin:5px;" onclick="redirectToDetailPage()">
-                        <div class="card-body">
+                <a href="{% url 'prj_detail' prj_instance.id %}" style="margin-right: 10px; text-decoration: none;">
+                    <div class="card" style="width: 18rem; margin:5px;">
+                        <div class="card-body" style="color:black;">
                             <h5 class="card-title">
                                 {% if prj_instance.contest %}
                                 [{{ prj_instance.contest.contest_title }}] 공모전 <br>팀원
@@ -166,9 +167,9 @@
                     </div>
                 </a>
                 {% empty %}
-                <a href="{% url 'prj_list' %}">
-                    <div class="card" style="width: 18rem;" onclick="redirectToDetailPage()">
-                        <div class="card-body">
+                <a href="{% url 'prj_list' %}" style="margin-right: 10px; text-decoration: none;">
+                    <div class="card" style="width: 18rem;">
+                        <div class="card-body" style="color:black;">
                             <h5 class="card-title">아직 게시물이 없습니다.</h5>
                             <br>
                             <p class="small-text mt-2">팀원 모집하러 가기</p>
@@ -186,9 +187,9 @@
           <div class="container mt-5" style="margin-top: 1rem!important;">
             <!-- 부트스트랩 둥근 모서리 카드 시작 -->
           {% for study_instance in Study_data %}
-            <a href="{% url 'study_detail' study_instance.id %}">
-              <div class="card" style="width: 18rem;" onclick="redirectToDetailPage()">
-                <div class="card-body">
+            <a href="{% url 'study_detail' study_instance.id %}" style="margin-right: 10px; text-decoration: none;">
+              <div class="card" style="width: 18rem;">
+                <div class="card-body" style="color:black;">
                   <h5 class="card-title">[{{ study_instance.post_title }}] 팀원 모집</h5>
                   <p class="card-text">모집 인원: {{ study_instance.study_member }} 명</p>
                   <p class="small-text mt-2">게시물 작성 날짜: {{ study_instance.created_at|date:"Y.m.d" }}</p>
@@ -196,9 +197,9 @@
               </div>
             </a>
           {% empty %}
-          <a href="{% url 'study_list' %}">
-            <div class="card" style="width: 18rem;" onclick="redirectToDetailPage()">
-              <div class="card-body">
+          <a href="{% url 'study_list' %}" style="margin-right: 10px; text-decoration: none;">
+            <div class="card" style="width: 18rem;">
+              <div class="card-body" style="color:black;">
                 <h5 class="card-title">게시물이 없습니다.</h5>
                 <br>
                 <p class="card-text">팀원 모집하러 가기</p>
@@ -217,18 +218,18 @@
           <div class="container mt-5" style="margin-top: 1rem!important;">
             <!-- 부트스트랩 둥근 모서리 카드 시작 -->
           {% for ott_instance in Ott_data %}
-            <a href="{% url 'ott_detail' ott_instance.id %}">
-              <div class="card" style="width: 18rem;" onclick="redirectToDetailPage()">
-                <div class="card-body">
+            <a href="{% url 'ott_detail' ott_instance.id %}" style="margin-right: 10px; text-decoration: none;">
+              <div class="card" style="width: 18rem;">
+                <div class="card-body" style="color:black;">
                   <h5 class="card-title">[{{ ott_instance.type }}] 계정 공유 모집</h5>
                   <p class="card-text">모집 인원: {{ ott_instance.people }} 명</p>
                 </div>
               </div>
             </a>
           {% empty %}
-          <a href="{% url 'ott_list' %}">
-            <div class="card" style="width: 18rem;" onclick="redirectToDetailPage()">
-              <div class="card-body">
+          <a href="{% url 'ott_list' %}" style="margin-right: 10px; text-decoration: none;">
+            <div class="card" style="width: 18rem;">
+              <div class="card-body" style="color:black;">
                 <h5 class="card-title">게시물이 없습니다.</h5>
                 <br>
                 <p class="card-text">팀원 모집하러 가기</p>
@@ -248,9 +249,9 @@
           <div class="container mt-5" style="margin-top: 1rem!important;">
             <!-- 부트스트랩 둥근 모서리 카드 시작 -->
           {% for ride_instance in Ride_data %}
-            <a href="{% url 'ride_detail' ride_instance.id %}">
-              <div class="card" style="width: 18rem;" onclick="redirectToDetailPage()">
-                <div class="card-body">
+            <a href="{% url 'ride_detail' ride_instance.id %}" style="margin-right: 10px; text-decoration: none;">
+              <div class="card" style="width: 18rem;">
+                <div class="card-body" style="color:black;">
                   <h5 class="card-title">
                     {{ ride_instance.departure_location }} 부터<br>
                     {{ ride_instance.destination }} 까지 <br>
@@ -261,9 +262,9 @@
               </div>
             </a>
             {% empty %}
-            <a href="{% url 'ride_list' %}">
-              <div class="card" style="width: 18rem;" onclick="redirectToDetailPage()">
-                <div class="card-body">
+            <a href="{% url 'ride_list' %}" style="margin-right: 10px; text-decoration: none;">
+              <div class="card" style="width: 18rem;">
+                <div class="card-body" style="color:black;">
                   <h5 class="card-title">게시물이 없습니다.</h5>
                   <br>
                   <p class="card-text">팀원 모집하러 가기</p>
@@ -288,17 +289,9 @@
   <style>
     @media (min-width: 768px){
       .container, .container-md, .container-sm {
-        max-width: 90%;
+        max-width: 100%;
       }
     }
+    
   </style>
-
-
-<script>
-    function redirectToDetailPage() {
-      // 여기에 상세 페이지로 이동하는 코드를 추가할 수 있습니다.
-      // 예를 들어, window.location.href = "상세페이지 주소"; 와 같이 사용할 수 있습니다.
-    }
-</script>
-
 {% endblock %}

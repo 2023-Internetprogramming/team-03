@@ -38,7 +38,7 @@
   #pagination {margin:10px auto;text-align: center;}
   #pagination a {display:inline-block;margin-right:10px;}
   #pagination .on {font-weight: bold; cursor: default;color:#777;}
-  </style>
+</style>
     <br><br>
     <div class="container mt-4" id="container">
       <h2>카풀 모집하기</h2><br>
@@ -103,4 +103,9 @@
       </form>
       <a href="{% url 'ride_list' %}" class="btn btn-secondary mt-3">목록으로 돌아가기</a>
     </div>
+    <style>
+      button, input, optgroup, select, textarea {
+        margin: 3px;
+      }
+    </style>
 {% endblock %}

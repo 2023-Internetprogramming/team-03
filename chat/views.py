@@ -10,15 +10,6 @@ from django.http import HttpResponseBadRequest
 
 @login_required
 def chat_room(request, room_name):
-    if room_name.startswith('ott_'):
-        ott_id = int(room_name[4:])  # 'ott_' 이후의 문자열을 정수로 변환
-        ott = get_object_or_404(Ott, id=ott_id)
-        room_name = f"chat/ott_{ott_id}"  # 'chat/ott_2'와 같은 형식으로 생성
-        return render(request, 'chat/chat_room.html', {'room_name_json': mark_safe(json.dumps(room_name)), 'ott': ott})
-    # elif room_name.startswith('chat_'):
-    #     # chat 앱에서 온 요청 처리
-    #     return render(request, 'chat/chat_room.html', {'room_name_json': mark_safe(json.dumps(room_name))})
-    
     return render(request, 'chat/chat_room.html', {'room_name_json': mark_safe(json.dumps(room_name))})
 
 @login_required

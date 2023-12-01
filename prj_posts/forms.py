@@ -12,7 +12,7 @@ class PrjForm(forms.ModelForm):
         (4, '4학년'),
     ]
     
-    prj_membernum = forms.TypedChoiceField(
+    prj_member = forms.TypedChoiceField(
         label='모집 인원',
         choices=[(1, '1명'), (2, '2명'), (3, '3명'), (4, '4명'), (5, '5명'), (6, '6명'), (7, '7명'), (8, '8명'), (9, '9명'), (10, '10명')],
         coerce=int
@@ -84,11 +84,11 @@ class PrjForm(forms.ModelForm):
     class Meta:
         model = Prj
         exclude = ['author']
-        fields = ["user_major", "contest", 'prj_name',  "user_grade", "prj_membernum", "post_content"]
+        fields = ["user_major", "contest", 'prj_name',  "user_grade", "prj_member", "post_content"]
 
         labels = {
             'user_major' : '전공',
             'user_grade' : '학년',
-            'prj_membernum' : '모집 인원',
+            'prj_member' : '모집 인원',
             'post_content' : '내용',      
         }

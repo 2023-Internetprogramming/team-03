@@ -89,3 +89,12 @@
     .container, .container-fluid, .container-lg, .container-md, .container-sm, .container-xl, .container-xxl {
       display: inherit;
     }
+
+    .icon-link:hover {
+      text-decoration: none;
+    }
+    a:hover .card{
+      border: 1px solid #000;
+    }
+
+

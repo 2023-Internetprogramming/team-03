@@ -2,111 +2,103 @@
 
 {% block main_area %}
 <br><br>
-<div class="py-3 mb-4" style="padding-bottom: 0rem!important; margin-bottom: 0rem!important; padding-top: 1.5rem!important;">
+<div class="py-3 mb-4"
+  style="padding-bottom: 0rem!important; margin-bottom: 0rem!important; padding-top: 1.5rem!important;">
   <nav class="navbar bg-body-tertiary" style="padding-left: 10%; width: 90%;">
     <div class="container-fluid">
       <h2 class="mb-4" style="margin-bottom: 0rem!important;">Study</h2>
       <form class="d-flex" role="search" method="GET" action="{% url 'studysearchResult' %}">
         <input class="form-control me-2" type="search" placeholder="검색어 입력..." name="q" value="{{ request.GET.q }}">
-        <button class="btn btn-outline-success" type="submit" style="padding-left: 10px; padding-right: 10px; padding-bottom: 2px;">
-            <span class="material-symbols-outlined" style="font-size:17px">
-                search
-            </span>
+        <button class="btn btn-outline-success" type="submit"
+          style="padding-left: 10px; padding-right: 10px; padding-bottom: 2px;">
+          <span class="material-symbols-outlined" style="font-size:17px">
+            search
+          </span>
         </button>
-    </form>
+      </form>
     </div>
   </nav>
   <hr style="width: 90%;">
 </div>
 <div class="container mt-4" id="container">
-    {% if studys %}
-        <ul class="list-group">
-            {% for study in studys %}
-            <li class="list-group-item d-flex justify-content-between align-items-center">
-              <a href="#" onclick="openDetailPopup('{{ study.id }}')" style="width: 100%; display: block;">
-                [{{ study.user_major }}] {{ study.post_title }}</a>
-                <span>
-                  <a href="#" onclick="openDetailPopup('{{ study.id }}')">
-                    <span class="badge badge-info" style="margin-right: 5px;">{{ study.study_type }}</span>
-                    </a>
-                </span>
-                <span>
-                  <a href="#" onclick="openDetailPopup('{{ study.id }}')">
-                    <span class="badge badge-info">
-                      {% if study.study_member == 0 %}
-                          마감
-                      {% else %}
-                          모집 중
-                      {% endif %}
-                    </span>
-                  </a>
-                </span>
-            </li>
-            <div id="studyDetailModal" class="modal">
-              <div class="modal-content">
-                <span class="close" onclick="closeDetailPopup()">&times;</span>
-                <div id="studyDetailContent"></div>
-                <div class="container mt-4 d-flex justify-content-between align-items-end">
-                  <div>
-                    <a href="{% url 'study_update' id=study.id %}"
-                      class="btn btn-secondary {% if request.user != study.author %}d-none{% endif %}">수정</a>
-            
-                    <!-- 모달창 안에서 모달창이 작동을 안해서 일단 버튼으로 대체 -->
-                    <a href="{% url 'study_delete' %}?id={{ study.id }} "
-                      class="btn btn-danger {% if request.user != study.author %}d-none{% endif %}">삭제</a>
-            
-                    <a href="{% url 'study_list' %}" class="btn btn-secondary">목록으로 돌아가기</a>
-                  </div>
-                  <div>
-                    <a href="#" onclick="join_user('{{ study.id }}'); return false;">
-                      <div id="join-button">
-                        <button id="join"><span>채팅 참여</span></button>
-                      </div>
-                    </a>
-                  </div>
-                </div>
+  {% if studys %}
+  <ul class="list-group">
+    {% for study in studys %}
+    <li class="list-group-item d-flex justify-content-between align-items-center">
+      <a href="#" onclick="openDetailPopup('{{ study.id }}')" style="width: 100%; display: block;">
+        [{{ study.user_major }}] {{ study.post_title }}</a>
+      <span>
+        <a href="#" onclick="openDetailPopup('{{ study.id }}')">
+          <span class="badge badge-info" style="margin-right: 5px;">{{ study.study_type }}</span>
+        </a>
+      </span>
+      <span>
+        <a href="#" onclick="openDetailPopup('{{ study.id }}')">
+          <span class="badge badge-info">
+            {% if study.study_member == 0 %}
+            마감
+            {% else %}
+            모집 중
+            {% endif %}
+          </span>
+        </a>
+      </span>
+    </li>
+    <div id="studyDetailModal" class="modal">
+      <div class="modal-content">
+        <span class="close" onclick="closeDetailPopup()">&times;</span>
+        <div id="studyDetailContent"></div>
+        <div class="container mt-4 d-flex justify-content-between align-items-end">
+          <div>
+            <a href="#" onclick="join_user('{{ study.id }}'); return false;">
+              <div id="join-button">
+                <button id="join"><span>채팅 참여</span></button>
               </div>
-            </div>
-            {% endfor %}
-        </ul>
+            </a>
+          </div>
+        </div>
+      </div>
+    </div>
+    {% endfor %}
+  </ul>
 
-    <!--페이지네이션-->
-    <br><br>
-    <nav aria-label="Page navigation example">
-        <ul class="pagination d-flex justify-content-center">
-            {% if page_obj.has_previous %}
-            <li class="page-item">
-                <a class="page-link" href="?page=1" aria-label="Previous">
-                    <span aria-hidden="true">&laquo;</span>
-                </a>
-            </li>
-            {% endif %}
+  <!--페이지네이션-->
+  <br><br>
+  <nav aria-label="Page navigation example">
+    <ul class="pagination d-flex justify-content-center">
+      {% if page_obj.has_previous %}
+      <li class="page-item">
+        <a class="page-link" href="?page=1" aria-label="Previous">
+          <span aria-hidden="true">&laquo;</span>
+        </a>
+      </li>
+      {% endif %}
 
-            {% for i in page_obj.paginator.page_range %}
-            <li class="page-item {% if page_obj.number == i %}active{% endif %}">
-                <a class="page-link" href="?page={{ i }}">{{ i }}</a>
-            </li>
-            {% endfor %}
+      {% for i in page_obj.paginator.page_range %}
+      <li class="page-item {% if page_obj.number == i %}active{% endif %}">
+        <a class="page-link" href="?page={{ i }}">{{ i }}</a>
+      </li>
+      {% endfor %}
 
-            {% if page_obj.has_next %}
-            <li class="page-item">
-                <a class="page-link" href="?page={{ page_obj.paginator.num_pages }}" aria-label="Next">
-                    <span aria-hidden="true">&raquo;</span>
-                </a>
-            </li>
-            {% endif %}
-        </ul>
-    </nav>
+      {% if page_obj.has_next %}
+      <li class="page-item">
+        <a class="page-link" href="?page={{ page_obj.paginator.num_pages }}" aria-label="Next">
+          <span aria-hidden="true">&raquo;</span>
+        </a>
+      </li>
+      {% endif %}
+    </ul>
+  </nav>
 
-    {% else %}
-    <h3>아직 게시물이 없습니다.</h3>
-    {% endif %}
+  {% else %}
+  <h3>아직 게시물이 없습니다.</h3>
+  {% endif %}
 
-    <a href="{% url 'study_create' %}" id="create-button" onclick="event.preventDefault();">
-        <span class="material-symbols-outlined" id="plus">
-            edit_square
-        </span>
-    </a>
+  <a href="{% url 'study_create' %}" id="create-button" onclick="event.preventDefault();">
+    <span class="material-symbols-outlined" id="plus">
+      edit_square
+    </span>
+  </a>
 </div>
 
 <script>
@@ -130,7 +122,7 @@
   function join_user() {
     // AJAX를 이용하여 study.people 값을 1 줄입니다.
     $.ajax({
-      url: "/" + study_id + "/study_join/",
+      url: study_id + "/study_join/",
       method: 'GET',
       success: function (response) {
         if (response.success) {
@@ -155,20 +147,20 @@
 </script>
 
 <script>
-    // JavaScript로 로그인 상태 확인 및 알림 창 표시
-    document.addEventListener('DOMContentLoaded', function () {
-      const createButton = document.getElementById('create-button');
-  
-      createButton.addEventListener('click', function () {
-        // 사용자가 로그인 상태인지 확인
-        {% if user.is_authenticated %}
-          window.location.href = '{% url "study_create" %}';
-        {% else %}
-          // 로그인 상태가 아닌 경우, 로그인 페이지로 이동
-          alert('로그인이 필요합니다. 로그인 페이지로 이동합니다.');
-          window.location.href = '{% url "login" %}';
-        {% endif %}
-      });
+  // JavaScript로 로그인 상태 확인 및 알림 창 표시
+  document.addEventListener('DOMContentLoaded', function () {
+    const createButton = document.getElementById('create-button');
+
+    createButton.addEventListener('click', function () {
+      // 사용자가 로그인 상태인지 확인
+      {% if user.is_authenticated %}
+      window.location.href = '{% url "study_create" %}';
+      {% else %}
+      // 로그인 상태가 아닌 경우, 로그인 페이지로 이동
+      alert('로그인이 필요합니다. 로그인 페이지로 이동합니다.');
+      window.location.href = '{% url "login" %}';
+      {% endif %}
     });
-  </script>
+  });
+</script>
 {% endblock %}

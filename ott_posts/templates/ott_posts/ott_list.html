@@ -44,16 +44,6 @@
             <div id="ottDetailContent"></div>
             <div class="container mt-4 d-flex justify-content-between align-items-end">
               <div>
-                <a href="{% url 'ott_update' id=ott.id %}"
-                  class="btn btn-secondary {% if request.user != ott.author %}d-none{% endif %}">수정</a>
-        
-                <!-- 모달창 안에서 모달창이 작동을 안해서 일단 버튼으로 대체 -->
-                <a href="{% url 'ott_delete' %}?id={{ ott.id }} "
-                  class="btn btn-danger {% if request.user != ott.author %}d-none{% endif %}">삭제</a>
-        
-                <a href="{% url 'ott_list' %}" class="btn btn-secondary">목록으로 돌아가기</a>
-              </div>
-              <div>
                 <a href="#" onclick="join_user('{{ ott.id }}'); return false;">
                   <div id="join-button">
                     <button id="join"><span>채팅 참여</span></button>

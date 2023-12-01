@@ -104,7 +104,7 @@ def studysearchResult(request):
             Q(study_type__icontains=query) |
             Q(study_member__icontains=query) |
             Q(post_content__icontains=query)
-        )
+        ).order_by('-created_at')
         return render(request, 'study_posts/study_search.html', {'query': query, 'studys': studys})
     else:
         return render(request, 'study_posts/study_search.html')

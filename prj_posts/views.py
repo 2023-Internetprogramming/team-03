@@ -1,6 +1,6 @@
 
 from django.shortcuts import render, get_object_or_404, redirect
-from .models import Prj
+from .models import Prj, Contest
 from .forms import PrjForm
 from django.http import HttpResponseRedirect, HttpResponseForbidden, JsonResponse
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
@@ -98,9 +98,11 @@ def prjsearchResult(request):
             Q(user_grade__icontains=query) |
             Q(post_content__icontains=query) |
             Q(prj_member__icontains=query) |
-            Q(post_title__icontains=query)
-        )
+            Q(post_title__icontains=query) |
+            Q(contest__contest_title__icontains=query) 
+        ).order_by('-created_at')
         return render(request, 'prj_posts/prj_search.html', {'query': query, 'prjs': prjs})
+    
     else:
         return render(request, 'prj_posts/prj_search.html')
     

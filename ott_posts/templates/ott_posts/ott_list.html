@@ -5,7 +5,7 @@
     <div class="py-3 mb-4" style="padding-bottom: 0rem!important; margin-bottom: 0rem!important; padding-top: 1.5rem!important;">
       <nav class="navbar bg-body-tertiary" style="padding-left: 10%; width: 90%;">
         <div class="container-fluid">
-          <h2 class="mb-4" style="margin-bottom: 0rem!important;">OTT</h2>
+          <a href="{% url 'ott_list' %}"><h2 class="mb-4" style="margin-bottom: 0rem!important;">OTT</h2></a>
           <form class="d-flex" role="search" method="GET" action="{% url 'ottsearchResult' %}">
             <input class="form-control me-2" type="search" placeholder="검색어 입력..." name="q" value="{{ request.GET.q }}">
             <button class="btn btn-outline-success" type="submit" style="padding-left: 10px; padding-right: 10px; padding-bottom: 2px;">
@@ -28,7 +28,7 @@
           </a>
           <span>
             <a href="#" onclick="openDetailPopup('{{ ott.id }}')">
-              <span class="badge badge-info">
+              <span class="badge {% if ott.people == 0 %}badge-danger{% else %}badge-info{% endif %}">
                 {% if ott.people == 0 %}
                     마감
                 {% else %}

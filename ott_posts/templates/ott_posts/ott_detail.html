@@ -109,11 +109,11 @@
 <div class="detail-content">
   <div class="container mt-4" id="container">
       <h2>{{ ott.type }} {{ ott.people }}명 모집
-        <span class="badge badge-info">
+        <span class="badge {% if ott.people == 0 %}badge-danger{% else %}badge-info{% endif %}">
           {% if ott.people == 0 %}
-          마감
+              마감
           {% else %}
-          모집 중
+              모집 중
           {% endif %}
         </span>
       </h2>

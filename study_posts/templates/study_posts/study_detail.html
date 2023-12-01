@@ -110,11 +110,11 @@
 <div class="detail-content">
   <div class="container mt-4" id="container">
     <h2>{{ study.post_title }}
-      <span class="badge badge-info">
+      <span class="badge {% if study.study_member == 0 %}badge-danger{% else %}badge-info{% endif %}">
         {% if study.study_member == 0 %}
-        마감
+            마감
         {% else %}
-        모집 중
+            모집 중
         {% endif %}
       </span>
     </h2>

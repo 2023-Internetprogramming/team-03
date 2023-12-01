@@ -4,24 +4,25 @@
 {% block main_area %}
 <link rel="stylesheet" href="{% static 'chat/css/chat.css' %}">
 
-<body style = "margin:0px; height: 100vh;">
+<body style="margin: 0px; height: 100vh;">
     <div class="chat-container">
         <div class="chat-box">
             <div class="chat-header">
-                <h3 style="margin-top:0px;">채팅방{{ room_name_json }}</h3>
+                <h3 style="margin-top: 0px;">채팅방{{ room_name_json }}</h3>
             </div>
-            <div class="chat-content">
+            <div class="chat-content" id="chat-content">
                 <div class="message">
                     <div class="text" id="chat-messages"></div>
                 </div>
             </div>
-            <div class="chat-input" style="max-width:72%;">
-                <form id="chat-form" method="post" action="{% url 'post_message' room_name=room_name_json %}" style="margin-left:10%; margin-right:10% text-al">
+            <div class="chat-input" style="max-width: 72%;">
+                <form id="chat-form" method="post" action="{% url 'post_message' room_name=room_name_json %}"
+                    style="margin-left: 10%; margin-right: 0%">
                     {% csrf_token %}
-                    <input type="text" id="message-input" name="message" autocomplete="off" required placeholder="메시지를 입력하세요" style="width:75%">
+                    <input type="text" id="message-input" name="message" autocomplete="off" required
+                        placeholder="메시지를 입력하세요" style="width: 75%">
                     <button type="submit" onclick="sendMessage()" style="margin-left: 10px;">전송</button>
                 </form>
-            </form>
             </div>
         </div>
     </div>
@@ -29,19 +30,21 @@
 <script>
     const roomName = '{{ room_name_json }}';
     const chatMessages = document.getElementById('chat-messages');
+    const chatContent = document.getElementById('chat-content');
     const messageInput = document.getElementById('message-input');
     const chatForm = document.getElementById('chat-form');
 
     function displayMessage(message) {
         const messageElement = document.createElement('p');
         messageElement.textContent = `${message.user}: ${message.message}`;
-        
+
         // Check if the message is from the current user
         if (message.user === '{{ request.user.username }}') {
             messageElement.classList.add('my-message'); // Add a class for styling
         }
 
         chatMessages.appendChild(messageElement);
+        chatContent.scrollTop = chatContent.scrollHeight; // Scroll to the bottom
     }
 
     function getMessages() {
@@ -58,21 +61,21 @@
         const message = messageInput.value.trim();
         if (message) {
             fetch(`/chat/${roomName}/post_message/`, {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/x-www-form-urlencoded',
-                    'X-CSRFToken': '{{ csrf_token }}',
-                },
-                body: `message=${encodeURIComponent(message)}`,
-            })
-            .then(() => {
-                messageInput.value = '';
-                getMessages();
-            });
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/x-www-form-urlencoded',
+                        'X-CSRFToken': '{{ csrf_token }}',
+                    },
+                    body: `message=${encodeURIComponent(message)}`,
+                })
+                .then(() => {
+                    messageInput.value = '';
+                    getMessages();
+                });
         }
     });
 
     getMessages();
-    setInterval(getMessages, 5000);  // Update messages every 5 seconds
+    // setInterval(getMessages, 5000); // 5초마다 자동 업데이트
 </script>
 {% endblock %}

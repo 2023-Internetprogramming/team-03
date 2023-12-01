@@ -2,6 +2,7 @@
 {% block main_area %}
     <br><br><br><br>
     <div class="container">
+        <h2>공모전/프로젝트 모집하기</h2><br>
         <form action="{% url 'prj_update' id=form.instance.id %}" method="post">
             {% csrf_token %}
             <input type="hidden" name="id" value="{{ form.instance.id }}"/>

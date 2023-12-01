@@ -77,10 +77,11 @@
     bottom: 0%;
     left: 50%; 
     transform: translate(-50%, -50%);
-    width: 100%;
+    width: 69%;
     background-color: #f2f2f2;
     padding: 10px;
     align-items: center;
+    border-radius: 6px;
 }
 
 .chat-input input[type="text"] {
@@ -136,10 +137,10 @@
 }
 
 .text p {
-    margin: 5px;
     padding: 5px 10px;
     background-color: #f2f2f2;
     border-radius: 10px;
+    width: 513px;
 }
 
 @media screen and (min-width: 768px) {
@@ -163,8 +164,18 @@
     max-height: 356px; /* 적절한 높이로 조정 */
     overflow-y: auto; /* 세로 스크롤 활성화 */
 }
+
+p{
+    margin-top:10px;
+}
+
 .my-message {
-    align-items: right;
-    text-align: right;
-    margin-left: 100px;
+    align-items: flex-end;
+    margin-left: 110%;
+}
+.text p {
+    padding: 5px 10px;
+    background-color: #f2f2f2;
+    border-radius: 10px;
+    width: 90%;
 }

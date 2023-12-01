@@ -70,7 +70,7 @@ def ott_update(request, id):
         form = OttForm(request.POST, instance=item)
         if form.is_valid():
             form.save()
-            return redirect('ott_list') # 모달창으로 돌아가지는게 안되서 일단 list페이지로 넘어가게 함
+            return redirect('ott_list')
 
     else:
         form = OttForm(instance=item)

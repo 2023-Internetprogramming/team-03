@@ -81,7 +81,6 @@ def prj_update(request, id):
         if form.is_valid():
             form.save()
             return redirect('prj_list')
-        # 모달창으로 돌아가지는게 안되서 일단 list페이지로 넘어가게 함
     else:
         form = PrjForm(instance=item)
 

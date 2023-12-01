@@ -1,4 +1,5 @@
 <link rel="stylesheet" href="../../../taxi_posts/static/taxi_posts/css/list.css">
+<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
 
 <style>
   .modal {
@@ -26,6 +27,7 @@
     float: right;
     font-size: 28px;
     font-weight: bold;
+    text-align: right;
   }
 
   .close:hover,
@@ -107,7 +109,7 @@
   }
 </style>
 <div class="detail-content">
-  <div class="container mt-4" id="container">
+  <div class="container mt-4" id="container"  style="padding-bottom: 3vh;">
     <h2>{{ ride.departure_location }} → {{ ride.destination }}
       <span class="badge {% if ride.available_seats == 0 %}badge-danger{% else %}badge-info{% endif %}">
         {% if ride.available_seats == 0 %}
@@ -117,7 +119,7 @@
         {% endif %}
       </span>
     </h2>
-    <p>시간: {{ ride.departure_time }}</p>
+    <p>탑승 시간: {{ ride.departure_time }}</p>
     <p>모집 인원: {{ ride.available_seats }} 명</p>
     <p>세부 사항: {{ ride.description }}</p>
     <div class="container mt-4 d-flex justify-content-between align-items-end">

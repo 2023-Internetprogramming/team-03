@@ -47,10 +47,8 @@
 </div>
 
 
-<div id="container1" style="padding-top: 15px; flex-grow: 1;" >  
-{% if contests %}
-    <h4>"{{ request.GET.q }}" 검색 결과:</h4>
-    <!-- Add the loop for displaying contests as before -->
+<div id="container1" style="padding-top: 25px; flex-grow: 1; margin-top:0px" >    
+    {% if contests %}
     {% for contest in contests %}
     <div class="list">
         <div class="item">
@@ -66,8 +64,8 @@
                 <h2>{{ contest.contest_title }}</h2>
                 <p class="info">
                     <span class="dday {% if contest.deadline < 0 %}highlight{% endif %}">
-                        {% if contest.deadline >= 0 %}
-                          D-{{ contest.deadline }}
+                        {% if contest.deadline.days >= 0 %}
+                          D-{{ contest.deadline.days }}
                         {% else %}
                           마감
                         {% endif %}
@@ -91,7 +89,7 @@
                 </a>
                 <a href="{% url 'comment' contest.id %}" data-menu="comment">
                     <span class="text">댓글</span>
-                    <span class="count">{{ contest.comments_count }}</span>
+                    <span class="commentcount count highlight">{{ contest.comments_count }}</span>
                 </a>
             </div>
         </div>

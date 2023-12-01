@@ -92,3 +92,11 @@ body::befor {
     font-size: 15px; color: #999;
     text-decoration: none;
 }
+#login:hover{
+    box-shadow: rgba(0, 0, 0, 0.25) 0px 4px 4px 4px inset;
+}
+@media (min-width: 1200px) {
+    .login-box {
+      width: 65%;
+    }
+  }

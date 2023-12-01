@@ -1,7 +1,8 @@
 {% extends 'taxi_posts/base.html' %}
 {% block main_area %}
     <br><br><br><br>
-    <div class="container">
+    <div class="container" style="height: 100vh;">
+        <h2>스터디 모집하기</h2><br>
         <form action="{% url 'study_update' id=form.instance.id %}" method="post">
             {% csrf_token %}
             <input type="hidden" name="id" value="{{ form.instance.id }}"/>

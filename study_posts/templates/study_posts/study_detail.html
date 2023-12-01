@@ -1,4 +1,5 @@
 <link rel="stylesheet" href="../../../taxi_posts/static/taxi_posts/css/list.css">
+<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
 
 <style>
   .modal {
@@ -26,6 +27,7 @@
     float: right;
     font-size: 28px;
     font-weight: bold;
+    text-align: right;
   }
 
   .close:hover,
@@ -108,7 +110,7 @@
 </style>
 
 <div class="detail-content">
-  <div class="container mt-4" id="container">
+  <div class="container mt-4" id="container"  style="padding-bottom: 3vh;">
     <h2>{{ study.post_title }}
       <span class="badge {% if study.study_member == 0 %}badge-danger{% else %}badge-info{% endif %}">
         {% if study.study_member == 0 %}

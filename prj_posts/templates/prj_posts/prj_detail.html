@@ -1,4 +1,5 @@
 <link rel="stylesheet" href="../../../taxi_posts/static/taxi_posts/css/list.css">
+<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
 
 <style>
   .modal {
@@ -26,6 +27,7 @@
     float: right;
     font-size: 28px;
     font-weight: bold;
+    text-align: right;
   }
 
   .close:hover,
@@ -107,7 +109,7 @@
   }
 </style>
 <div class="detail-content">
-  <div class="container mt-4" id="container">
+  <div class="container mt-4" id="container" style="padding-bottom: 3vh; margin-top: 1rem!important;">
     <h2>
       {% if prj.contest %}
       [{{ prj.contest.contest_title }}] 공모전 팀원
@@ -127,7 +129,7 @@
     <p>모집 인원 : {{prj.prj_member}} 명</p>
     <p>학년: {{prj.user_grade}} 학년 / 학과 : {{prj.user_major}}</p>
     <p>세부 사항 : {{prj.post_content}}</p>
-    <div class="container mt-4 d-flex justify-content-between align-items-end">
+    <div class="container mt-4 d-flex justify-content-between align-items-end" style="margin-top: 1rem!important;">
     <div>
       <a href="{% url 'prj_update' id=prj.id %}"
         class="btn btn-secondary {% if request.user != prj.author %}d-none{% endif %}">수정</a>

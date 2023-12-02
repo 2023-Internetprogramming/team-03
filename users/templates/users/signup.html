@@ -27,7 +27,7 @@
         </div>
         <div class="int-area">
           <input type="text" name="phone_number" id="phone" autocomplete="off" required>
-          <label for="phone">전화번호</label>
+          <label for="phone">전화번호(010-XXXX-XXXX)</label>
           {% if form.errors.phone_number %}
               <div class="alert alert-danger" role="alert">{{ form.errors.phone_number.0 }}</div>
           {% endif %}

@@ -59,6 +59,16 @@
 </div><br>
 
 <div class="container">
+  <h3>나의 채팅 목록</h3>
+  {% for room in chat_rooms %}
+    <a href="{% url 'chat_room' room_name=room %}" class="btn btn-info">{{ room }}</a>
+  {% endfor %}
+  {% if not chat_rooms %}
+    <p>작성한 글과 관련된 채팅방이 없습니다.</p>
+  {% endif %}
+</div>
+
+<div class="container">
   <h3>작성한 글</h3>
   <!-- User's Own Posts -->
   <div class="card text-center">

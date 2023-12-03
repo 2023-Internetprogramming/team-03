@@ -13,6 +13,7 @@ from taxi_posts.models import Ride
 from contest.models import Contest
 from .forms import EditProfileForm
 from .models import UserProfile
+from chat.models import ChatMessage
 
 
 def main_view(request):
@@ -90,8 +91,9 @@ def mypage_view(request):
     study_posts = Study.objects.filter(author=user)
     taxi_posts = Ride.objects.filter(author=user)
     
+    chat_rooms = ChatMessage.objects.filter(user=user).values_list('room', flat=True).distinct()
 
-    return render(request, 'users/mypage.html', {'saved_posts': saved_posts, 'ott_posts': ott_posts, 'prj_posts': prj_posts, 'study_posts': study_posts, 'taxi_posts': taxi_posts, 'user_profile': user_profile})
+    return render(request, 'users/mypage.html', {'saved_posts': saved_posts, 'ott_posts': ott_posts, 'prj_posts': prj_posts, 'study_posts': study_posts, 'taxi_posts': taxi_posts, 'user_profile': user_profile, 'chat_rooms': chat_rooms})
 
 
 @login_required

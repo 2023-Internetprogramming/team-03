@@ -7,7 +7,7 @@
 <div class="py-3" style="padding-top: 0rem!important; padding-bottom: 0rem!important;">
   <nav class="navbar bg-body-tertiary" style="padding-left: 10%; width: 90%; padding-bottom:0px;">
     <div class="container-fluid">
-      <a class="navbar-brand"><h4>공모전</h4></a>
+        <a class="navbar-brand" href="{% url 'contest_list' %}"><h4>공모전</h4></a>
       <form class="d-flex" role="search" method="GET" action="{% url 'searchResult' %}">
         <input class="form-control me-2" type="search" placeholder="검색어 입력..." name="q" value="{{ request.GET.q }}">
         <button class="btn btn-outline-success" type="submit" style="padding-left: 10px; padding-right: 10px; padding-bottom: 2px;">
@@ -20,32 +20,6 @@
     <hr>
   </nav>
 </div>
-<section style="height: 50px;">
-    <div class="wrap" style="padding-right:10%; padding-left:10%">
-        <a href="/contest/" class="{% if not request.GET.category %}active{% endif %}">
-            <span class="text1">전체</span>
-        </a>
-        <a href="?category=기획/아이디어" class="{% if request.GET.category == '기획/아이디어' %}active{% endif %}">
-            <span class="text1">기획/아이디어</span>
-        </a>
-        <a href="?category=IT/소프트웨어/게임" class="{% if request.GET.category == 'IT/소프트웨어/게임' %}active{% endif %}">
-            <span class="text1">IT/소프트웨어/게임</span>
-        </a>
-        <a href="?category=광고/마케팅" class="{% if request.GET.category == '광고/마케팅' %}active{% endif %}">
-            <span class="text1">광고/마케팅</span>
-        </a>
-        <a href="?category=디자인" class="{% if request.GET.category == '디자인' %}active{% endif %}">
-            <span class="text1">디자인</span>
-        </a>
-        <a href="?category=사진/영상/UCC" class="{% if request.GET.category == '사진/영상/UCC' %}active{% endif %}">
-            <span class="text1">사진/영상/UCC</span>
-        </a>
-        <a href="?category=예체능" class="{% if request.GET.category == '예체능' %}active{% endif %}">
-            <span class="text1">예체능</span>
-        </a>
-    </section>
-</div>
-
 
 <div id="container1" style="padding-top: 25px; flex-grow: 1; margin-top:0px" >    
     {% if contests %}

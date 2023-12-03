@@ -15,7 +15,11 @@ from datetime import datetime, timedelta
 
 def contest_list(request):
     category_filter = request.GET.get('category', None)
-    if category_filter:
+    scraped_filter = request.GET.get('scraped', False)
+    
+    if scraped_filter == 'true':
+        contests = Contest.objects.filter(scraped_by_users=request.user).order_by('-pk')
+    elif category_filter:
         contests = Contest.objects.filter(contest_category=category_filter).order_by('-pk')
     else:
         contests = Contest.objects.order_by('-pk')

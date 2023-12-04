@@ -59,7 +59,7 @@
 </div><br>
 
 <div class="container">
-  <h3>나의 채팅 목록</h3>
+  <h3>나의 채팅방 목록</h3>
   {% for room in chat_rooms %}
     <a href="{% url 'chat_room' room_name=room %}" class="btn btn-info">{{ room }}</a>
   {% endfor %}

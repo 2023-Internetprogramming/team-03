@@ -136,8 +136,6 @@ section.title > div.wrap > img {
     margin: 0 auto;
     max-width: 720px;
     height: auto;
-    margin-left: 20%;
-    margin-right: 20%;
 }
 
 @media only screen and (min-width: 720px){

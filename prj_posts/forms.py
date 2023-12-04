@@ -1,6 +1,7 @@
 from django import forms
 from .models import Prj
 from contest.models import Contest
+from django.utils import timezone
 
 
 class PrjForm(forms.ModelForm):
@@ -61,7 +62,7 @@ class PrjForm(forms.ModelForm):
     user_major = forms.ChoiceField(choices=MAJOR_CHOICES, label='전공', widget=forms.Select())
     
     contest = forms.ModelChoiceField(
-        queryset=Contest.objects.all(),
+        queryset=Contest.objects.filter(deadline__gt=timezone.now()),
         required=False,
         label='공모전 선택',
         widget=forms.Select(attrs={'class': 'form-control'}),

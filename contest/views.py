@@ -17,16 +17,30 @@ def contest_list(request):
     category_filter = request.GET.get('category', None)
     scraped_filter = request.GET.get('scraped', False)
     
+    now = datetime.now().date()
+
     if scraped_filter == 'true':
-        contests = Contest.objects.filter(scraped_by_users=request.user).order_by('-pk')
+        contests = Contest.objects.filter(scraped_by_users=request.user).order_by('-contest_view_count', '-pk')
     elif category_filter:
-        contests = Contest.objects.filter(contest_category=category_filter).order_by('-pk')
+        contests = Contest.objects.filter(contest_category=category_filter).order_by('deadline', '-contest_view_count', '-pk')
     else:
-        contests = Contest.objects.order_by('-pk')
+        contests = Contest.objects.order_by('deadline', '-contest_view_count', '-pk')
+
+    contests_with_deadline = [contest for contest in contests if contest.deadline > now]
+    contests_without_deadline = [contest for contest in contests if contest.deadline <= now]
+
+    contests = contests_with_deadline + contests_without_deadline
 
     for contest in contests:
-        contest.deadline = contest.deadline - datetime.now().date()
+        contest.deadline = contest.deadline - now
         contest.comments_count = Comment.objects.filter(contest_post=contest).count()
+        
+        if contest.deadline.days == 0:
+            contest.dday = "D-Day"
+        elif contest.deadline.days > 0:
+            contest.dday = f"D-{contest.deadline.days}"
+        else:
+            contest.dday = "마감"
 
     page = request.GET.get('page', 1)
     paginator = Paginator(contests, 8)

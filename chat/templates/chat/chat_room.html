@@ -36,16 +36,32 @@
 
     function displayMessage(message) {
         const messageElement = document.createElement('p');
-        messageElement.textContent = `${message.user}: ${message.message}`;
-
-        // Check if the message is from the current user
-        if (message.user === '{{ request.user.username }}') {
-            messageElement.classList.add('my-message'); // Add a class for styling
+        const timestampOptions = {
+            year: 'numeric',
+            month: 'long',
+            day: 'numeric',
+            hour: 'numeric',
+            minute: 'numeric',
+            hour12: true,
+        };
+        const timestamp = new Date(message.timestamp).toLocaleString('ko-KR', timestampOptions);
+        
+        let messageText = message.message;
+    
+        if (message.user !== '{{ request.user.username }}') {
+            messageText = `<span class="other-user"><strong>${message.user}</strong> : </span> ${messageText}`;
+            messageElement.classList.add('other-message');
+        } else {
+            messageText = `${messageText}`;
+            messageElement.classList.add('my-message');
         }
-
+    
+        messageElement.innerHTML = `${messageText} <br/><small>${timestamp}</small>`;
+    
         chatMessages.appendChild(messageElement);
-        chatContent.scrollTop = chatContent.scrollHeight; // Scroll to the bottom
+        chatContent.scrollTop = chatContent.scrollHeight;
     }
+    
 
     function getMessages() {
         fetch(`/chat/${roomName}/get_messages/`)
@@ -76,6 +92,6 @@
     });
 
     getMessages();
-    // setInterval(getMessages, 5000); // 5초마다 자동 업데이트
+    setInterval(getMessages, 5000); // 5초마다 자동 업데이트
 </script>
 {% endblock %}

@@ -16,8 +16,8 @@ def chat_room(request, room_name):
 @login_required
 def get_messages(request, room_name):
     room_messages = ChatMessage.objects.filter(room=room_name).order_by('-timestamp')[:50]
-    messages_data = [{'user': message.user.username, 'message': message.message} for message in reversed(room_messages)]
-    return JsonResponse({'messages': messages_data})
+    messages_data = {'messages': [{'user': msg.user.username, 'message': msg.message, 'timestamp': msg.timestamp} for msg in room_messages]}
+    return JsonResponse(messages_data)
 
 @login_required
 def post_message(request, room_name):

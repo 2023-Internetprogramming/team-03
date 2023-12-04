@@ -56,11 +56,7 @@
             <h2>접수 기간</h2>
             <p class="dday highlight">
                 <span class="dday {% if contest.deadline < 0 %}highlight{% endif %}">
-                {% if contest.deadline1.days >= 0 %}
-                  D-{{ contest.deadline1.days }}
-                {% else %}
-                  마감
-                {% endif %}
+                    {{ contest.dday }}
               </span>
             </p>
             <p class="indent">{{ contest.deadline }} 까지</p>
@@ -79,7 +75,7 @@
         </div>
         <div class="section">
             <article class="description">[응모 주제]
-                <br>{{ contest.subject }}
+                <br>{{ contest.contest_description }}
                 <br>
                 <br>[응모 자격]
                 <br>대학생<br>

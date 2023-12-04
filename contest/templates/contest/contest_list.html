@@ -22,7 +22,7 @@
     </div>
     <section style="height: 50px;">
         <div class="wrap" style="padding-right:10%; padding-left:10%">
-            <a href="?scraped=true" class="{% if request.GET.scraped %}active{% endif %} text1">
+            <a href="?scraped=true" class="{% if request.GET.scraped %}active{% endif %} text1" onclick="checkLogin()">
                 <span class="text1">스크랩</span>
             </a>
             <a href="/contest/" class="{% if not request.GET.category and not request.GET.scraped %}active{% endif %} text1">

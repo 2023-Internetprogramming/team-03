@@ -253,48 +253,53 @@
     }
 </script>
 <script>
-    // Function to set the initial state of the scrap button based on localStorage
-    function setInitialScrapState() {
+    function setInitialScrapState(contestId, userId) {
         var scrapButton = document.getElementById('scrapImage');
-        var storedState = localStorage.getItem('scrapState');
-
-        if (storedState === 'scrap') {
+        var storedState = localStorage.getItem('scrapState_' + userId + '_' + contestId);
+    
+        if (storedState && storedState === 'scrap') {
             scrapButton.src = "{% static 'contest/image/bookmark_FILL.png' %}";
+        } else {
+            scrapButton.src = "{% static 'contest/image/bookmark.png' %}";
         }
     }
 
-    // Function to handle the scrap button click
     function handleScrap() {
-        var scrapButton = document.getElementById('scrapImage');
-        var csrfToken = '{{ csrf_token }}';
-
-        jQuery.ajax({
-            url: "{% url 'scrap_contest' contest.id %}",
-            method: "POST",
-            data: { csrfmiddlewaretoken: csrfToken, contest_id: {{ contest.id }} },
-            success: function (data) {
-                console.log(data);
-                alert(data.message);
-
-                if (data.status === 'success') {
-                    // Toggle the image source
-                    if (scrapButton.src.includes('bookmark.png')) {
-                        scrapButton.src = "{% static 'contest/image/bookmark_FILL.png' %}";
-                        localStorage.setItem('scrapState', 'scrap');
-                    } else {
-                        scrapButton.src = "{% static 'contest/image/bookmark.png' %}";
-                        localStorage.removeItem('scrapState');
-                    }
-                }
-            },
-            error: function (error) {
-                console.log(error);
-            },
-        });
-    }
-
-    // Call setInitialScrapState when the page is loaded
-    document.addEventListener('DOMContentLoaded', setInitialScrapState);
+                var scrapButton = document.getElementById('scrapImage');
+                var csrfToken = '{{ csrf_token }}';
+                var contestId = {{ contest.id }};
+                var userId = {{ request.user.id }};
+            
+                jQuery.ajax({
+                    url: "{% url 'scrap_contest' contest.id %}",
+                    method: "POST",
+                    data: { csrfmiddlewaretoken: csrfToken, contest_id: contestId },
+                    success: function (data) {
+                        console.log(data);
+                        alert(data.message);
+            
+                        if (data.status === 'success') {
+                            // Toggle the image source
+                            if (scrapButton.src.includes('bookmark.png')) {
+                                scrapButton.src = "{% static 'contest/image/bookmark_FILL.png' %}";
+                                localStorage.setItem('scrapState_' + userId + '_' + contestId, 'scrap');
+                            } else {
+                                scrapButton.src = "{% static 'contest/image/bookmark.png' %}";
+                                localStorage.removeItem('scrapState_' + userId + '_' + contestId);
+                            }
+                        }
+                    },
+                    error: function (error) {
+                        console.log(error);
+                    },
+                });
+            }
+            
+            // 스크랩 상태를 페이지 로드 시 반영
+            document.addEventListener('DOMContentLoaded', function() {
+                var userId = {{ request.user.id }};
+                setInitialScrapState({{ contest.id }}, userId);
+            });
 </script>
 
 <link rel="stylesheet" type="text/css" href="{% static 'contest/css/detail.css' %}">

@@ -78,8 +78,13 @@
             </td>
           </tr>
         </table>
+        <button type="button" onclick="updateEstimatedFare()"> 예상 택시비 계산</button><br>
+
+        <script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=839355f5e4e20913f2172f52bdc973b9"></script>
 
         <script>
+
+        var departureLocation, destination, departureLat, departureLng, destinationLat, destinationLng;
 
         function openMap1() {
           // 출발지 지도 페이지 URL로 이동
@@ -91,14 +96,45 @@
           window.open('/map2?type=destination', 'mapWindow', 'width=800,height=600');
         }
 
-        function receiveMapData(title) {
+        function receiveMapData(title, lat, lng) {
           document.getElementById('id_departure_location').value = title;
+          departureLocation = title;
+          departureLat = lat;
+          departureLng = lng;
         }
 
-        function receiveMapData2(title) {
+        function receiveMapData2(title, lat, lng) {
           document.getElementById('id_destination').value = title;
+          destination = title;
+          destinationLat = lat;
+          destinationLng = lng;
+        }
+
+        function updateEstimatedFare() {
+          if (departureLat && departureLng && destinationLat && destinationLng) {
+            var R = 6371e3; // metres
+            var φ1 = departureLat * Math.PI/180; // φ, λ in radians
+            var φ2 = destinationLat * Math.PI/180;
+            var Δφ = (destinationLat-departureLat) * Math.PI/180;
+            var Δλ = (destinationLng-departureLng) * Math.PI/180;
+        
+            var a = Math.sin(Δφ/2) * Math.sin(Δφ/2) +
+                    Math.cos(φ1) * Math.cos(φ2) *
+                    Math.sin(Δλ/2) * Math.sin(Δλ/2);
+            var c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1-a));
+        
+            var distance = R * c / 1000; // in metres
+        
+            var baseFare = 3800;  // 기본 요금
+            var perMeterRate = 100 / 100;  // 거리당 요금 (100원/100m)
+        
+            var estimatedFare = Math.round(baseFare + perMeterRate * distance * 1000);
+        
+            document.getElementById('id_description').value = '거리: ' + Math.round(distance) + 'km, 예상 택시비: ' + estimatedFare + '원';
+          }
         }
         </script>
+        <br>
         <button type="submit" class="btn btn-primary">글쓰기</button>
       </form>
       <a href="{% url 'ride_list' %}" class="btn btn-secondary mt-3">목록으로 돌아가기</a>

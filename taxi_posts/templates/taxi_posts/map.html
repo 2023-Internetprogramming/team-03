@@ -234,14 +234,18 @@ function addMarker(position, idx, title) {
 function updateDestination(marker, title) {
     event.preventDefault();
 
+    var lat = marker.getPosition().getLat();
+    var lng = marker.getPosition().getLng();
+
+
     // 기존의 코드는 sendMapData 함수를 호출하는 것으로 변경합니다.
-    sendMapData(title);
+    sendMapData(title, lat, lng);
 }
 
 // 오프너 창으로 데이터를 보내는 함수
-function sendMapData(title) {
+function sendMapData(title, lat, lng) {
     // 오프너 창에서 receiveMapData 함수를 호출합니다
-    window.opener.receiveMapData(title);
+    window.opener.receiveMapData(title, lat, lng);
 
     // 지도 창을 닫습니다
     window.close();

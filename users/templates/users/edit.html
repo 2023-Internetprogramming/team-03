@@ -1,15 +1,29 @@
 {% extends 'taxi_posts/base.html' %}
-{% block main_area %}
+{% block main_area %}\<style>
+    .container{
+            background-color: #f8f9fa;
+            border-bottom: 1px solid #ddd;
+            border-top: 1px solid #ddd;
+            padding: 15px;
+            height: 100vh;
+    }
+
+    h2 {
+        color: #333;
+        margin-bottom: 10px;
+        padding-bottom: 15px;
+    }
+</style>
     <br><br><br><br>
     <div class="container">
-        <h2>Edit Profile</h2>
+        <h2>프로필 수정</h2>
         <form action="{% url 'editmypage' %}" method="post">
             {% csrf_token %}
             <input type="hidden">
             <table>
                 {{ profile_form.as_p }}
             </table>
-            <button type="submit">수정완료</button>
+            <button type="submit" style="color: #fff; background-color: #8B2845; border: none; padding: 10px 20px; border-radius: 5px; cursor: pointer;">수정완료</button>
         </form>
     </div>
 {% endblock %}

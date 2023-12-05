@@ -12,8 +12,13 @@ class OttForm(forms.ModelForm):
         ('Coupangplay', 'Coupangplay')
     ]
     
-    type = forms.ChoiceField(choices=TYPE_CHOICES, label='OTT 종류', widget=forms.Select())
-    
+    type = forms.ChoiceField(choices=TYPE_CHOICES, label='OTT 종류', widget=forms.Select(attrs={'onchange': 'updateBill()'}))
+    people = forms.ChoiceField(
+        choices=[(1, '1명'), (2, '2명'), (3, '3명'), (4, '4명')],
+        label='모집 인원',
+        widget=forms.Select(attrs={'onchange': 'updateBill()'})
+    )
+        
     class Meta:
         model = Ott
         exclude = ['author']

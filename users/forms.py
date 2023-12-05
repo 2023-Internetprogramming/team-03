@@ -24,4 +24,8 @@ class SignUpForm(UserCreationForm):
 class EditProfileForm(forms.ModelForm):
     class Meta:
         model = UserProfile
-        fields = ['phone_number', 'real_name']       
+        fields = ['real_name', 'phone_number'] 
+        labels = {
+            'real_name': '이름',
+            'phone_number': '전화번호',
+        }      

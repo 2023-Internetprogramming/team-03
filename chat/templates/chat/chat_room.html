@@ -45,7 +45,7 @@
             hour12: true,
         };
         const timestamp = new Date(message.timestamp).toLocaleString('ko-KR', timestampOptions);
-        
+    
         let messageText = message.message;
     
         if (message.user !== '{{ request.user.username }}') {
@@ -59,7 +59,7 @@
         messageElement.innerHTML = `${messageText} <br/><small>${timestamp}</small>`;
     
         chatMessages.appendChild(messageElement);
-        chatContent.scrollTop = chatContent.scrollHeight;
+        chatContent.scrollTop = chatContent.scrollHeight; // Automatically scroll to the bottom
     }
     
 

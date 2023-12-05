@@ -62,10 +62,9 @@ class PrjForm(forms.ModelForm):
     user_major = forms.ChoiceField(choices=MAJOR_CHOICES, label='전공', widget=forms.Select())
     
     contest = forms.ModelChoiceField(
-        queryset=Contest.objects.filter(deadline__gt=timezone.now()),
+        queryset=Contest.objects.filter(deadline__gte=timezone.now()), 
         required=False,
         label='공모전 선택',
-        widget=forms.Select(attrs={'class': 'form-control'}),
     )
     
     prj_name = forms.CharField(

@@ -102,9 +102,9 @@
         </div>
         <script>
 
-            function setInitialScrapState(contestId) {
+            function setInitialScrapState(contestId, userId) {
                 var scrapButton = document.getElementById('scrapImage');
-                var storedState = localStorage.getItem('scrapState_' + contestId);
+                var storedState = localStorage.getItem('scrapState_' + userId + '_' + contestId);
             
                 if (storedState && storedState === 'scrap') {
                     scrapButton.src = "{% static 'contest/image/bookmark_FILL.png' %}";
@@ -112,11 +112,12 @@
                     scrapButton.src = "{% static 'contest/image/bookmark.png' %}";
                 }
             }
-        
+            
             function handleScrap() {
                 var scrapButton = document.getElementById('scrapImage');
                 var csrfToken = '{{ csrf_token }}';
                 var contestId = {{ contest.id }};
+                var userId = {{ request.user.id }};
             
                 jQuery.ajax({
                     url: "{% url 'scrap_contest' contest.id %}",
@@ -130,10 +131,10 @@
                             // Toggle the image source
                             if (scrapButton.src.includes('bookmark.png')) {
                                 scrapButton.src = "{% static 'contest/image/bookmark_FILL.png' %}";
-                                localStorage.setItem('scrapState_' + contestId, 'scrap');
+                                localStorage.setItem('scrapState_' + userId + '_' + contestId, 'scrap');
                             } else {
                                 scrapButton.src = "{% static 'contest/image/bookmark.png' %}";
-                                localStorage.removeItem('scrapState_' + contestId);
+                                localStorage.removeItem('scrapState_' + userId + '_' + contestId);
                             }
                         }
                     },
@@ -145,7 +146,8 @@
             
             // 스크랩 상태를 페이지 로드 시 반영
             document.addEventListener('DOMContentLoaded', function() {
-                setInitialScrapState({{ contest.id }});
+                var userId = {{ request.user.id }};
+                setInitialScrapState({{ contest.id }}, userId);
             });
         </script>
     </div>

@@ -21,7 +21,7 @@
       </nav>
     </div>
     <section style="height: 50px;">
-        <div class="wrap" style="padding-right:10%; padding-left:10%">
+        <div class="wrap" style="padding-right:10%; padding-left:7%">
             {% if request.user.is_authenticated %}
                 <a href="?scraped=true" class="{% if request.GET.scraped %}active{% endif %} text1" onclick="checkLogin()">
                     <span class="text1">스크랩</span>
@@ -68,7 +68,7 @@
                 <p class="info">
                     <span class="dday {% if contest.deadline < 0 %}highlight{% endif %}">
                         {{ contest.dday }}
-                      </span>
+                    </span>
                     <span class="viewcount">
                         <span class="material-symbols-outlined" style="font-size: 11px;">
                         visibility

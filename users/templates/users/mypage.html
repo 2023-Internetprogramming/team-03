@@ -37,9 +37,9 @@
                 <span>{{ contest.contest_category }}</span>
               </p>
             </strong>
-            <h3 class="mb-0">{{ contest.contest_title }}</h3>
+            <h5 class="mb-0">{{ contest.contest_title }}</h5>
             <div class="mb-1 text-body-secondary"> 
-              <span class="dday {% if contest.deadline < 0 %}highlight{% endif %}">
+              <span class="dday {% if contest.deadline < 0 %}highlight{% endif %}"><br>
                 {% if contest.deadline.days >= 0 %}
                   D-{{ contest.deadline.days }}
                 {% else %}

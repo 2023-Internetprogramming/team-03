@@ -90,5 +90,5 @@ class PrjForm(forms.ModelForm):
             'user_major' : '전공',
             'user_grade' : '학년',
             'prj_member' : '모집 인원',
-            'post_content' : '내용',      
+            'post_content' : '상세 정보',      
         }

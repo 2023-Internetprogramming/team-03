@@ -7,7 +7,44 @@
       <form action="{% url 'study_create' %}" method="post" class="study_form">
         {% csrf_token %}
         <table>
-          {{ form.as_table }}
+          <tr>
+            <td>제목 : </td>
+            <td>
+              {{ form.post_title }}
+            </td>
+          </tr>
+          <tr>
+            <td>전공 : </td>
+            <td>
+              {{ form.user_major }}
+            </td>
+          </tr>
+          <tr>
+            <td>학년 : </td>
+            <td>
+              {{ form.user_grade }}
+            </td>
+          </tr>
+          <tr>
+            <td>스터디 종류 : </td>
+            <td>
+              {{ form.study_type }}
+            </td>
+          </tr>
+          <tr>
+            <td>모집 인원: </td>
+            <td>
+              {{ form.study_member }}
+            </td>
+          </tr>
+          <tr>
+            <td>상세 정보: </td>
+            <td>
+              {{ form.post_content }}
+              <br>
+              <small>{{ form.post_content.help_text }}</small>
+            </td>
+          </tr>
         </table>
         <button type="submit" class="btn btn-primary">글쓰기</button>
       </form>

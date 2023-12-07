@@ -74,5 +74,5 @@ class StudyForm(forms.ModelForm):
             'user_major' : '전공',
             'user_grade' : '학년',
             'study_type' : '스터디 종류',
-            'post_content' : '내용',            
+            'post_content' : '상세 정보',            
         }

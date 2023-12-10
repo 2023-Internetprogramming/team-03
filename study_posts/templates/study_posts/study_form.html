@@ -1,55 +1,129 @@
 {% extends 'taxi_posts/base.html' %}
 
 {% block main_area %}
-    <br><br>
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <title>스터디 모집하기</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f0f0f0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .container {
+            width: 80%;
+            background-color: #fff;
+            padding: 20px;
+            margin: 20px;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+
+        h2 {
+            color: #333;
+            text-align: center;
+        }
+
+        form {
+            margin-bottom: 20px;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+
+        td {
+            padding: 8px;
+            border-bottom: 1px solid #ddd;
+        }
+
+        .btn {
+            padding: 10px 20px;
+            border-radius: 4px;
+            cursor: pointer;
+            text-decoration: none;
+            background-color: #3498db;
+            color: #fff;
+            border: none;
+            display: inline-block;
+            margin-right: 10px;
+        }
+
+        .btn-secondary {
+            background-color: #555;
+            color: #fff;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 4px;
+            cursor: pointer;
+            text-decoration: none;
+            float: right;
+        }
+
+        button.btn-primary:hover,
+        button.btn-secondary:hover {
+            opacity: 0.8;
+        }
+
+        button, input, optgroup, select, textarea {
+            margin: 3px;
+        }
+    </style>
+</head>
+<body>
+    <br><br><br><br><br><br><br><br>
     <div class="container mt-4" id="container">
-      <h2>스터디 모집하기</h2><br>
-      <form action="{% url 'study_create' %}" method="post" class="study_form">
-        {% csrf_token %}
-        <table>
-          <tr>
-            <td>제목 : </td>
-            <td>
-              {{ form.post_title }}
-            </td>
-          </tr>
-          <tr>
-            <td>전공 : </td>
-            <td>
-              {{ form.user_major }}
-            </td>
-          </tr>
-          <tr>
-            <td>학년 : </td>
-            <td>
-              {{ form.user_grade }}
-            </td>
-          </tr>
-          <tr>
-            <td>스터디 종류 : </td>
-            <td>
-              {{ form.study_type }}
-            </td>
-          </tr>
-          <tr>
-            <td>모집 인원: </td>
-            <td>
-              {{ form.study_member }}
-            </td>
-          </tr>
-          <tr>
-            <td>상세 정보: </td>
-            <td>
-              {{ form.post_content }}
-              <br>
-              <small>{{ form.post_content.help_text }}</small>
-            </td>
-          </tr>
-        </table>
-        <button type="submit" class="btn btn-primary">글쓰기</button>
-      </form>
-      <a href="{% url 'study_list' %}" class="btn btn-secondary mt-3">Back to Ride List</a>
+        <h2>스터디 모집하기</h2><br>
+        <form action="{% url 'study_create' %}" method="post" class="study_form">
+            {% csrf_token %}
+            <table>
+                <tr>
+                    <td>제목 : </td>
+                    <td>{{ form.post_title }}</td>
+                </tr>
+                <tr>
+                    <td>전공 : </td>
+                    <td>{{ form.user_major }}</td>
+                </tr>
+                <tr>
+                    <td>학년 : </td>
+                    <td>{{ form.user_grade }}</td>
+                </tr>
+                <tr>
+                    <td>스터디 종류 : </td>
+                    <td>{{ form.study_type }}</td>
+                </tr>
+                <tr>
+                    <td>모집 인원: </td>
+                    <td>{{ form.study_member }}</td>
+                </tr>
+                <tr>
+                    <td>상세 정보: </td>
+                    <td>
+                        {{ form.post_content }}
+                        <br>
+                        <small>{{ form.post_content.help_text }}</small>
+                    </td>
+                </tr>
+            </table>
+            <div class="button-group">
+                <button type="submit" class="btn btn-primary">글쓰기</button>
+                <a href="{% url 'study_list' %}" class="btn btn-secondary mt-1">목록으로 돌아가기</a>
+            </div>
+        </form>
     </div>
+</body>
+</html>
+
+
     <script>
       document.addEventListener('DOMContentLoaded', function() {
         const gradeField = document.getElementById('id_user_grade');

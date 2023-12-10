@@ -1,7 +1,8 @@
 {% extends 'taxi_posts/base.html' %}
 
 {% block main_area %}
-    <br><br>
+<body>
+    <br><br><br><br><br><br><br><br>
     <div class="container mt-4" id="container">
       <h2>공모전/프로젝트 모집하기</h2><br>
       <form action="{% url 'prj_create' %}" method="post" class="form">
@@ -46,10 +47,84 @@
             </td>
           </tr>
         </table>
-        <button type="submit" class="btn btn-primary">글쓰기</button>
+        <div class="button-group">
+          <button type="submit" class="btn btn-primary">글쓰기</button>
+          <a href="{% url 'prj_list' %}" class="btn btn-secondary mt-1">목록으로 돌아가기</a>
+      </div>
       </form>
-      <a href="{% url 'prj_list' %}" class="btn btn-secondary mt-3">목록으로 돌아가기</a>
     </div>
+  </body>
+    <style>
+      body {
+          font-family: Arial, sans-serif;
+          margin: 0;
+          padding: 0;
+          background-color: #f0f0f0;
+          display: flex;
+          justify-content: center;
+          align-items: center;
+      }
+
+      .container {
+          width: 80%;
+          background-color: #fff;
+          padding: 20px;
+          margin: 20px;
+          border-radius: 8px;
+          box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+      }
+
+      h2 {
+          color: #333;
+          text-align: center;
+      }
+
+      form {
+          margin-bottom: 20px;
+      }
+
+      table {
+          width: 100%;
+          border-collapse: collapse;
+      }
+
+      td {
+          padding: 8px;
+          border-bottom: 1px solid #ddd;
+      }
+
+      .btn {
+          padding: 10px 20px;
+          border-radius: 4px;
+          cursor: pointer;
+          text-decoration: none;
+          background-color: #3498db;
+          color: #fff;
+          border: none;
+          display: inline-block;
+          margin-right: 10px;
+      }
+
+      .btn-secondary {
+          background-color: #555;
+          color: #fff;
+          border: none;
+          padding: 10px 20px;
+          border-radius: 4px;
+          cursor: pointer;
+          text-decoration: none;
+          float: right;
+      }
+
+      button.btn-primary:hover,
+      button.btn-secondary:hover {
+          opacity: 0.8;
+      }
+
+      button, input, optgroup, select, textarea {
+          margin: 3px;
+      }
+  </style>
     <style>
       button, input, optgroup, select, textarea {
         margin: 3px;

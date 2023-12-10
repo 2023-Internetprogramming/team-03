@@ -26,8 +26,8 @@ def contest_list(request):
     else:
         contests = Contest.objects.order_by('deadline', '-contest_view_count', '-pk')
 
-    contests_with_deadline = [contest for contest in contests if contest.deadline > now]
-    contests_without_deadline = [contest for contest in contests if contest.deadline <= now]
+    contests_with_deadline = [contest for contest in contests if contest.deadline >= now]
+    contests_without_deadline = [contest for contest in contests if contest.deadline < now]
 
     contests = contests_with_deadline + contests_without_deadline
 
